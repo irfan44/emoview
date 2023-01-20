@@ -64,12 +64,7 @@ const Header = ({
               handleSwitch={handleSwitch}
             />
             {!isEnded && isStart && (
-              <Button
-                type="primary"
-                onClick={async () =>
-                  openInMeeting(await window.electronAPI.getAccessToken())
-                }
-              >
+              <Button type="primary" onClick={() => openInMeeting()}>
                 In Meeting Display
               </Button>
             )}

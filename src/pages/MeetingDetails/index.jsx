@@ -46,6 +46,8 @@ const MeetingDetails = () => {
   const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [meetingParticipants, setMeetingParticipants] = useState([]);
 
+  const [accessToken, setAccessToken] = useState();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -79,7 +81,12 @@ const MeetingDetails = () => {
     }
   };
 
-  const openInMeeting = async (accessToken) => {
+  const getAccessToken = async () => {
+    const accessToken = await window.electronAPI.getAccessToken();
+    setAccessToken(accessToken);
+  };
+
+  const openInMeeting = async () => {
     await window.electronAPI.openFloating(id, accessToken);
   };
 
@@ -158,6 +165,7 @@ const MeetingDetails = () => {
   useEffect(() => {
     fetchMeetingById();
     getSwitchStatus();
+    getAccessToken();
   }, []);
 
   useEffect(async () => {
