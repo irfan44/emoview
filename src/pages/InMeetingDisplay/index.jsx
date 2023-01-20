@@ -19,7 +19,7 @@ const InMeetingDisplay = () => {
   const [countParticipants, setCountParticipants] = useState();
   const [page, setPage] = useState(0);
 
-  const id = sessionStorage.getItem('meeting-details:id');
+  const { id } = useParams();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL);

@@ -80,7 +80,7 @@ const MeetingDetails = () => {
   };
 
   const openInMeeting = async () => {
-    await window.electronAPI.openFloating();
+    await window.electronAPI.openFloating(id);
   };
 
   const handleStartMeeting = async () => {
