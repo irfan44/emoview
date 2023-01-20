@@ -36,7 +36,7 @@ const InMeetingLayout = ({ children }) => {
             <Button
               type="text"
               size="large"
-              // onClick={async () => await ipcRenderer.invoke("close-floating")}
+              onClick={async () => await window.electronAPI.closeFloating()}
             >
               <VscChromeClose />
             </Button>

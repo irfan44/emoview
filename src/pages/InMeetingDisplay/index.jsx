@@ -22,8 +22,6 @@ const InMeetingDisplay = () => {
   const id = searchParams.get('id');
   const accessToken = searchParams.get('accessToken');
 
-  console.log(id, accessToken);
-
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL);
 

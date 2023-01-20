@@ -168,10 +168,6 @@ const MeetingDetails = () => {
     getAccessToken();
   }, []);
 
-  useEffect(async () => {
-    await window.electronAPI.getAccessToken();
-  }, []);
-
   return (
     <>
       {meetingData && (
