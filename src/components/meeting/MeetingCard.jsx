@@ -10,7 +10,7 @@ const MeetingCard = ({ data }) => {
   const startedAt = convertTimezone(data.startedAt).format('D MMM YYYY, H:mm');
 
   return (
-    <Link to={`meeting/${data._id}`}>
+    <Link to={`/meeting/${data._id}`}>
       <Card
         hoverable
         style={{ height: '100%' }}
