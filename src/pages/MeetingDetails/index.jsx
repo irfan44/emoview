@@ -83,6 +83,7 @@ const MeetingDetails = () => {
 
   const getAccessToken = async () => {
     const accessToken = await window.electronAPI.getAccessToken();
+    console.log(accessToken);
     setAccessToken(accessToken);
   };
 
