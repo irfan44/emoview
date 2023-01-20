@@ -40,7 +40,7 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/in-meeting-display/:id',
+    path: '/in-meeting-display',
     element: <InMeetingDisplay />,
   },
 ]);

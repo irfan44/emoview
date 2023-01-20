@@ -80,8 +80,10 @@ const MeetingDetails = () => {
   };
 
   const openInMeeting = async () => {
-    await window.electronAPI.openFloating();
-    sessionStorage.setItem('floating:meetingId', id);
+    await window.electronAPI.openFloating(
+      id,
+      await window.electronAPI.getAccessToken()
+    );
   };
 
   const handleStartMeeting = async () => {

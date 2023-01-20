@@ -4,9 +4,9 @@ import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
 } from 'react-icons/fa';
+import { useSearchParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { getMeetingById } from '../../api/meeting';
-import { getRecognition } from '../../api/recognition';
+import { getMeetingById, getRecognition } from '../../api/floating';
 import DisplayData from '../../components/inMeetingDisplay/DisplayData';
 import DominantEmotion from '../../components/inMeetingDisplay/DominantEmotion';
 import ParticipantCount from '../../components/inMeetingDisplay/ParticipantCount';
@@ -18,14 +18,16 @@ const InMeetingDisplay = () => {
   const [countParticipants, setCountParticipants] = useState();
   const [page, setPage] = useState(0);
 
-  const { id } = sessionStorage.getItem('floating:meetingId');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const id = searchParams.get('id');
+  const accessToken = searchParams.get('accessToken');
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL);
 
   const fetchRecognition = async () => {
     try {
-      const data = await getMeetingById(id);
+      const data = await getMeetingById(id, accessToken);
       let count = data.participants.length;
       setCountParticipants(count);
 
@@ -46,7 +48,7 @@ const InMeetingDisplay = () => {
 
   const fetchRecognitionOverview = async (id, limit) => {
     try {
-      const data = await getRecognition(id, limit);
+      const data = await getRecognition(id, limit, accessToken);
       let arr = data.recognitionStream[0];
       let max = Object.keys(arr).reduce((a, b) => (arr[a] > arr[b] ? a : b));
       setMaxRecognition(max);
