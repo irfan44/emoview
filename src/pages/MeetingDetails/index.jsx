@@ -79,9 +79,8 @@ const MeetingDetails = () => {
     }
   };
 
-  const openInMeeting = async () => {
-    const accessToken = await window.electronAPI.getAccessToken();
-    accessToken && (await window.electronAPI.openFloating(id, accessToken));
+  const openInMeeting = async (accessToken) => {
+    await window.electronAPI.openFloating(id, accessToken);
   };
 
   const handleStartMeeting = async () => {
@@ -159,6 +158,10 @@ const MeetingDetails = () => {
   useEffect(() => {
     fetchMeetingById();
     getSwitchStatus();
+  }, []);
+
+  useEffect(async () => {
+    await window.electronAPI.getAccessToken();
   }, []);
 
   return (
