@@ -60,7 +60,7 @@ const UserEmotionDetails = () => {
       <Breadcrumb style={{ marginBottom: '8px' }}>
         <Breadcrumb.Item>
           <Link
-            to={navigate(-1)}
+            onClick={() => navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
             <FaAngleLeft /> Back to Previous
