@@ -1,0 +1,11 @@
+.floatingWindow {
+  -webkit-app-region: drag;
+}
+
+.floatingWindow button {
+  -webkit-app-region: no-drag;
+}
+
+.floatingWindow a {
+  -webkit-app-region: no-drag;
+}
