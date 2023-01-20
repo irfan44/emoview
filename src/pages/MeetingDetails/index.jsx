@@ -62,7 +62,7 @@ const MeetingDetails = () => {
       fetchMeetingParticipants(id);
 
       socket.on('connect', () => {
-        socket.emit('joinMeeting', data.code);
+        socket.emit('join', data.code);
       });
 
       socket.on('USER_JOINED', () => {

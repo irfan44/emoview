@@ -34,7 +34,7 @@ const InMeetingDisplay = () => {
       fetchRecognitionOverview(data.code, 1);
 
       socket.on('connect', () => {
-        socket.emit('joinMeeting', data.code);
+        socket.emit('join', data.code);
       });
 
       socket.on('RECOGNITION_DATA_ADDED', () => {

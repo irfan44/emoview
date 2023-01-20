@@ -144,7 +144,7 @@ const startRecognition = async (code) => {
   try {
     const response = await axios.patch(
       `${baseURL}/meeting/start/${code}`,
-      {},
+      { status: 'started' },
       {
         headers: {
           Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
@@ -160,8 +160,8 @@ const startRecognition = async (code) => {
 const stopRecognition = async (code) => {
   try {
     const response = await axios.patch(
-      `${baseURL}/meeting/stop/${code}`,
-      {},
+      `${baseURL}/meeting/start/${code}`,
+      { status: 'stopped' },
       {
         headers: {
           Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
