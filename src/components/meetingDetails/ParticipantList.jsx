@@ -4,7 +4,7 @@ import EmptyHolder from '../placeholders/EmptyHolder';
 
 const { Text, Title } = Typography;
 
-const ParticipantList = ({ meetingParticipants }) => {
+const ParticipantList = ({ id, meetingParticipants }) => {
   const navigate = useNavigate();
 
   const handleClick = (userId) => {
@@ -19,14 +19,16 @@ const ParticipantList = ({ meetingParticipants }) => {
           {meetingParticipants.map((data) => {
             return (
               <Col span={6} key={data.userId}>
-                <Card
-                  hoverable
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleClick(data.userId)}
-                >
-                  <Title level={5}>{data.fullname}</Title>
-                  <Text type="secondary">{data.userId}</Text>
-                </Card>
+                <Link to={`meeting/${id}/${data.userId}`}>
+                  <Card
+                    hoverable
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleClick(data.userId)}
+                  >
+                    <Title level={5}>{data.fullname}</Title>
+                    <Text type="secondary">{data.userId}</Text>
+                  </Card>
+                </Link>
               </Col>
             );
           })}

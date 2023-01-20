@@ -15,8 +15,7 @@ const UserEmotionDetails = () => {
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
 
-  const meetingId = sessionStorage.getItem('meeting-details:id');
-  const userId = sessionStorage.getItem('meeting-details:userId');
+  const { meetingId, userId } = useParams();
 
   const navigate = useNavigate();
 
@@ -61,7 +60,7 @@ const UserEmotionDetails = () => {
       <Breadcrumb style={{ marginBottom: '8px' }}>
         <Breadcrumb.Item>
           <Link
-            to="/meeting-details"
+            to={navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
             <FaAngleLeft /> Back to Previous
