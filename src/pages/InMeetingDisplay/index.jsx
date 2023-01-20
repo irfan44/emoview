@@ -4,7 +4,6 @@ import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
 } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById } from '../../api/meeting';
 import { getRecognition } from '../../api/recognition';
@@ -19,7 +18,7 @@ const InMeetingDisplay = () => {
   const [countParticipants, setCountParticipants] = useState();
   const [page, setPage] = useState(0);
 
-  const { id } = useParams();
+  const { id } = sessionStorage.getItem('floating:meetingId');
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL);
