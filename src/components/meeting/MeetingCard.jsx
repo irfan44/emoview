@@ -14,7 +14,6 @@ const MeetingCard = ({ data }) => {
       <Card
         hoverable
         style={{ height: '100%' }}
-        onClick={() => handleClick()}
         title={
           <div>
             <Title level={5} ellipsis style={{ marginBottom: 0 }}>
