@@ -1,4 +1,4 @@
-import { Card, Empty } from 'antd';
+import { Card } from 'antd';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -49,13 +49,9 @@ const DoughnutChart = ({ data }) => {
 
   return (
     <Card title="Summary" style={{ width: '100%' }}>
-      {Object.keys(data).length === 0 ? (
-        <Empty />
-      ) : (
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <Doughnut data={chartData} options={options} />
-        </div>
-      )}
+      <div style={{ width: '100%', textAlign: 'center' }}>
+        <Doughnut data={chartData} options={options} />
+      </div>
     </Card>
   );
 };

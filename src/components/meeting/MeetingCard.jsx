@@ -1,14 +1,10 @@
-import { Col, Dropdown, Row, Space } from 'antd';
-import { Card, Typography } from 'antd';
+import { Card, Space, Typography } from 'antd';
 import { FaRegCalendar } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import convertTimezone from '../../helpers/convertTimezone';
+import { Link } from 'react-router-dom';
 
 const { Text, Title, Paragraph } = Typography;
 
 const MeetingCard = ({ data }) => {
-  const startedAt = convertTimezone(data.startedAt).format('D MMM YYYY, H:mm');
-
   return (
     <Link to={`/meeting/${data._id}`}>
       <Card
@@ -31,7 +27,7 @@ const MeetingCard = ({ data }) => {
         <Space align="center">
           <FaRegCalendar size={12} />
           {data.isStart ? (
-            <Text>{startedAt}</Text>
+            <Text>{new Date(data.startedAt).toLocaleString('en-GB')}</Text>
           ) : (
             <Text type="secondary">Not Started</Text>
           )}
