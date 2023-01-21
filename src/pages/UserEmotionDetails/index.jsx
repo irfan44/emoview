@@ -11,7 +11,7 @@ import Recognition from '../../components/meetingDetails/Recognition';
 const { Title } = Typography;
 
 const UserEmotionDetails = () => {
-  const [recognitionStream, setRecognitionStream] = useState([]);
+  const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
 
@@ -28,13 +28,15 @@ const UserEmotionDetails = () => {
       fetchRecognitionOverview(data.code, userId, 10);
 
       socket.on('connect', () => {
-        socket.emit('joinMeeting', `${data.code}-${userId}`);
+        socket.emit('join', `${data.code}-${userId}`);
       });
 
-      socket.on('RECOGNITION_DATA_ADDED', () => {
-        fetchRecognitionOverview(data.code, userId, 10);
-        console.log('FER:: Recognition Running');
-      });
+      if (data.isStart) {
+        socket.on('RECOGNITION_DATA_ADDED', () => {
+          fetchRecognitionOverview(data.code, userId, 10);
+          console.log('FER:: Recognition Running');
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +45,7 @@ const UserEmotionDetails = () => {
   const fetchRecognitionOverview = async (id, userId, limit) => {
     try {
       const data = await getRecognitionById(id, userId, limit);
-      setRecognitionStream(data.recognitionStream);
+      setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
     } catch (error) {
@@ -76,7 +78,7 @@ const UserEmotionDetails = () => {
             key: 'recognition',
             children: (
               <Recognition
-                recogStream={recognitionStream}
+                recogDetail={recognitionsDetail}
                 recogOverview={recognitionsOverview}
                 recogSummary={recognitionsSummary}
               />

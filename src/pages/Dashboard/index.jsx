@@ -9,6 +9,7 @@ import MeetingList from '../../components/meeting/MeetingList';
 const { Text, Title } = Typography;
 
 const Dashboard = () => {
+  const [user, setUser] = useState();
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
 
@@ -26,12 +27,20 @@ const Dashboard = () => {
   const fetchMeetings = async () => {
     try {
       const data = await getMeeting();
-      const recentMeeting = data.slice(0, 4);
+      const recentMeeting = data.slice(0, 6);
       setMeetings(recentMeeting);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getProfile = async () => {
+    setUser(await window.electronAPI.getProfile());
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   useEffect(() => {
     fetchCountMeeting();
@@ -43,7 +52,7 @@ const Dashboard = () => {
       <Title level={3} style={{ marginBottom: '0px' }}>
         Dashboard
       </Title>
-      {/* <Text type="secondary">Welcome, {user.name}</Text> */}
+      {user && <Text type="secondary">Welcome, {user.name}</Text>}
       <Row style={{ marginTop: '24px', marginBottom: '24px' }}>
         <Col>
           <Card>

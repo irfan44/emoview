@@ -41,7 +41,7 @@ const MeetingDetails = () => {
     },
   });
   const [recognitionStatus, setRecognitionStatus] = useState();
-  const [recognitionStream, setRecognitionStream] = useState([]);
+  const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [meetingParticipants, setMeetingParticipants] = useState([]);
@@ -58,7 +58,7 @@ const MeetingDetails = () => {
     try {
       const data = await getMeetingById(id);
       setMeetingData(data);
-      fetchRecognitionOverview(data.code, 10);
+      fetchRecognitionOverview(data.code, ' ');
       fetchMeetingParticipants(id);
 
       socket.on('connect', () => {
@@ -67,7 +67,6 @@ const MeetingDetails = () => {
 
       socket.on('USER_JOINED', () => {
         fetchMeetingParticipants(id);
-        console.log('User Join');
       });
 
       if (data.isStart) {
@@ -145,7 +144,7 @@ const MeetingDetails = () => {
   const fetchRecognitionOverview = async (id, limit) => {
     try {
       const data = await getRecognition(id, limit);
-      setRecognitionStream(data.recognitionStream);
+      setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
     } catch (error) {
@@ -203,7 +202,7 @@ const MeetingDetails = () => {
                   key: 'recognition',
                   children: (
                     <Recognition
-                      recogStream={recognitionStream}
+                      recogDetail={recognitionsDetail}
                       recogOverview={recognitionsOverview}
                       recogSummary={recognitionsSummary}
                     />

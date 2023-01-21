@@ -15,7 +15,7 @@ const ParticipantList = ({ id, meetingParticipants }) => {
                 <Link to={`/meeting/${id}/${data.userId}`}>
                   <Card hoverable style={{ cursor: 'pointer' }}>
                     <Title level={5}>{data.fullname}</Title>
-                    <Text type="secondary">{data.userId}</Text>
+                    <Text type="secondary">{data.email}</Text>
                   </Card>
                 </Link>
               </Col>
