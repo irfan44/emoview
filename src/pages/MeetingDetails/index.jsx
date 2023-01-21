@@ -71,7 +71,7 @@ const MeetingDetails = () => {
 
       if (data.isStart) {
         socket.on('RECOGNITION_DATA_ADDED', () => {
-          fetchRecognitionOverview(data.code, 10);
+          fetchRecognitionOverview(data.code, ' ');
           console.log('FER:: Recognition Running');
         });
       }

@@ -25,7 +25,7 @@ const UserEmotionDetails = () => {
   const fetchRecognitionById = async () => {
     try {
       const data = await getMeetingById(meetingId);
-      fetchRecognitionOverview(data.code, userId, 10);
+      fetchRecognitionOverview(data.code, userId, ' ');
 
       socket.on('connect', () => {
         socket.emit('join', `${data.code}-${userId}`);
@@ -33,7 +33,7 @@ const UserEmotionDetails = () => {
 
       if (data.isStart) {
         socket.on('RECOGNITION_DATA_ADDED', () => {
-          fetchRecognitionOverview(data.code, userId, 10);
+          fetchRecognitionOverview(data.code, userId, ' ');
           console.log('FER:: Recognition Running');
         });
       }
