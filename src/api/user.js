@@ -11,7 +11,6 @@ const createUser = async (
   userId,
   role
 ) => {
-  console.log(userId, role);
   try {
     const body = {
       name: nickname,
