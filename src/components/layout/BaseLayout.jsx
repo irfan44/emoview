@@ -45,7 +45,7 @@ const BaseLayout = ({ children }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingInline: '12px',
-          height: '56px',
+          height: '64px',
           borderBottom: '0.5px solid #d9d9d9',
         }}
       >
