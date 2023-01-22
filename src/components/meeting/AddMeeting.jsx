@@ -42,14 +42,14 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Please input meeting name!',
+              message: 'Please insert meeting name!',
             },
           ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
-          <Input />
+          <Input placeholder="Insert meeting name here" />
         </Form.Item>
         <Form.Item
           label="Subject"
@@ -57,14 +57,14 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Please input meeting subject!',
+              message: 'Please insert meeting subject!',
             },
           ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
-          <Input />
+          <Input placeholder="Insert meeting subject here" />
         </Form.Item>
         <Form.Item
           label="Description"
@@ -72,14 +72,14 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Please input meeting description!',
+              message: 'Please insert meeting description!',
             },
           ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
-          <TextArea rows={4} />
+          <TextArea rows={4} placeholder="Insert meeting description here" />
         </Form.Item>
         <Form.Item
           label="Google Meet Link"
@@ -94,7 +94,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
-          <Input />
+          <Input placeholder="Example: https://meet.google.com/abc-defg-hij" />
         </Form.Item>
         {/* <Form.Item
           label="Size"
