@@ -27,18 +27,24 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           });
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Segmented
           options={['Description', 'In Meeting View']}
           value={tabValue}
           onChange={setTabValue}
-          style={{ marginTop: '16px', marginBottom: '16px' }}
+          style={{ marginTop: '16px' }}
         />
-      </div>
-      <Form form={form} layout="vertical">
+      </div> */}
+      <Form form={form} layout="vertical" style={{ marginTop: '16px' }}>
         <Form.Item
           label="Name"
           name="name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input meeting name!',
+            },
+          ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
@@ -48,6 +54,12 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         <Form.Item
           label="Subject"
           name="subject"
+          rules={[
+            {
+              required: true,
+              message: 'Please input meeting subject!',
+            },
+          ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
@@ -57,6 +69,12 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         <Form.Item
           label="Description"
           name="description"
+          rules={[
+            {
+              required: true,
+              message: 'Please input meeting description!',
+            },
+          ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
@@ -66,13 +84,19 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         <Form.Item
           label="Google Meet Link"
           name="link"
+          rules={[
+            {
+              required: true,
+              message: 'Please input google meet link!',
+            },
+          ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Size"
           name="size"
           style={{
@@ -115,7 +139,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
               </div>
             </Radio>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </Modal>
   );
