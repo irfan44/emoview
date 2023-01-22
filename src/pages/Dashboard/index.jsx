@@ -5,10 +5,12 @@ import { countMeeting, getMeeting } from '../../api/meeting';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import MeetingList from '../../components/meeting/MeetingList';
+import LoadingMeetingList from '../../components/loading/MeetingList';
 
 const { Text, Title } = Typography;
 
 const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState();
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
@@ -26,9 +28,11 @@ const Dashboard = () => {
 
   const fetchMeetings = async () => {
     try {
+      setIsLoading(true);
       const data = await getMeeting();
       const recentMeeting = data.slice(0, 6);
       setMeetings(recentMeeting);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -54,8 +58,8 @@ const Dashboard = () => {
       </Title>
       {user && <Text type="secondary">Welcome, {user.name}</Text>}
       <Row style={{ marginTop: '24px', marginBottom: '24px' }}>
-        <Col>
-          <Card>
+        <Col span={4}>
+          <Card loading={isLoading}>
             <Title>{count}</Title>
             <Text type="secondary">Total Meeting</Text>
           </Card>
@@ -88,7 +92,7 @@ const Dashboard = () => {
           </Button>
         </div>
       </div>
-      <MeetingList meetings={meetings} />
+      {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}
     </PageLayout>
   );
 };

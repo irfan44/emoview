@@ -55,6 +55,10 @@ const UserEmotionDetails = () => {
 
   useEffect(() => {
     fetchRecognitionById();
+
+    return function cleanup() {
+      socket.disconnect();
+    };
   }, []);
 
   return (

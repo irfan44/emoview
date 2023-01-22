@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import { Breadcrumb, Modal, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -20,6 +21,7 @@ import EmptyHolder from '../../components/placeholders/EmptyHolder';
 const { confirm } = Modal;
 
 const MeetingDetails = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [meetingData, setMeetingData] = useState({
     _id: '',
     name: '',
@@ -54,12 +56,14 @@ const MeetingDetails = () => {
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL);
 
-  const fetchMeetingById = async () => {
+  const handleOnMount = async () => {
     try {
+      setIsLoading(true);
       const data = await getMeetingById(id);
       setMeetingData(data);
       fetchRecognitionOverview(data.code, ' ');
       fetchMeetingParticipants(id);
+      setIsLoading(false);
 
       socket.on('connect', () => {
         socket.emit('join', data.code);
@@ -69,12 +73,21 @@ const MeetingDetails = () => {
         fetchMeetingParticipants(id);
       });
 
-      if (data.isStart) {
-        socket.on('RECOGNITION_DATA_ADDED', () => {
-          fetchRecognitionOverview(data.code, ' ');
-          console.log('FER:: Recognition Running');
-        });
-      }
+      socket.on('RECOGNITION_DATA_ADDED', () => {
+        fetchRecognitionOverview(data.code, ' ');
+        console.log('FER:: Recognition Running');
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchMeetingById = async () => {
+    try {
+      const data = await getMeetingById(id);
+      setMeetingData(data);
+      fetchRecognitionOverview(data.code, ' ');
+      fetchMeetingParticipants(id);
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +114,7 @@ const MeetingDetails = () => {
 
   const handleStartRecognition = async () => {
     await startRecognition(meetingData.code);
-    fetchMeetingById();
+    handleOnMount();
   };
 
   const handleStopRecognition = async () => {
@@ -162,9 +175,13 @@ const MeetingDetails = () => {
   };
 
   useEffect(() => {
-    fetchMeetingById();
+    handleOnMount();
     getSwitchStatus();
     getAccessToken();
+
+    return function cleanup() {
+      socket.disconnect();
+    };
   }, []);
 
   return (
@@ -220,6 +237,16 @@ const MeetingDetails = () => {
                 },
               ]}
             />
+          ) : isLoading ? (
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                textAlign: 'center',
+              }}
+            >
+              <Spin />
+            </div>
           ) : (
             <EmptyHolder title="Start meeting & recognition to see emotion data!" />
           )}

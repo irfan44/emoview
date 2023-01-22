@@ -83,6 +83,7 @@ const BaseLayout = ({ children }) => {
                     src={user.picture}
                     style={{ borderRadius: '50%' }}
                     height="30"
+                    referrerPolicy="no-referrer"
                   />
                   <Text>{user.nickname}</Text>
                   <Text>

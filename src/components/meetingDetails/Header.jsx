@@ -99,7 +99,7 @@ const Header = ({
         <Paragraph>
           Link :{' '}
           <a href={!isEnded && link} target="_blank">
-            {link}
+            <Text copyable>{link}</Text>
           </a>
           {isEnded && <span> Ended</span>}
         </Paragraph>

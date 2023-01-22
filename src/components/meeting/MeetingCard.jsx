@@ -10,28 +10,41 @@ const MeetingCard = ({ data }) => {
       <Card
         hoverable
         style={{ height: '100%' }}
-        title={
-          <div>
-            <Title level={5} ellipsis style={{ marginBottom: 0 }}>
-              {data.name}
-            </Title>
-            <Text type="secondary" ellipsis style={{ marginBottom: 0 }}>
-              {data.subject}
-            </Text>
-          </div>
-        }
         headStyle={{ borderBottom: 0, paddingTop: '16px' }}
-        bodyStyle={{ paddingTop: '8px', paddingBottom: '16px' }}
+        bodyStyle={{
+          paddingTop: '16px',
+          paddingBottom: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}
       >
-        <Paragraph ellipsis={{ rows: 2 }}>{data.description}</Paragraph>
-        <Space align="center">
-          <FaRegCalendar size={12} />
-          {data.isStart ? (
-            <Text>{new Date(data.startedAt).toLocaleString('en-GB')}</Text>
-          ) : (
-            <Text type="secondary">Not Started</Text>
-          )}
-        </Space>
+        <div style={{ marginBottom: '16px' }}>
+          <Title level={5} ellipsis style={{ marginBottom: 0 }}>
+            {data.name}
+          </Title>
+          <Text type="secondary" ellipsis style={{ marginBottom: 0 }}>
+            {data.subject}
+          </Text>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            justifyContent: 'space-between',
+          }}
+        >
+          <Paragraph ellipsis={{ rows: 2 }}>{data.description}</Paragraph>
+          <Space align="center">
+            <FaRegCalendar size={12} />
+            {data.isStart ? (
+              <Text>{new Date(data.startedAt).toLocaleString('en-GB')}</Text>
+            ) : (
+              <Text type="secondary">Not Started</Text>
+            )}
+          </Space>
+        </div>
       </Card>
     </Link>
   );
