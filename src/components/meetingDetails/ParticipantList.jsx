@@ -2,6 +2,7 @@ import { Avatar, Space } from 'antd';
 import { Card, Col, Row, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import EmptyHolder from '../placeholders/EmptyHolder';
+import ParticipantCard from './ParticipantCard';
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -13,7 +14,7 @@ const ParticipantList = ({ id, meetingParticipants }) => {
           {meetingParticipants.map((data) => {
             return (
               <Col span={6} key={data.userId}>
-                <Link to={`/meeting/${id}/${data.userId}`}>
+                {/* <Link to={`/meeting/${id}/${data.userId}`}>
                   <Card
                     hoverable
                     style={{ cursor: 'pointer', width: '100%', height: '100%' }}
@@ -37,7 +38,8 @@ const ParticipantList = ({ id, meetingParticipants }) => {
                       </div>
                     </div>
                   </Card>
-                </Link>
+                </Link> */}
+                <ParticipantCard id={id} data={data} />
               </Col>
             );
           })}

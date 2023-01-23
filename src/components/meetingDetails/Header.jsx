@@ -1,9 +1,11 @@
 import { Button, Dropdown, Space, Typography } from 'antd';
 import { FaEllipsisV } from 'react-icons/fa';
+import Subtitle from '../common/typography/Subtitle';
+import Title from '../common/typography/Title';
 import UpdateMeeting from '../meeting/UpdateMeeting';
 import RecognitionSwitch from './RecognitionSwitch';
 
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Text } = Typography;
 
 const Header = ({
   name,
@@ -50,10 +52,8 @@ const Header = ({
         }}
       >
         <div>
-          <Title level={3} style={{ marginBottom: 0 }}>
-            {name}
-          </Title>
-          <Text type="secondary">{subject}</Text>
+          <Title>{name}</Title>
+          <Subtitle>{subject}</Subtitle>
         </div>
         <div>
           <Space>
@@ -86,23 +86,23 @@ const Header = ({
               arrow
             >
               <Button type="text">
-                <Text type="secondary">
+                <Subtitle>
                   <FaEllipsisV />
-                </Text>
+                </Subtitle>
               </Button>
             </Dropdown>
           </Space>
         </div>
       </div>
       <div>
-        <Paragraph>Description : {description}</Paragraph>
-        <Paragraph>
+        <p>Description : {description}</p>
+        <p>
           Link :{' '}
           <a href={!isEnded && link} target="_blank">
             <Text copyable>{link}</Text>
           </a>
           {isEnded && <span> Ended</span>}
-        </Paragraph>
+        </p>
       </div>
     </>
   );

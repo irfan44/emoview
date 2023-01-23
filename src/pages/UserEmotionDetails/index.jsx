@@ -1,14 +1,13 @@
-import { Breadcrumb, Tabs, Typography } from 'antd';
+import { Breadcrumb, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaAngleLeft } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById } from '../../api/meeting';
 import { getRecognitionById } from '../../api/recognition';
+import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import Recognition from '../../components/meetingDetails/Recognition';
-
-const { Title } = Typography;
 
 const UserEmotionDetails = () => {
   const [recognitionsDetail, setRecognitionsDetail] = useState();
@@ -73,7 +72,7 @@ const UserEmotionDetails = () => {
           </Link>
         </Breadcrumb.Item>
       </Breadcrumb>
-      <Title level={3}>User Details</Title>
+      <Title>User Details</Title>
       <Tabs
         defaultActiveKey="1"
         items={[

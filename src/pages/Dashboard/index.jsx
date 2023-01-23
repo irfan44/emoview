@@ -1,13 +1,16 @@
-import { Button, Card, Col, Row, Space, Typography, theme } from 'antd';
+import { Button, Card, Col, Row, Space, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import PageLayout from '../../components/layout/PageLayout';
 import { countMeeting, getMeeting } from '../../api/meeting';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
-import MeetingList from '../../components/meeting/MeetingList';
+import SectionTitle from '../../components/common/typography/SectionTitle';
+import Subtitle from '../../components/common/typography/Subtitle';
+import Title from '../../components/common/typography/Title';
 import LoadingMeetingList from '../../components/loading/MeetingList';
+import MeetingList from '../../components/meeting/MeetingList';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,15 +56,13 @@ const Dashboard = () => {
 
   return (
     <PageLayout>
-      <Title level={3} style={{ marginBottom: '0px' }}>
-        Dashboard
-      </Title>
-      {user && <Text type="secondary">Welcome, {user.name}</Text>}
+      <Title>Dashboard</Title>
+      {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <Row style={{ marginTop: '24px', marginBottom: '24px' }}>
         <Col span={4}>
           <Card loading={isLoading}>
-            <Title>{count}</Title>
-            <Text type="secondary">Total Meeting</Text>
+            <h5 className="font-bold text-4xl">{count}</h5>
+            <Subtitle>Total Meeting</Subtitle>
           </Card>
         </Col>
       </Row>
@@ -74,9 +75,9 @@ const Dashboard = () => {
           marginBottom: '16px',
         }}
       >
-        <Title level={4} style={{ marginBottom: 0 }}>
+        <SectionTitle level={4} style={{ marginBottom: 0 }}>
           Recent Meetings
-        </Title>
+        </SectionTitle>
         <div>
           <Button
             type="text"

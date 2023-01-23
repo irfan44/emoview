@@ -1,4 +1,4 @@
-import { Card, Col, Empty, Row, Space } from 'antd';
+import { Card, Col, Empty, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import DoughnutChart from '../charts/Doughnut';
 import LineChart from '../charts/Line';
@@ -16,7 +16,7 @@ const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
   }, [recogDetail, recogSummary, recogOverview]);
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <div className="w-full space-y-2">
       <Row>
         <Col span={24}>
           {detailData ? (
@@ -48,7 +48,7 @@ const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
           )}
         </Col>
       </Row>
-    </Space>
+    </div>
   );
 };
 

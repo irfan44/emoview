@@ -1,7 +1,5 @@
-import { Typography } from 'antd';
 import emptyImage from '../../assets/empty.webp';
-
-const { Title } = Typography;
+import SectionTitle from '../common/typography/SectionTitle';
 
 const EmptyHolder = ({ title }) => {
   return (
@@ -14,11 +12,9 @@ const EmptyHolder = ({ title }) => {
         textAlign: 'center',
       }}
     >
-      <div>
+      <div className="space-y-4">
         <img src={emptyImage} width="300" />
-        <Title level={5} style={{ marginTop: '16px' }}>
-          {title}
-        </Title>
+        <SectionTitle>{title}</SectionTitle>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
-import { Card, Space, Typography } from 'antd';
+import { Card, Typography } from 'antd';
 import { FaRegCalendar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import CardTitle from '../common/typography/CardTitle';
+import Subtitle from '../common/typography/Subtitle';
 
-const { Text, Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const MeetingCard = ({ data }) => {
   return (
@@ -20,12 +22,8 @@ const MeetingCard = ({ data }) => {
         }}
       >
         <div style={{ marginBottom: '16px' }}>
-          <Title level={5} ellipsis style={{ marginBottom: 0 }}>
-            {data.name}
-          </Title>
-          <Text type="secondary" ellipsis style={{ marginBottom: 0 }}>
-            {data.subject}
-          </Text>
+          <CardTitle>{data.name}</CardTitle>
+          <Subtitle>{data.subject}</Subtitle>
         </div>
         <div
           style={{
@@ -36,14 +34,16 @@ const MeetingCard = ({ data }) => {
           }}
         >
           <Paragraph ellipsis={{ rows: 2 }}>{data.description}</Paragraph>
-          <Space align="center">
+          <div className="flex items-center space-x-2">
             <FaRegCalendar size={12} />
             {data.isStart ? (
-              <Text>{new Date(data.startedAt).toLocaleString('en-GB')}</Text>
+              <Subtitle>
+                {new Date(data.startedAt).toLocaleString('en-GB')}
+              </Subtitle>
             ) : (
-              <Text type="secondary">Not Started</Text>
+              <Subtitle>Not Started</Subtitle>
             )}
-          </Space>
+          </div>
         </div>
       </Card>
     </Link>

@@ -1,17 +1,15 @@
-import { Progress, Space, Typography } from 'antd';
-
-const { Text } = Typography;
+import { Progress } from 'antd';
 
 const DisplayData = ({ emotionDisplay, data, title }) => {
   return (
-    <Space direction="vertical" align="center">
+    <div className="flex flex-col text-center">
       <Progress
         type={emotionDisplay}
         percent={Math.floor(data * 100)}
         width={56}
       />
-      <Text>{title}</Text>
-    </Space>
+      <p className="mb-0 mt-2">{title}</p>
+    </div>
   );
 };
 

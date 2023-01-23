@@ -114,11 +114,7 @@ const DominantEmotion = ({ emotion }) => {
         );
     }
   };
-  return (
-    <Space size="small" align="center">
-      {emoji()}
-    </Space>
-  );
+  return <div className="flex items-center space-x-2">{emoji()}</div>;
 };
 
 export default DominantEmotion;
