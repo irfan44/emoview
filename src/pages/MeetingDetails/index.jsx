@@ -1,5 +1,4 @@
-import { Spin } from 'antd';
-import { Breadcrumb, Modal, Tabs } from 'antd';
+import { Modal, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -188,12 +187,20 @@ const MeetingDetails = () => {
     <>
       {meetingData && (
         <PageLayout>
-          <Breadcrumb>
-            <Breadcrumb.Item>
-              <Link to="/meetings">Meetings</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{meetingData.name}</Breadcrumb.Item>
-          </Breadcrumb>
+          <div className="flex space-x-1">
+            <div>
+              <Link
+                className="text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
+                to="/meetings"
+              >
+                Meetings
+              </Link>
+            </div>
+            <div>
+              <span>/</span>
+            </div>
+            <div className="px-[4px]">{meetingData.name}</div>
+          </div>
           <Header
             name={meetingData.name}
             subject={meetingData.subject}

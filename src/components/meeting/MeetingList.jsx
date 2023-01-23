@@ -6,7 +6,7 @@ const MeetingList = ({ meetings }) => {
   return (
     <>
       {meetings ? (
-        <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
+        <Row className="mt-6" gutter={[16, 16]}>
           {meetings.map((data) => {
             return (
               <Col key={data._id} span={8}>

@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import {
   FaRegArrowAltCircleLeft,
@@ -64,8 +64,8 @@ const InMeetingDisplay = () => {
 
   return (
     <InMeetingLayout>
-      <Space direction="vertical" size="middle" style={{ minWidth: '100%' }}>
-        <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className="min-w-full space-y-4">
+        <div className="flex items-center justify-between">
           {page !== 0 && (
             <Button
               type="text"
@@ -96,9 +96,7 @@ const InMeetingDisplay = () => {
           )}
           {page === 1 && (
             <>
-              <Space
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
+              <div className="flex space-x-2">
                 <DisplayData
                   emotionDisplay="dashboard"
                   data={recognitionStream.fearful}
@@ -114,20 +112,18 @@ const InMeetingDisplay = () => {
                   data={recognitionStream.surprised}
                   title="Suprise"
                 />
-              </Space>
+              </div>
             </>
           )}
           {page === 2 && (
             <>
-              <Space
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
+              <div className="flex justify-between">
                 <DisplayData
                   emotionDisplay="dashboard"
                   data={recognitionStream.angry}
                   title="Angry"
                 />
-              </Space>
+              </div>
             </>
           )}
           {page === 2 && (
@@ -144,15 +140,12 @@ const InMeetingDisplay = () => {
               <FaRegArrowAltCircleRight />
             </Button>
           )}
-        </Space>
-        <Space
-          align="center"
-          style={{ display: 'flex', justifyContent: 'space-between' }}
-        >
+        </div>
+        <div className="flex items-center justify-between">
           <DominantEmotion emotion={maxRecognition} />
           <ParticipantCount countParticipants={countParticipants} />
-        </Space>
-      </Space>
+        </div>
+      </div>
     </InMeetingLayout>
   );
 };

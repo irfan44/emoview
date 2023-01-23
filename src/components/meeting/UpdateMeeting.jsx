@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
+import { Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
 import { updateMeeting } from '../../api/meeting';
 
 const { TextArea } = Input;
@@ -83,7 +83,7 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Size"
           name="size"
           style={{
@@ -126,7 +126,7 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
               </div>
             </Radio>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </Modal>
   );

@@ -1,4 +1,4 @@
-import { Breadcrumb, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaAngleLeft } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -62,16 +62,17 @@ const UserEmotionDetails = () => {
 
   return (
     <PageLayout>
-      <Breadcrumb style={{ marginBottom: '8px' }}>
-        <Breadcrumb.Item>
+      <div className="flex space-x-1 mb-2">
+        <div>
           <Link
+            className="flex items-center text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
             onClick={() => navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
             <FaAngleLeft /> Back to Previous
           </Link>
-        </Breadcrumb.Item>
-      </Breadcrumb>
+        </div>
+      </div>
       <Title>User Details</Title>
       <Tabs
         defaultActiveKey="1"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Dropdown, Layout, Menu, Space, theme, Typography } from 'antd';
+import { Button, Dropdown, Layout, Menu, theme } from 'antd';
 import { HiChevronDown, HiMenu, HiX } from 'react-icons/hi';
 import { useLocation } from 'react-router-dom';
 import menuItems from '../../data/menuItems';
@@ -7,7 +7,6 @@ import emoviewLogo from '../../assets/icon.png';
 import Style from '../../styles/header.module.css';
 
 const { Content, Header, Sider } = Layout;
-const { Text } = Typography;
 
 const { useToken } = theme;
 
@@ -62,11 +61,7 @@ const BaseLayout = ({ children }) => {
             )}
           </Button>
           <img src={emoviewLogo} width="30" style={{ marginLeft: '16px' }} />
-          <Text
-            style={{ fontWeight: 'bold', fontSize: '20px', marginLeft: '8px' }}
-          >
-            Emoview
-          </Text>
+          <span className="font-bold text-xl ml-2">Emoview</span>
         </div>
         {user && (
           <div
@@ -77,19 +72,22 @@ const BaseLayout = ({ children }) => {
             }}
           >
             <Dropdown menu={{ items }}>
-              <a onClick={(e) => e.preventDefault()}>
-                <Space size="small" align="center">
+              <a
+                className="text-black/[.60] hover:text-black"
+                onClick={(e) => e.preventDefault()}
+              >
+                <div className="flex items-center space-x-2">
                   <img
                     src={user.picture}
                     style={{ borderRadius: '50%' }}
                     height="30"
                     referrerPolicy="no-referrer"
                   />
-                  <Text>{user.nickname}</Text>
-                  <Text>
+                  <span>{user.nickname}</span>
+                  <span>
                     <HiChevronDown style={{ paddingTop: '4px' }} />
-                  </Text>
-                </Space>
+                  </span>
+                </div>
               </a>
             </Dropdown>
           </div>

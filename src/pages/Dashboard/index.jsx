@@ -1,24 +1,20 @@
-import { Button, Card, Col, Row, Space, Typography } from 'antd';
+import { Card, Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
-import PageLayout from '../../components/layout/PageLayout';
 import { countMeeting, getMeeting } from '../../api/meeting';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import SectionTitle from '../../components/common/typography/SectionTitle';
 import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
+import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingList';
 import MeetingList from '../../components/meeting/MeetingList';
-
-const { Text } = Typography;
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState();
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
-
-  const navigate = useNavigate();
 
   const fetchCountMeeting = async () => {
     try {
@@ -79,18 +75,14 @@ const Dashboard = () => {
           Recent Meetings
         </SectionTitle>
         <div>
-          <Button
-            type="text"
-            onClick={() => navigate('/meetings')}
-            style={{ padding: 0 }}
-          >
-            <Space size={'small'}>
-              <Text type="secondary">View All</Text>
-              <Text type="secondary">
+          <Link to={'/meetings'}>
+            <div className="flex items-center space-x-2 text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]">
+              <span>View All</span>
+              <span>
                 <FaChevronRight style={{ marginTop: '6px' }} />
-              </Text>
-            </Space>
-          </Button>
+              </span>
+            </div>
+          </Link>
         </div>
       </div>
       {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}

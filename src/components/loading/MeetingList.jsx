@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 
 const LoadingMeetingList = () => {
   return (
-    <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
+    <Row className="mt-6" gutter={[16, 16]}>
       <Col span={8}>
         <Card loading />
       </Col>
