@@ -96,13 +96,13 @@ const Header = ({
       </div>
       <div>
         <p>Description : {description}</p>
-        <p>
+        <span className="block">
           Link :{' '}
           <a href={!isEnded && link} target="_blank">
             <Text copyable>{link}</Text>
           </a>
           {isEnded && <span> Ended</span>}
-        </p>
+        </span>
       </div>
     </>
   );
