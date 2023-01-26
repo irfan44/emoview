@@ -19,7 +19,7 @@ const UserEmotionDetails = () => {
   const navigate = useNavigate();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
-  const socket = io(baseURL);
+  const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const fetchRecognitionById = async () => {
     try {
@@ -65,7 +65,7 @@ const UserEmotionDetails = () => {
       <div className="flex space-x-1 mb-2">
         <div>
           <Link
-            className="flex items-center text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
+            className="flex items-center text-black/[.45] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
             onClick={() => navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
@@ -85,6 +85,7 @@ const UserEmotionDetails = () => {
                 recogDetail={recognitionsDetail}
                 recogOverview={recognitionsOverview}
                 recogSummary={recognitionsSummary}
+                withImage={true}
               />
             ),
           },

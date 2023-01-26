@@ -7,6 +7,8 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById, getRecognition } from '../../api/floating';
+import { getMeetingParticipants } from '../../api/meeting';
+import CardTitle from '../../components/common/typography/CardTitle';
 import DisplayData from '../../components/inMeetingDisplay/DisplayData';
 import DominantEmotion from '../../components/inMeetingDisplay/DominantEmotion';
 import ParticipantCount from '../../components/inMeetingDisplay/ParticipantCount';
@@ -14,6 +16,7 @@ import InMeetingLayout from '../../components/layout/InMeetingLayout';
 
 const InMeetingDisplay = () => {
   const [recognitionStream, setRecognitionStream] = useState({});
+  const [meetingParticipants, setMeetingParticipants] = useState();
   const [maxRecognition, setMaxRecognition] = useState();
   const [countParticipants, setCountParticipants] = useState();
   const [page, setPage] = useState(0);
@@ -23,18 +26,20 @@ const InMeetingDisplay = () => {
   const accessToken = searchParams.get('accessToken');
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
-  const socket = io(baseURL);
+  const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const fetchRecognition = async () => {
     try {
       const data = await getMeetingById(id, accessToken);
-      let count = data.participants.length;
-      setCountParticipants(count);
-
       fetchRecognitionOverview(data.code, 1);
+      fetchMeetingParticipants(id);
 
       socket.on('connect', () => {
         socket.emit('join', data.code);
+      });
+
+      socket.on('USER_JOINED', () => {
+        fetchMeetingParticipants(id);
       });
 
       socket.on('RECOGNITION_DATA_ADDED', () => {
@@ -58,8 +63,24 @@ const InMeetingDisplay = () => {
     }
   };
 
+  const fetchMeetingParticipants = async (id) => {
+    try {
+      const data = await getMeetingParticipants(id);
+      console.log(data);
+      setMeetingParticipants(data);
+      let count = data.length;
+      setCountParticipants(count);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchRecognition();
+
+    return function cleanup() {
+      socket.disconnect();
+    };
   }, []);
 
   return (
@@ -145,6 +166,22 @@ const InMeetingDisplay = () => {
           <DominantEmotion emotion={maxRecognition} />
           <ParticipantCount countParticipants={countParticipants} />
         </div>
+        {/* <div>
+          <CardTitle>Participants</CardTitle>
+          {meetingParticipants ? (
+            <div>
+              {meetingParticipants.map((data) => {
+                return (
+                  <div>
+                    <p className="m-0 text-sm">{data.fullname}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <h1>Empty</h1>
+          )}
+        </div> */}
       </div>
     </InMeetingLayout>
   );
