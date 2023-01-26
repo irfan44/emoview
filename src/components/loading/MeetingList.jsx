@@ -1,19 +1,18 @@
 import { Card } from 'antd';
-import { Col, Row } from 'antd';
 
 const LoadingMeetingList = () => {
   return (
-    <Row className="mt-6" gutter={[16, 16]}>
-      <Col span={8}>
+    <div className="grid grid-cols-3 gap-4 mt-6">
+      <div>
         <Card loading />
-      </Col>
-      <Col span={8}>
+      </div>
+      <div>
         <Card loading />
-      </Col>
-      <Col span={8}>
+      </div>
+      <div>
         <Card loading />
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 

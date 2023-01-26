@@ -1,4 +1,3 @@
-import { Col, Row } from 'antd';
 import EmptyHolder from '../placeholders/EmptyHolder';
 import ParticipantCard from './ParticipantCard';
 
@@ -6,15 +5,15 @@ const ParticipantList = ({ id, meetingParticipants }) => {
   return (
     <>
       {meetingParticipants ? (
-        <Row gutter={[8, 8]}>
+        <div className="grid grid-cols-4 gap-4">
           {meetingParticipants.map((data) => {
             return (
-              <Col span={6} key={data.userId}>
+              <div key={data.userId}>
                 <ParticipantCard id={id} data={data} />
-              </Col>
+              </div>
             );
           })}
-        </Row>
+        </div>
       ) : (
         <EmptyHolder title="No participants joined" />
       )}

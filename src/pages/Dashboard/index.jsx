@@ -1,4 +1,4 @@
-import { Card, Col, Row } from 'antd';
+import { Card } from 'antd';
 import { useEffect, useState } from 'react';
 import { countMeeting, getMeeting } from '../../api/meeting';
 import { Link } from 'react-router-dom';
@@ -54,23 +54,15 @@ const Dashboard = () => {
     <PageLayout>
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
-      <Row style={{ marginTop: '24px', marginBottom: '24px' }}>
-        <Col span={4}>
+      <div className="grid grid-cols-6 gap-4 my-6">
+        <div span={4}>
           <Card loading={isLoading}>
             <h5 className="font-bold text-4xl">{count}</h5>
             <Subtitle>Total Meeting</Subtitle>
           </Card>
-        </Col>
-      </Row>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginTop: '8px',
-          marginBottom: '16px',
-        }}
-      >
+        </div>
+      </div>
+      <div className="flex items-center justify-between mt-2 mb-4">
         <SectionTitle level={4} style={{ marginBottom: 0 }}>
           Recent Meetings
         </SectionTitle>
@@ -79,7 +71,7 @@ const Dashboard = () => {
             <div className="flex items-center space-x-2 text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]">
               <span>View All</span>
               <span>
-                <FaChevronRight style={{ marginTop: '6px' }} />
+                <FaChevronRight className="mt-1" />
               </span>
             </div>
           </Link>
