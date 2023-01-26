@@ -1,7 +1,5 @@
-import { Typography } from 'antd';
 import loginImage from '../../assets/login.webp';
-
-const { Title } = Typography;
+import SectionTitle from '../common/typography/SectionTitle';
 
 const NotLoginHolder = () => {
   return (
@@ -14,11 +12,9 @@ const NotLoginHolder = () => {
         textAlign: 'center',
       }}
     >
-      <div>
+      <div className="space-y-4">
         <img src={loginImage} width="300" />
-        <Title level={5} style={{ marginTop: '16px' }}>
-          You need to login first!
-        </Title>
+        <SectionTitle>You need to login first!</SectionTitle>
       </div>
     </div>
   );

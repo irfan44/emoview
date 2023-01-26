@@ -1,10 +1,15 @@
-import { Card, Col, Empty, Row, Space } from 'antd';
+import { Card, Empty } from 'antd';
 import { useEffect, useState } from 'react';
 import DoughnutChart from '../charts/Doughnut';
 import LineChart from '../charts/Line';
 import RadarChart from '../charts/Radar';
 
-const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
+const Recognition = ({
+  recogDetail,
+  recogOverview,
+  recogSummary,
+  withImage,
+}) => {
   const [detailData, setDetailData] = useState();
   const [overviewData, setOverviewData] = useState();
   const [summaryData, setSummaryData] = useState();
@@ -16,20 +21,20 @@ const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
   }, [recogDetail, recogSummary, recogOverview]);
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <Row>
-        <Col span={24}>
+    <div className="w-full space-y-2">
+      <div>
+        <div>
           {detailData ? (
-            <LineChart data={detailData} />
+            <LineChart data={detailData} withImage={withImage} />
           ) : (
             <Card>
               <Empty />
             </Card>
           )}
-        </Col>
-      </Row>
-      <Row gutter={8}>
-        <Col span={12}>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div>
           {overviewData ? (
             <RadarChart data={overviewData} />
           ) : (
@@ -37,8 +42,8 @@ const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
               <Empty />
             </Card>
           )}
-        </Col>
-        <Col span={12}>
+        </div>
+        <div>
           {summaryData ? (
             <DoughnutChart data={summaryData} />
           ) : (
@@ -46,9 +51,9 @@ const Recognition = ({ recogDetail, recogOverview, recogSummary }) => {
               <Empty />
             </Card>
           )}
-        </Col>
-      </Row>
-    </Space>
+        </div>
+      </div>
+    </div>
   );
 };
 

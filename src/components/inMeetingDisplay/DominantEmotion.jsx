@@ -1,4 +1,3 @@
-import { Space, Typography } from 'antd';
 import {
   FaRegAngry,
   FaRegDizzy,
@@ -9,8 +8,7 @@ import {
   FaRegSurprise,
   FaRegTired,
 } from 'react-icons/fa';
-
-const { Text, Title } = Typography;
+import CardTitle from '../common/typography/CardTitle';
 
 const DominantEmotion = ({ emotion }) => {
   const emoji = () => {
@@ -20,10 +18,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegMeh size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Neutral
-              </Title>
-              <Text type="secondary">Emotion</Text>
+              <CardTitle>Neutral</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Emotion</p>
             </div>
           </>
         );
@@ -32,10 +28,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegLaughSquint size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Happy
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Happy</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -44,10 +38,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegSadCry size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Sad
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Sad</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -56,10 +48,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegAngry size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Angry
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Angry</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -68,10 +58,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegMehBlank size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Fearful
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Fearful</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -80,10 +68,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegTired size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Disgusted
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Disgusted</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -92,10 +78,8 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegSurprise size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                Surprised
-              </Title>
-              <Text type="secondary">Current</Text>
+              <CardTitle>Surprised</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Current</p>
             </div>
           </>
         );
@@ -105,20 +89,14 @@ const DominantEmotion = ({ emotion }) => {
           <>
             <FaRegDizzy size={28} style={{ marginTop: '8px' }} />
             <div>
-              <Title level={5} style={{ marginBottom: 0 }}>
-                -
-              </Title>
-              <Text type="secondary">Overall</Text>
+              <CardTitle>-</CardTitle>
+              <p className="m-0 text-sm text-black/[.45]">Overall</p>
             </div>
           </>
         );
     }
   };
-  return (
-    <Space size="small" align="center">
-      {emoji()}
-    </Space>
-  );
+  return <div className="flex items-center space-x-2">{emoji()}</div>;
 };
 
 export default DominantEmotion;

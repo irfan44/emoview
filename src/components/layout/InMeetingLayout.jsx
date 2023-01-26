@@ -1,9 +1,8 @@
-import { Button, Typography, theme } from 'antd';
+import { Button, theme } from 'antd';
 import { VscChromeClose } from 'react-icons/vsc';
 import Style from '../../styles/floatingWin.module.css';
-// import { ipcRenderer } from "electron";
+import CardTitle from '../common/typography/CardTitle';
 
-const { Title } = Typography;
 const { useToken } = theme;
 
 const InMeetingLayout = ({ children }) => {
@@ -14,24 +13,9 @@ const InMeetingLayout = ({ children }) => {
       className={Style.floatingWindow}
       style={{ backgroundColor: token.colorBgLayout, borderRadius: '8px' }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingLeft: '12px',
-          borderBottom: '0.5px solid #d9d9d9',
-        }}
-      >
-        <Title level={5} style={{ margin: 0 }}>
-          In Meeting Display
-        </Title>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+      <div className="flex items-center justify-between pl-3 border-0 border-b-[0.5px] border-[#d9d9d9] border-solid">
+        <CardTitle>In Meeting Display</CardTitle>
+        <div className="flex items-center">
           <div id="titlebar-close">
             <Button
               type="text"
@@ -43,9 +27,7 @@ const InMeetingLayout = ({ children }) => {
           </div>
         </div>
       </div>
-      <div style={{ padding: '12px', minHeight: '100%', width: '100%' }}>
-        {children}
-      </div>
+      <div className="p-3 min-h-full w-full">{children}</div>
     </div>
   );
 };

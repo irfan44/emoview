@@ -1,6 +1,5 @@
-import { Space, Switch, Typography } from 'antd';
-
-const { Text } = Typography;
+import { Switch } from 'antd';
+import Subtitle from '../common/typography/Subtitle';
 
 const RecognitionSwitch = ({
   isStart,
@@ -11,8 +10,8 @@ const RecognitionSwitch = ({
   return (
     <>
       {!isEnded && isStart && (
-        <Space>
-          <Text>Recognition : </Text>
+        <div className="flex space-x-2">
+          <Subtitle>Recognition : </Subtitle>
           {recognitionStatus && (
             <Switch
               defaultChecked
@@ -28,7 +27,7 @@ const RecognitionSwitch = ({
               onChange={handleSwitch}
             />
           )}
-        </Space>
+        </div>
       )}
     </>
   );

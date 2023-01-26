@@ -1,4 +1,3 @@
-import { Col, Row } from 'antd';
 import EmptyHolder from '../placeholders/EmptyHolder';
 import MeetingCard from './MeetingCard';
 
@@ -6,15 +5,15 @@ const MeetingList = ({ meetings }) => {
   return (
     <>
       {meetings ? (
-        <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
+        <div className="grid grid-cols-3 gap-4 mt-6">
           {meetings.map((data) => {
             return (
-              <Col key={data._id} span={8}>
+              <div key={data._id}>
                 <MeetingCard data={data} />
-              </Col>
+              </div>
             );
           })}
-        </Row>
+        </div>
       ) : (
         <EmptyHolder title="Your meetings list is empty!" />
       )}

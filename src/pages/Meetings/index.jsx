@@ -1,12 +1,11 @@
-import { Button, Space, Typography } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { getMeeting } from '../../api/meeting';
+import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingList';
 import AddMeeting from '../../components/meeting/AddMeeting';
 import MeetingList from '../../components/meeting/MeetingList';
-
-const { Title } = Typography;
 
 const Meetings = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,14 +33,12 @@ const Meetings = () => {
           marginBottom: '16px',
         }}
       >
-        <Title level={3} style={{ marginBottom: 0 }}>
-          Meetings
-        </Title>
+        <Title>Meetings</Title>
         <div>
-          <Space>
+          <div className="flex items-center space-x-2">
             <AddMeeting fetchData={fetchMeetings} />
             <Button onClick={() => fetchClasses()}>Refresh</Button>
-          </Space>
+          </div>
         </div>
       </div>
       {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}

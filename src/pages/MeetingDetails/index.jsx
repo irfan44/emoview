@@ -1,5 +1,4 @@
-import { Spin } from 'antd';
-import { Breadcrumb, Modal, Tabs } from 'antd';
+import { Modal, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -54,7 +53,7 @@ const MeetingDetails = () => {
   const navigate = useNavigate();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
-  const socket = io(baseURL);
+  const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const handleOnMount = async () => {
     try {
@@ -188,12 +187,20 @@ const MeetingDetails = () => {
     <>
       {meetingData && (
         <PageLayout>
-          <Breadcrumb>
-            <Breadcrumb.Item>
-              <Link to="/meetings">Meetings</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{meetingData.name}</Breadcrumb.Item>
-          </Breadcrumb>
+          <div className="flex space-x-1">
+            <div>
+              <Link
+                className="text-black/[.45] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
+                to="/meetings"
+              >
+                Meetings
+              </Link>
+            </div>
+            <div>
+              <span>/</span>
+            </div>
+            <div className="px-1">{meetingData.name}</div>
+          </div>
           <Header
             name={meetingData.name}
             subject={meetingData.subject}
@@ -212,6 +219,7 @@ const MeetingDetails = () => {
           />
           {meetingData.isStart ? (
             <Tabs
+              className="mt-2"
               defaultActiveKey="1"
               items={[
                 {
@@ -222,6 +230,7 @@ const MeetingDetails = () => {
                       recogDetail={recognitionsDetail}
                       recogOverview={recognitionsOverview}
                       recogSummary={recognitionsSummary}
+                      withImage={false}
                     />
                   ),
                 },

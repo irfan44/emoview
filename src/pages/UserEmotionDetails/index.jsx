@@ -1,14 +1,13 @@
-import { Breadcrumb, Tabs, Typography } from 'antd';
+import { Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaAngleLeft } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById } from '../../api/meeting';
 import { getRecognitionById } from '../../api/recognition';
+import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import Recognition from '../../components/meetingDetails/Recognition';
-
-const { Title } = Typography;
 
 const UserEmotionDetails = () => {
   const [recognitionsDetail, setRecognitionsDetail] = useState();
@@ -20,7 +19,7 @@ const UserEmotionDetails = () => {
   const navigate = useNavigate();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
-  const socket = io(baseURL);
+  const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const fetchRecognitionById = async () => {
     try {
@@ -63,17 +62,18 @@ const UserEmotionDetails = () => {
 
   return (
     <PageLayout>
-      <Breadcrumb style={{ marginBottom: '8px' }}>
-        <Breadcrumb.Item>
+      <div className="flex space-x-1 mb-2">
+        <div>
           <Link
+            className="flex items-center text-black/[.45] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
             onClick={() => navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
             <FaAngleLeft /> Back to Previous
           </Link>
-        </Breadcrumb.Item>
-      </Breadcrumb>
-      <Title level={3}>User Details</Title>
+        </div>
+      </div>
+      <Title>User Details</Title>
       <Tabs
         defaultActiveKey="1"
         items={[
@@ -85,6 +85,7 @@ const UserEmotionDetails = () => {
                 recogDetail={recognitionsDetail}
                 recogOverview={recognitionsOverview}
                 recogSummary={recognitionsSummary}
+                withImage={true}
               />
             ),
           },

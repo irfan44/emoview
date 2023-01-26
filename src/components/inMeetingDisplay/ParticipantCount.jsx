@@ -1,14 +1,11 @@
-import { Space, Typography } from 'antd';
 import { FaUser } from 'react-icons/fa';
-
-const { Text } = Typography;
 
 const ParticipantCount = ({ countParticipants }) => {
   return (
-    <Space>
+    <div className="flex space-x-2">
       <FaUser />
-      <Text>{countParticipants}</Text>
-    </Space>
+      <span>{countParticipants}</span>
+    </div>
   );
 };
 

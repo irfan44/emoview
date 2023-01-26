@@ -1,4 +1,4 @@
-import { Card, Space, Switch, Typography } from 'antd';
+import { Card, Switch } from 'antd';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -10,19 +10,21 @@ import {
 } from 'chart.js';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import Subtitle from '../common/typography/Subtitle';
 
 ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  zoomPlugin,
   Title,
   Tooltip,
   Legend
 );
 
-const { Text } = Typography;
-
-const Linechart = ({ data }) => {
+const Linechart = ({ data, withImage }) => {
+  const [currentIndex, setCurrentIndex] = useState();
   const [isSimple, setsSimple] = useState(false);
 
   const simpleData = (data) => {
@@ -103,6 +105,7 @@ const Linechart = ({ data }) => {
         },
         callbacks: {
           title: (context) => {
+            setCurrentIndex(context[0].dataIndex);
             return new Date(context[0].label).toLocaleString('en-GB');
           },
         },
@@ -118,10 +121,10 @@ const Linechart = ({ data }) => {
         },
         zoom: {
           wheel: {
-            enabled: true,
+            enabled: !isSimple,
           },
           pinch: {
-            enabled: true,
+            enabled: !isSimple,
           },
           mode: 'x',
         },
@@ -163,6 +166,10 @@ const Linechart = ({ data }) => {
     },
   };
 
+  const currentImage = () => {
+    return data.image[currentIndex] || '';
+  };
+
   const handleSimpleMode = (checked) => {
     setsSimple(checked);
   };
@@ -171,13 +178,16 @@ const Linechart = ({ data }) => {
     <Card
       title="Details"
       extra={
-        <Space align="center">
-          <Text type="secondary">Simple : </Text>
+        <div className="flex items-center space-x-2">
+          <Subtitle>Simple : </Subtitle>
           <Switch size="small" onChange={handleSimpleMode} />
-        </Space>
+        </div>
       }
     >
       <div style={{ width: '100%', textAlign: 'center' }}>
+        {withImage && !isSimple && (
+          <img className="mb-4 w-36" src={currentImage()} />
+        )}
         <Line data={chartData} options={options} />
       </div>
     </Card>
