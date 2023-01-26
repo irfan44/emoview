@@ -8,6 +8,7 @@ specifiers:
   autoprefixer: ^10.4.13
   axios: ^1.2.3
   chart.js: ^4.2.0
+  chartjs-plugin-zoom: ^2.0.0
   postcss: ^8.4.21
   prettier: ^2.8.3
   react: ^18.2.0
@@ -23,6 +24,7 @@ dependencies:
   antd: 5.1.5_biqbaboplfbrettd7655fr4n2y
   axios: 1.2.3
   chart.js: 4.2.0
+  chartjs-plugin-zoom: 2.0.0_chart.js@4.2.0
   react: 18.2.0
   react-chartjs-2: 5.2.0_uxqdnqzacoapcp4mwytn5yclyu
   react-dom: 18.2.0_react@18.2.0
@@ -719,6 +721,15 @@ packages:
       '@kurkle/color': 0.3.2
     dev: false
 
+  /chartjs-plugin-zoom/2.0.0_chart.js@4.2.0:
+    resolution: {integrity: sha512-bqpi7DGy9a5hX7ThKl/xQaLzXvneSwhS0w/lNimZ8AJaoRVMKz5JfUoqwciJYV5ixKXJbgyvwC9HcJnyVsYmjg==}
+    peerDependencies:
+      chart.js: '>=3.2.0'
+    dependencies:
+      chart.js: 4.2.0
+      hammerjs: 2.0.8
+    dev: false
+
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
@@ -945,6 +956,11 @@ packages:
     dependencies:
       is-glob: 4.0.3
     dev: true
+
+  /hammerjs/2.0.8:
+    resolution: {integrity: sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==}
+    engines: {node: '>=0.8.0'}
+    dev: false
 
   /has/1.0.3:
     resolution: {integrity: sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==}
