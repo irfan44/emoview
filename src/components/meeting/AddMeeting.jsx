@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button, Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
 import { createMeeting } from '../../api/meeting';
+import { createEvent } from '../../api/calendar';
+import { DatePicker } from 'antd';
 
 const { TextArea } = Input;
 
@@ -27,15 +29,15 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           });
       }}
     >
-      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Segmented
+          className="my-2"
           options={['Description', 'In Meeting View']}
           value={tabValue}
           onChange={setTabValue}
-          style={{ marginTop: '16px' }}
         />
-      </div> */}
-      <Form form={form} layout="vertical" style={{ marginTop: '16px' }}>
+      </div>
+      <Form form={form} layout="vertical">
         <Form.Item
           label="Name"
           name="name"
@@ -81,6 +83,26 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         >
           <TextArea rows={4} placeholder="Insert meeting description here" />
         </Form.Item>
+        <div className="grid grid-cols-2 gap-4">
+          <Form.Item
+            label="Start"
+            name="start"
+            style={{
+              display: tabValue === 'Description' ? 'block' : 'none',
+            }}
+          >
+            <Input type="datetime-local" />
+          </Form.Item>
+          <Form.Item
+            label="End"
+            name="end"
+            style={{
+              display: tabValue === 'Description' ? 'block' : 'none',
+            }}
+          >
+            <Input type="datetime-local" />
+          </Form.Item>
+        </div>
         <Form.Item
           label="Google Meet Link"
           name="link"
@@ -96,7 +118,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         >
           <Input placeholder="Example: https://meet.google.com/abc-defg-hij" />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           label="Size"
           name="size"
           style={{
@@ -139,7 +161,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
               </div>
             </Radio>
           </Radio.Group>
-        </Form.Item> */}
+        </Form.Item>
       </Form>
     </Modal>
   );
@@ -151,21 +173,24 @@ const AddMeetingModal = ({ fetchData }) => {
   const handleSubmit = async (values) => {
     setOpen(false);
 
-    const { name, subject, description, link, size, emotionDisplay } = values;
+    const { name, subject, description, date, link, size, emotionDisplay } =
+      values;
 
     try {
-      const getCode = link.match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/g);
-      const code = getCode[0];
-      await createMeeting(
-        name,
-        subject,
-        description,
-        link,
-        code,
-        size,
-        emotionDisplay
-      );
-      fetchData();
+      const data = await createEvent(name, subject, description, date);
+      console.log(data.hangoutLink);
+      // const getCode = link.match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/g);
+      // const code = getCode[0];
+      // await createMeeting(
+      //   name,
+      //   subject,
+      //   description,
+      //   link,
+      //   code,
+      //   size,
+      //   emotionDisplay
+      // );
+      // fetchData();
     } catch (error) {
       console.log(error);
     }

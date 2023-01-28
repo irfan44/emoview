@@ -9,6 +9,8 @@ import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingList';
 import MeetingList from '../../components/meeting/MeetingList';
+import { useGoogleLogin } from '@react-oauth/google';
+import { createEvent } from '../../api/calendar';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,10 +52,28 @@ const Dashboard = () => {
     fetchMeetings();
   }, []);
 
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse);
+      sessionStorage.setItem(
+        'calendar:accessToken',
+        tokenResponse.access_token
+      );
+      sessionStorage.setItem('calendar:tokenExpiry', tokenResponse.expires_in);
+    },
+  });
+
+  const handleAddEvent = async () => {
+    const data = await createEvent();
+    console.log(data);
+  };
+
   return (
     <PageLayout>
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
+      <button onClick={() => login()}>Login Google</button>
+      <button onClick={() => handleAddEvent()}>Add event</button>
       <div className="grid grid-cols-6 gap-4 my-6">
         <div span={4}>
           <Card loading={isLoading}>
