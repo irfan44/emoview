@@ -193,7 +193,7 @@ const Linechart = ({ data, withImage }) => {
         <Line data={chartData} options={options} />
       </div>
       <div>
-        <span className="text-black/[.45] text-xs">
+        <span className="text-black/[.60] text-xs">
           * Emotion captured at 5 second interval
         </span>
       </div>

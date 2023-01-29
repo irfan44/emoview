@@ -25,7 +25,7 @@ const Meetings = () => {
 
   return (
     <PageLayout>
-      <p className="text-black/[.45] mb-2">Meetings</p>
+      <p className="text-black/[.60] mb-2">Meetings</p>
       <div
         style={{
           display: 'flex',

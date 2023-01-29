@@ -52,7 +52,7 @@ const Dashboard = () => {
 
   return (
     <PageLayout>
-      <p className="text-black/[.45] mb-2">Dashboard</p>
+      <p className="text-black/[.60] mb-2">Dashboard</p>
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 gap-4 my-6">
@@ -72,7 +72,7 @@ const Dashboard = () => {
         </div>
         <div>
           <Link to={'/meetings'}>
-            <div className="flex items-center space-x-2 text-black/[.45] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
+            <div className="flex items-center space-x-2 text-black/[.60] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
               <span className="text-sm">View All</span>
               <span>
                 <FaChevronRight className="mt-1" />

@@ -190,16 +190,16 @@ const MeetingDetails = () => {
           <div className="flex space-x-0.5">
             <div>
               <Link
-                className="text-black/[.45] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
+                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
                 to="/meetings"
               >
                 Meetings
               </Link>
             </div>
             <div>
-              <span className="text-black/[.45] ">/</span>
+              <span className="text-black/[.60] ">/</span>
             </div>
-            <div className="text-black/[.45] px-1">{meetingData.name}</div>
+            <div className="text-black/[.60] px-1">{meetingData.name}</div>
           </div>
           <Header
             name={meetingData.name}
