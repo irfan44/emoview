@@ -45,7 +45,7 @@ const BaseLayout = ({ children }) => {
           justifyContent: 'space-between',
           paddingInline: '12px',
           height: '64px',
-          borderBottom: '0.5px solid #d9d9d9',
+          borderBottom: '0.5px solid #e6e6e6',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>

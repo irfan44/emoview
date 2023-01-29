@@ -175,20 +175,27 @@ const Linechart = ({ data, withImage }) => {
   };
 
   return (
-    <Card
-      title="Details"
-      extra={
+    <Card bodyStyle={{ padding: '16px 24px' }}>
+      <div className="flex justify-between mb-2">
+        <div>
+          <h5 className="font-semibold text-lg mb-0">Details</h5>
+          <Subtitle>Detailed emotion during the meeting</Subtitle>
+        </div>
         <div className="flex items-center space-x-2">
-          <Subtitle>Simple : </Subtitle>
+          <Subtitle>Simple</Subtitle>
           <Switch size="small" onChange={handleSimpleMode} />
         </div>
-      }
-    >
-      <div style={{ width: '100%', textAlign: 'center' }}>
+      </div>
+      <div className="text-center mb-2">
         {withImage && !isSimple && (
           <img className="mb-4 w-36" src={currentImage()} />
         )}
         <Line data={chartData} options={options} />
+      </div>
+      <div>
+        <span className="text-black/[.45] text-xs">
+          * Emotion captured at 5 second interval
+        </span>
       </div>
     </Card>
   );

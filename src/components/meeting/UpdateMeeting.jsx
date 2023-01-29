@@ -10,9 +10,8 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
   const [form] = Form.useForm();
   const beforeUpdate = {
     ...initialValues,
-    sound: initialValues.configuration.sound,
-    size: initialValues.configuration.size,
-    emotionDisplay: initialValues.configuration.emotionDisplay,
+    // size: initialValues.configuration.size,
+    // emotionDisplay: initialValues.configuration.emotionDisplay,
   };
 
   useEffect(() => {
@@ -38,14 +37,14 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
           });
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Segmented
           options={['Description', 'In Meeting View']}
           value={tabValue}
           onChange={setTabValue}
           style={{ marginTop: '16px', marginBottom: '16px' }}
         />
-      </div>
+      </div> */}
       <Form form={form} layout="vertical" initialValues={initialValues}>
         <Form.Item
           label="Name"

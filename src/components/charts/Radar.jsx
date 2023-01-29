@@ -12,6 +12,7 @@ import {
   RadialLinearScale,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import Subtitle from '../common/typography/Subtitle';
 
 ChartJS.register(
   CategoryScale,
@@ -75,13 +76,19 @@ const RadarChart = ({ data }) => {
   };
 
   return (
-    <Card title="Overview" style={{ width: '100%' }}>
+    <Card bodyStyle={{ padding: '16px 24px' }}>
       {Object.keys(data).length === 0 ? (
         <Empty />
       ) : (
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <Radar data={chartData} options={options} />
-        </div>
+        <>
+          <div className="mb-2">
+            <h5 className="font-semibold text-lg mb-0">Overview</h5>
+            <Subtitle>Emotion spread during the meeting</Subtitle>
+          </div>
+          <div className="text-center">
+            <Radar data={chartData} options={options} />
+          </div>
+        </>
       )}
     </Card>
   );
