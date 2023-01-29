@@ -1,6 +1,6 @@
 import { Button, Dropdown, Typography } from 'antd';
 import { FaEllipsisV } from 'react-icons/fa';
-import { GrTextAlignFull } from 'react-icons/gr';
+import { GrRefresh, GrTextAlignFull, GrTrash } from 'react-icons/gr';
 import Subtitle from '../common/typography/Subtitle';
 import Title from '../common/typography/Title';
 import UpdateMeeting from '../meeting/UpdateMeeting';
@@ -8,7 +8,7 @@ import RecognitionSwitch from './RecognitionSwitch';
 import FloatingDisplayIcon from '../icons/FloatingDisplay';
 import MeetIcon from '../icons/Meet';
 
-const { Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const Header = ({
   name,
@@ -30,6 +30,18 @@ const Header = ({
     {
       key: '1',
       label: (
+        <a
+          className="flex items-center space-x-2"
+          onClick={() => window.location.reload()}
+        >
+          <GrRefresh />
+          <span>Refresh</span>
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
         <UpdateMeeting
           fetchData={fetchMeetingById}
           initialValues={meetingData}
@@ -37,9 +49,16 @@ const Header = ({
       ),
     },
     {
-      key: '2',
-      danger: true,
-      label: <a onClick={() => handleDeleteMeeting()}>Delete Meeting</a>,
+      key: '3',
+      label: (
+        <a
+          className="flex items-center space-x-2"
+          onClick={() => handleDeleteMeeting()}
+        >
+          <GrTrash />
+          <span className="text-red-700">Delete Meeting</span>
+        </a>
+      ),
     },
   ];
 

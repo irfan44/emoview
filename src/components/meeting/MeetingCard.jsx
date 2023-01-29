@@ -1,10 +1,8 @@
-import { Card, Typography } from 'antd';
+import { Card } from 'antd';
 import { FaRegCalendar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import CardTitle from '../common/typography/CardTitle';
 import Subtitle from '../common/typography/Subtitle';
-
-const { Paragraph } = Typography;
 
 const MeetingCard = ({ data }) => {
   return (
