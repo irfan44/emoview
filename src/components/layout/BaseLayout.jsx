@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Dropdown, Layout, Menu, theme } from 'antd';
-import { HiChevronDown, HiMenu, HiX } from 'react-icons/hi';
+import { HiChevronDown, HiMenu, HiOutlineLogout, HiX } from 'react-icons/hi';
 import { useLocation } from 'react-router-dom';
 import menuItems from '../../data/menuItems';
 import emoviewLogo from '../../assets/icon.png';
@@ -22,7 +22,15 @@ const BaseLayout = ({ children }) => {
   const items = [
     {
       key: '1',
-      label: <a onClick={() => window.electronAPI.logOut()}>Logout</a>,
+      label: (
+        <a
+          className="flex items-center space-x-2"
+          onClick={() => window.electronAPI.logOut()}
+        >
+          <HiOutlineLogout />
+          <span>Logout</span>
+        </a>
+      ),
     },
   ];
 
@@ -45,7 +53,7 @@ const BaseLayout = ({ children }) => {
           justifyContent: 'space-between',
           paddingInline: '12px',
           height: '64px',
-          borderBottom: '0.5px solid #e6e6e6',
+          borderBottom: '1px solid #e6e6e6',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -102,7 +110,7 @@ const BaseLayout = ({ children }) => {
           style={{
             paddingBottom: '4px',
             backgroundColor: token.colorBgLayout,
-            borderRight: '0.5px solid #d9d9d9',
+            borderRight: '1px solid #d9d9d9',
           }}
         >
           <Menu
