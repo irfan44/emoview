@@ -87,7 +87,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Please input google meet link!',
+              message: 'Please insert google meet link!',
             },
           ]}
           style={{

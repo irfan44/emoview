@@ -19,7 +19,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegMeh size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Neutral</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Emotion</p>
+              <p className="m-0 text-sm text-black/[.60]">Emotion</p>
             </div>
           </>
         );
@@ -29,7 +29,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegLaughSquint size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Happy</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -39,7 +39,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegSadCry size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Sad</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -49,7 +49,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegAngry size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Angry</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -59,7 +59,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegMehBlank size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Fearful</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -69,7 +69,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegTired size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Disgusted</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -79,7 +79,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegSurprise size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Surprised</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Current</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
@@ -90,7 +90,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegDizzy size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>-</CardTitle>
-              <p className="m-0 text-sm text-black/[.45]">Overall</p>
+              <p className="m-0 text-sm text-black/[.60]">Overall</p>
             </div>
           </>
         );

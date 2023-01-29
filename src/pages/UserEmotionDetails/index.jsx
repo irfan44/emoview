@@ -65,7 +65,7 @@ const UserEmotionDetails = () => {
       <div className="flex space-x-1 mb-2">
         <div>
           <Link
-            className="flex items-center text-black/[.45] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
+            className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
             onClick={() => navigate(-1)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
