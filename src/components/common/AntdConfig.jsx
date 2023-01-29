@@ -7,14 +7,19 @@ const AntdConfig = ({ children }) => {
         token: {
           colorPrimary: '#0066ff',
           colorBgLayout: '#f1f2f6',
+          fontFamily: 'Public Sans',
         },
         components: {
           Menu: {
             colorItemBgSelected: '#0066ff',
             colorItemTextSelected: '#ffffff',
+            borderRadius: '8px',
           },
-          Progress: {
-            colorFill: '$000000',
+          Button: {
+            borderRadius: '8px',
+          },
+          Card: {
+            borderRadius: '8px',
           },
         },
       }}

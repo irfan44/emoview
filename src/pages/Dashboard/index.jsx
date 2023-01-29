@@ -52,6 +52,7 @@ const Dashboard = () => {
 
   return (
     <PageLayout>
+      <p className="text-black/[.45] mb-2">Dashboard</p>
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 gap-4 my-6">
@@ -62,14 +63,17 @@ const Dashboard = () => {
           </Card>
         </div>
       </div>
-      <div className="flex items-center justify-between mt-2 mb-4">
-        <SectionTitle level={4} style={{ marginBottom: 0 }}>
-          Recent Meetings
-        </SectionTitle>
+      <div className="flex items-center justify-between mt-2 mb-6">
+        <div>
+          <SectionTitle level={4} style={{ marginBottom: 0 }}>
+            Latest Meetings
+          </SectionTitle>
+          <Subtitle>List of your latest meetings</Subtitle>
+        </div>
         <div>
           <Link to={'/meetings'}>
-            <div className="flex items-center space-x-2 text-black/[.45] px-[4px] rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]">
-              <span>View All</span>
+            <div className="flex items-center space-x-2 text-black/[.45] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
+              <span className="text-sm">View All</span>
               <span>
                 <FaChevronRight className="mt-1" />
               </span>

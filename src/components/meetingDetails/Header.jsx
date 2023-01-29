@@ -1,9 +1,12 @@
-import { Button, Dropdown, Space, Typography } from 'antd';
+import { Button, Dropdown, Typography } from 'antd';
 import { FaEllipsisV } from 'react-icons/fa';
+import { GrTextAlignFull } from 'react-icons/gr';
 import Subtitle from '../common/typography/Subtitle';
 import Title from '../common/typography/Title';
 import UpdateMeeting from '../meeting/UpdateMeeting';
 import RecognitionSwitch from './RecognitionSwitch';
+import FloatingDisplayIcon from '../icons/FloatingDisplay';
+import MeetIcon from '../icons/Meet';
 
 const { Paragraph, Text } = Typography;
 
@@ -48,15 +51,15 @@ const Header = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           marginTop: '8px',
-          marginBottom: '16px',
+          marginBottom: '8px',
         }}
       >
-        <div>
+        <div className="mb-2">
           <Title>{name}</Title>
           <Subtitle>{subject}</Subtitle>
         </div>
         <div>
-          <Space>
+          <div className="flex items-center space-x-2">
             <RecognitionSwitch
               isStart={isStart}
               isEnded={isEnded}
@@ -65,7 +68,10 @@ const Header = ({
             />
             {!isEnded && isStart && (
               <Button type="primary" onClick={() => openInMeeting()}>
-                In Meeting Display
+                <div className="flex items-center space-x-1">
+                  <FloatingDisplayIcon />
+                  <span>Floating Display</span>
+                </div>
               </Button>
             )}
             {!isEnded && !isStart && (
@@ -74,7 +80,12 @@ const Header = ({
               </Button>
             )}
             {!isEnded && isStart && (
-              <Button danger onClick={() => handleStopMeeting()}>
+              <Button
+                danger
+                type="primary"
+                style={{ backgroundColor: '#B91C1C' }}
+                onClick={() => handleStopMeeting()}
+              >
                 End Meeting
               </Button>
             )}
@@ -91,18 +102,21 @@ const Header = ({
                 </Subtitle>
               </Button>
             </Dropdown>
-          </Space>
+          </div>
         </div>
       </div>
-      <div>
-        <p>Description : {description}</p>
-        <span className="block">
-          Link :{' '}
+      <div className="space-y-2 mb-2">
+        <div className="flex items-center space-x-2">
+          <GrTextAlignFull className="h-4 w-5" />
+          <span>{description}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <MeetIcon />
           <a href={!isEnded && link} target="_blank">
             <Text copyable>{link}</Text>
           </a>
           {isEnded && <span> Ended</span>}
-        </span>
+        </div>
       </div>
     </>
   );

@@ -10,23 +10,12 @@ const RecognitionSwitch = ({
   return (
     <>
       {!isEnded && isStart && (
-        <div className="flex space-x-2">
-          <Subtitle>Recognition : </Subtitle>
+        <div className="flex items-center space-x-2">
+          <span>Recognition</span>
           {recognitionStatus && (
-            <Switch
-              defaultChecked
-              checkedChildren="Start"
-              unCheckedChildren="Stop"
-              onChange={handleSwitch}
-            />
+            <Switch defaultChecked onChange={handleSwitch} />
           )}
-          {!recognitionStatus && (
-            <Switch
-              checkedChildren="Start"
-              unCheckedChildren="Stop"
-              onChange={handleSwitch}
-            />
-          )}
+          {!recognitionStatus && <Switch onChange={handleSwitch} />}
         </div>
       )}
     </>

@@ -187,7 +187,7 @@ const MeetingDetails = () => {
     <>
       {meetingData && (
         <PageLayout>
-          <div className="flex space-x-1">
+          <div className="flex space-x-0.5">
             <div>
               <Link
                 className="text-black/[.45] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
@@ -197,9 +197,9 @@ const MeetingDetails = () => {
               </Link>
             </div>
             <div>
-              <span>/</span>
+              <span className="text-black/[.45] ">/</span>
             </div>
-            <div className="px-1">{meetingData.name}</div>
+            <div className="text-black/[.45] px-1">{meetingData.name}</div>
           </div>
           <Header
             name={meetingData.name}
@@ -221,6 +221,7 @@ const MeetingDetails = () => {
             <Tabs
               className="mt-2"
               defaultActiveKey="1"
+              tabBarStyle={{ borderBottom: '0px' }}
               items={[
                 {
                   label: `Recognition`,

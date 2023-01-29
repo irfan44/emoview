@@ -6,24 +6,21 @@ import Subtitle from '../common/typography/Subtitle';
 const ParticipantCard = ({ id, data }) => {
   return (
     <Link to={`/meeting/${id}/${data.userId}`}>
-      <Card
-        hoverable
-        style={{ cursor: 'pointer', width: '100%', height: '100%' }}
-        bodyStyle={{ padding: '20px' }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ marginRight: '12px' }}>
-            <img
-              src={data.picture}
-              alt={data.userId}
-              style={{ borderRadius: '50%' }}
-              height="36"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          <div style={{ width: '80%' }}>
+      <Card hoverable bodyStyle={{ padding: '16px 24px' }}>
+        <div className="space-y-2">
+          <img
+            src={data.picture}
+            alt={data.userId}
+            style={{ borderRadius: '50%' }}
+            height="36"
+            referrerPolicy="no-referrer"
+          />
+          <div>
             <CardTitle>{data.fullname}</CardTitle>
             <Subtitle>{data.email}</Subtitle>
+          </div>
+          <div>
+            <span>View Emotion {'>'}</span>
           </div>
         </div>
       </Card>

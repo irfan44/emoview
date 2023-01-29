@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { getMeeting } from '../../api/meeting';
+import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingList';
@@ -24,16 +25,20 @@ const Meetings = () => {
 
   return (
     <PageLayout>
+      <p className="text-black/[.45] mb-2">Meetings</p>
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           marginTop: '8px',
-          marginBottom: '16px',
+          marginBottom: '24px',
         }}
       >
-        <Title>Meetings</Title>
+        <div>
+          <Title>Meetings</Title>
+          <Subtitle>List of all your meetings</Subtitle>
+        </div>
         <div>
           <div className="flex items-center space-x-2">
             <AddMeeting fetchData={fetchMeetings} />
