@@ -1,5 +1,5 @@
 import { Button, Dropdown, Typography } from 'antd';
-import { FaEllipsisV } from 'react-icons/fa';
+import { FaEllipsisV, FaRegCopy } from 'react-icons/fa';
 import { GrRefresh, GrTextAlignFull, GrTrash } from 'react-icons/gr';
 import Subtitle from '../common/typography/Subtitle';
 import Title from '../common/typography/Title';
@@ -132,7 +132,9 @@ const Header = ({
         <div className="flex items-center space-x-2">
           <MeetIcon />
           <a href={!isEnded && link} target="_blank">
-            <Text copyable>{link}</Text>
+            <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
+              {link}
+            </Text>
           </a>
           {isEnded && <span> Ended</span>}
         </div>

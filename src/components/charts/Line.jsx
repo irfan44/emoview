@@ -1,11 +1,12 @@
-import { Card, Switch } from 'antd';
+import { Card, Switch, Tooltip } from 'antd';
+import React from 'react';
 import {
   Chart as ChartJS,
   LinearScale,
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+  Tooltip as ChartTooltip,
   Legend,
 } from 'chart.js';
 import { useState } from 'react';
@@ -19,7 +20,7 @@ ChartJS.register(
   LineElement,
   zoomPlugin,
   Title,
-  Tooltip,
+  ChartTooltip,
   Legend
 );
 
@@ -28,7 +29,7 @@ const Linechart = ({ data, withImage }) => {
   const [isSimple, setsSimple] = useState(false);
 
   const simpleData = (data) => {
-    return data.slice(-10);
+    return data.slice(-15);
   };
 
   const chartData = {
@@ -171,6 +172,7 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const handleSimpleMode = (checked) => {
+    setCurrentIndex();
     setsSimple(checked);
   };
 
@@ -179,17 +181,17 @@ const Linechart = ({ data, withImage }) => {
       <div className="flex justify-between mb-2">
         <div>
           <h5 className="font-semibold text-lg mb-0">Details</h5>
-          <Subtitle>Detailed emotion during the meeting</Subtitle>
+          <Subtitle>Realtime detailed emotion</Subtitle>
         </div>
         <div className="flex items-center space-x-2">
           <Subtitle>Simple</Subtitle>
-          <Switch size="small" onChange={handleSimpleMode} />
+          <Tooltip title="Only show the last 15 data" placement="topRight">
+            <Switch size="small" onChange={handleSimpleMode} />
+          </Tooltip>
         </div>
       </div>
       <div className="text-center mb-2">
-        {withImage && !isSimple && (
-          <img className="mb-4 w-36" src={currentImage()} />
-        )}
+        {withImage && <img className="mb-4 w-36" src={currentImage()} />}
         <Line data={chartData} options={options} />
       </div>
       <div>
