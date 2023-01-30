@@ -89,6 +89,12 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
               required: true,
               message: 'Please insert google meet link!',
             },
+            {
+              pattern: new RegExp(
+                /meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}/
+              ),
+              message: 'Please insert a valid google meet link',
+            },
           ]}
           style={{
             display: tabValue === 'Description' ? 'block' : 'none',
