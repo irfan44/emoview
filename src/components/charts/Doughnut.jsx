@@ -10,6 +10,7 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js';
+import datalabels from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';
 import Subtitle from '../common/typography/Subtitle';
 
@@ -21,8 +22,11 @@ ChartJS.register(
   ArcElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  datalabels
 );
+
+ChartJS.defaults.plugins.datalabels.display = false;
 
 const DoughnutChart = ({ data }) => {
   const chartData = {
@@ -39,13 +43,22 @@ const DoughnutChart = ({ data }) => {
   const options = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
+      datalabels: {
+        display: true,
+        formatter: (value) => (value ? `${value}%` : ''),
+        color: '#fff',
       },
       tooltip: {
         enabled: false,
       },
     },
+  };
+
+  const emoji = () => {
+    if (!data.datas.length) return '';
+    else if (data.datas.includes(NaN)) return '😐';
+    else if (data.datas[0] > data.datas[1]) return '🙂';
+    else return '🙁';
   };
 
   return (
@@ -55,7 +68,17 @@ const DoughnutChart = ({ data }) => {
         <Subtitle>Overall emotion is positive or negative</Subtitle>
       </div>
       <div style={{ width: '100%', textAlign: 'center' }}>
-        <Doughnut data={chartData} options={options} />
+        <Doughnut data={chartData} options={options} height="300" width="300" />
+        <div
+          style={{
+            fontSize: '5rem',
+            position: 'absolute',
+            top: '48%',
+            left: '40%',
+          }}
+        >
+          {emoji()}
+        </div>
       </div>
     </Card>
   );
