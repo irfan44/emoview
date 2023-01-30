@@ -47,6 +47,9 @@ const MeetingDetails = () => {
   const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [meetingParticipants, setMeetingParticipants] = useState([]);
 
+  const [isLoadingStart, setIsLoadingStart] = useState(false);
+  const [isLoadingEnd, setIsLoadingEnd] = useState(false);
+
   const [accessToken, setAccessToken] = useState();
 
   const { id } = useParams();
@@ -102,13 +105,29 @@ const MeetingDetails = () => {
   };
 
   const handleStartMeeting = async () => {
+    setIsLoadingStart(true);
     await setMeetingStatus(id, true, false);
     fetchMeetingById();
   };
 
   const handleStopMeeting = async () => {
-    await setMeetingStatus(id, true, true);
-    fetchMeetingById();
+    confirm({
+      title: 'Do you want to end this meeting?',
+      content: (
+        <span>
+          Warning : You <strong>cannot</strong> change this later!
+        </span>
+      ),
+      okText: 'End',
+      okType: 'danger',
+      okButtonProps: { type: 'primary' },
+      onOk: async () => {
+        await setMeetingStatus(id, true, true);
+        fetchMeetingById();
+      },
+    });
+
+    setIsLoadingEnd(false);
   };
 
   const handleStartRecognition = async () => {
@@ -124,9 +143,14 @@ const MeetingDetails = () => {
   const handleDeleteMeeting = () => {
     confirm({
       title: 'Do you want to delete this meeting?',
-      content: 'Warning : You cannot change this later!',
+      content: (
+        <span>
+          Warning : You <strong>cannot</strong> change this later!
+        </span>
+      ),
       okText: 'Delete',
       okType: 'danger',
+      okButtonProps: { type: 'primary' },
       onOk: async () => {
         await removeMeeting(id);
         navigate('/meetings');
@@ -216,6 +240,8 @@ const MeetingDetails = () => {
             openInMeeting={openInMeeting}
             fetchMeetingById={fetchMeetingById}
             meetingData={meetingData}
+            isLoadingStart={isLoadingStart}
+            isLoadingEnd={isLoadingEnd}
           />
           {meetingData.isStart ? (
             <Tabs

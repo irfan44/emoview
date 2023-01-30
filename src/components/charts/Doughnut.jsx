@@ -12,6 +12,10 @@ import {
 } from 'chart.js';
 import datalabels from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';
+import {
+  DOUGHNUT_CHART_SUBTITLE,
+  DOUGHNUT_CHART_TITLE,
+} from '../../data/constants';
 import Subtitle from '../common/typography/Subtitle';
 
 ChartJS.register(
@@ -64,8 +68,8 @@ const DoughnutChart = ({ data }) => {
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
       <div className="mb-2">
-        <h5 className="font-semibold text-lg mb-0">Summary</h5>
-        <Subtitle>Overall emotion is positive or negative</Subtitle>
+        <h5 className="font-semibold text-lg mb-0">{DOUGHNUT_CHART_TITLE}</h5>
+        <Subtitle>{DOUGHNUT_CHART_SUBTITLE}</Subtitle>
       </div>
       <div style={{ width: '100%', textAlign: 'center' }}>
         <Doughnut data={chartData} options={options} height="300" width="300" />

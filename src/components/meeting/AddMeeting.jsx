@@ -6,6 +6,7 @@ const { TextArea } = Input;
 
 const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
   const [tabValue, setTabValue] = useState('Description');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -15,10 +16,12 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
       title="Add New Meeting"
       okText="Add"
       onCancel={onCancel}
+      confirmLoading={isLoading}
       onOk={() => {
         form
           .validateFields()
           .then((values) => {
+            setIsLoading(true);
             onSubmit(values);
             form.resetFields();
           })
@@ -155,8 +158,6 @@ const AddMeetingModal = ({ fetchData }) => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (values) => {
-    setOpen(false);
-
     const { name, subject, description, link, size, emotionDisplay } = values;
 
     try {
@@ -171,6 +172,7 @@ const AddMeetingModal = ({ fetchData }) => {
         size,
         emotionDisplay
       );
+      setOpen(false);
       fetchData();
     } catch (error) {
       console.log(error);

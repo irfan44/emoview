@@ -1,8 +1,17 @@
 import { Card, Empty } from 'antd';
 import { useEffect, useState } from 'react';
+import {
+  DOUGHNUT_CHART_SUBTITLE,
+  DOUGHNUT_CHART_TITLE,
+  LINE_CHART_SUBTITLE,
+  LINE_CHART_TITLE,
+  RADAR_CHART_SUBTITLE,
+  RADAR_CHART_TITLE,
+} from '../../data/constants';
 import DoughnutChart from '../charts/Doughnut';
 import LineChart from '../charts/Line';
 import RadarChart from '../charts/Radar';
+import Subtitle from '../common/typography/Subtitle';
 
 const Recognition = ({
   recogDetail,
@@ -27,7 +36,13 @@ const Recognition = ({
           {detailData ? (
             <LineChart data={detailData} withImage={withImage} />
           ) : (
-            <Card>
+            <Card bodyStyle={{ padding: '16px 24px' }}>
+              <div className="mb-2">
+                <h5 className="font-semibold text-lg mb-0">
+                  {LINE_CHART_TITLE}
+                </h5>
+                <Subtitle>{LINE_CHART_SUBTITLE}</Subtitle>
+              </div>
               <Empty />
             </Card>
           )}
@@ -38,7 +53,13 @@ const Recognition = ({
           {overviewData ? (
             <RadarChart data={overviewData} />
           ) : (
-            <Card title="Summary">
+            <Card bodyStyle={{ padding: '16px 24px' }}>
+              <div className="mb-2">
+                <h5 className="font-semibold text-lg mb-0">
+                  {RADAR_CHART_TITLE}
+                </h5>
+                <Subtitle>{RADAR_CHART_SUBTITLE}</Subtitle>
+              </div>
               <Empty />
             </Card>
           )}
@@ -47,7 +68,13 @@ const Recognition = ({
           {summaryData ? (
             <DoughnutChart data={summaryData} />
           ) : (
-            <Card title="Summary">
+            <Card bodyStyle={{ padding: '16px 24px' }}>
+              <div className="mb-2">
+                <h5 className="font-semibold text-lg mb-0">
+                  {DOUGHNUT_CHART_TITLE}
+                </h5>
+                <Subtitle>{DOUGHNUT_CHART_SUBTITLE}</Subtitle>
+              </div>
               <Empty />
             </Card>
           )}

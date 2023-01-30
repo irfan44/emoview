@@ -12,6 +12,7 @@ import {
   RadialLinearScale,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import { RADAR_CHART_SUBTITLE, RADAR_CHART_TITLE } from '../../data/constants';
 import Subtitle from '../common/typography/Subtitle';
 
 ChartJS.register(
@@ -77,18 +78,16 @@ const RadarChart = ({ data }) => {
 
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
+      <div className="mb-2">
+        <h5 className="font-semibold text-lg mb-0">{RADAR_CHART_TITLE}</h5>
+        <Subtitle>{RADAR_CHART_SUBTITLE}</Subtitle>
+      </div>
       {Object.keys(data).length === 0 ? (
         <Empty />
       ) : (
-        <>
-          <div className="mb-2">
-            <h5 className="font-semibold text-lg mb-0">Overview</h5>
-            <Subtitle>Emotion spread during the meeting</Subtitle>
-          </div>
-          <div className="text-center">
-            <Radar data={chartData} options={options} />
-          </div>
-        </>
+        <div className="text-center">
+          <Radar data={chartData} options={options} />
+        </div>
       )}
     </Card>
   );
