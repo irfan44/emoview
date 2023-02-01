@@ -14,6 +14,7 @@ import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import Subtitle from '../common/typography/Subtitle';
 import { LINE_CHART_SUBTITLE, LINE_CHART_TITLE } from '../../data/constants';
+import ExportModal from '../meeting/ExportModal';
 
 ChartJS.register(
   LinearScale,
@@ -185,10 +186,13 @@ const Linechart = ({ data, withImage }) => {
           <Subtitle>{LINE_CHART_SUBTITLE}</Subtitle>
         </div>
         <div className="flex items-center space-x-2">
-          <Subtitle>Simple</Subtitle>
-          <Tooltip title="Only show the last 15 data" placement="topRight">
-            <Switch size="small" onChange={handleSimpleMode} />
-          </Tooltip>
+          <ExportModal data={data} />
+          <div className="flex items-center space-x-1">
+            <Subtitle>Simple</Subtitle>
+            <Tooltip title="Only show the last 15 data" placement="topRight">
+              <Switch size="small" onChange={handleSimpleMode} />
+            </Tooltip>
+          </div>
         </div>
       </div>
       <div className="text-center mb-2">

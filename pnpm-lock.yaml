@@ -10,6 +10,7 @@ specifiers:
   chart.js: ^4.2.0
   chartjs-plugin-datalabels: ^2.2.0
   chartjs-plugin-zoom: ^2.0.0
+  export-from-json: ^1.7.0
   postcss: ^8.4.21
   prettier: ^2.8.3
   react: ^18.2.0
@@ -27,6 +28,7 @@ dependencies:
   chart.js: 4.2.0
   chartjs-plugin-datalabels: 2.2.0_chart.js@4.2.0
   chartjs-plugin-zoom: 2.0.0_chart.js@4.2.0
+  export-from-json: 1.7.0
   react: 18.2.0
   react-chartjs-2: 5.2.0_uxqdnqzacoapcp4mwytn5yclyu
   react-dom: 18.2.0_react@18.2.0
@@ -893,6 +895,10 @@ packages:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
     engines: {node: '>=6'}
     dev: true
+
+  /export-from-json/1.7.0:
+    resolution: {integrity: sha512-BE7MUOuSZy3uNwBt4mHxDgcknCC9yQWPvXHx1rrxWGKiQ9EYBZlxHWwMuOqQfo5TWkZ0+bSWJLEsWQ0wxrPA1Q==}
+    dev: false
 
   /fast-glob/3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
