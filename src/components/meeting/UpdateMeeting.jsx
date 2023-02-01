@@ -23,8 +23,8 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
     <Modal
       forceRender
       open={open}
-      title="Update Meeting"
-      okText="Update"
+      title="Edit Meeting"
+      okText="Edit"
       onCancel={onCancel}
       onOk={() => {
         form
