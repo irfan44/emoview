@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import Subtitle from '../common/typography/Subtitle';
+import { LINE_CHART_SUBTITLE, LINE_CHART_TITLE } from '../../data/constants';
 
 ChartJS.register(
   LinearScale,
@@ -180,8 +181,8 @@ const Linechart = ({ data, withImage }) => {
     <Card bodyStyle={{ padding: '16px 24px' }}>
       <div className="flex justify-between mb-2">
         <div>
-          <h5 className="font-semibold text-lg mb-0">Details</h5>
-          <Subtitle>Realtime detailed emotion</Subtitle>
+          <h5 className="font-semibold text-lg mb-0">{LINE_CHART_TITLE}</h5>
+          <Subtitle>{LINE_CHART_SUBTITLE}</Subtitle>
         </div>
         <div className="flex items-center space-x-2">
           <Subtitle>Simple</Subtitle>

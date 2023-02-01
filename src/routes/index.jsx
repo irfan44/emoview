@@ -5,6 +5,8 @@ import Meetings from '../pages/Meetings';
 import MeetingDetails from '../pages/MeetingDetails';
 import InMeetingDisplay from '../pages/InMeetingDisplay';
 import UserEmotionDetails from '../pages/UserEmotionDetails';
+import Students from '../pages/Students';
+import StudentDetails from '../pages/StudentDetails';
 
 const Routes = createBrowserRouter([
   {
@@ -36,6 +38,22 @@ const Routes = createBrowserRouter([
     element: (
       <BaseLayout>
         <UserEmotionDetails />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/students',
+    element: (
+      <BaseLayout>
+        <Students />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/students/:id',
+    element: (
+      <BaseLayout>
+        <StudentDetails />
       </BaseLayout>
     ),
   },

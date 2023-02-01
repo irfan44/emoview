@@ -25,6 +25,8 @@ const Header = ({
   openInMeeting,
   fetchMeetingById,
   meetingData,
+  isLoadingStart,
+  isLoadingEnd,
 }) => {
   const items = [
     {
@@ -94,15 +96,19 @@ const Header = ({
               </Button>
             )}
             {!isEnded && !isStart && (
-              <Button type="primary" onClick={() => handleStartMeeting()}>
+              <Button
+                loading={isLoadingStart}
+                type="primary"
+                onClick={() => handleStartMeeting()}
+              >
                 Start Meeting
               </Button>
             )}
             {!isEnded && isStart && (
               <Button
                 danger
+                loading={isLoadingEnd}
                 type="primary"
-                style={{ backgroundColor: '#B91C1C' }}
                 onClick={() => handleStopMeeting()}
               >
                 End Meeting
@@ -131,7 +137,7 @@ const Header = ({
         </div>
         <div className="flex items-center space-x-2">
           <MeetIcon />
-          <a href={!isEnded && link} target="_blank">
+          <a href={!isEnded ? link : ''} target="_blank">
             <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
               {link}
             </Text>
