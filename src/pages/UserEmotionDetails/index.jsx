@@ -5,6 +5,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById } from '../../api/meeting';
 import { getRecognitionById } from '../../api/recognition';
+import { getUserByUserId } from '../../api/user';
+import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import Recognition from '../../components/meetingDetails/Recognition';
@@ -13,6 +15,7 @@ const UserEmotionDetails = () => {
   const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
+  const [userData, setUserData] = useState();
 
   const { meetingId, userId } = useParams();
 
@@ -41,6 +44,16 @@ const UserEmotionDetails = () => {
     }
   };
 
+  const fetchUserDetails = async () => {
+    try {
+      const data = await getUserByUserId(userId);
+      console.log(data[0]);
+      setUserData(data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchRecognitionOverview = async (id, userId, limit) => {
     try {
       const data = await getRecognitionById(id, userId, limit);
@@ -60,6 +73,10 @@ const UserEmotionDetails = () => {
     };
   }, []);
 
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
   return (
     <PageLayout>
       <div className="flex space-x-1 mb-2">
@@ -73,7 +90,22 @@ const UserEmotionDetails = () => {
           </Link>
         </div>
       </div>
-      <Title>User Emotion</Title>
+      {userData && (
+        <div className="flex items-center space-x-4">
+          <img
+            src={userData.picture}
+            alt={userData.userId}
+            style={{ borderRadius: '50%' }}
+            height="42"
+            referrerPolicy="no-referrer"
+          />
+          <div>
+            <Title>{userData.fullname}</Title>
+            <Subtitle>{userData.email}</Subtitle>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4">
         <Recognition
           recogDetail={recognitionsDetail}
