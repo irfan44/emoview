@@ -78,6 +78,7 @@ const ExportModal = ({ data }) => {
       <Tooltip title="Export emotion data">
         <button
           className="bg-transparent border-0 rounded-full cursor-pointer hover:bg-[#f1f2f6]"
+          aria-label="Export emotion data"
           onClick={showModal}
         >
           <BiExport className="text-black/[.60] text-lg" />

@@ -58,7 +58,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-6 gap-4 my-6">
         <div span={4}>
           <Card loading={isLoading}>
-            <h5 className="font-bold text-4xl">{count}</h5>
+            <p className="mb-0 font-bold text-4xl">{count}</p>
             <Subtitle>Total Meeting</Subtitle>
           </Card>
         </div>
