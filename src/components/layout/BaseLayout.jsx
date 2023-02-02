@@ -59,6 +59,7 @@ const BaseLayout = ({ children }) => {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Button
             type="text"
+            aria-label="Menu"
             onClick={() => setCollapsed(!collapsed)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
@@ -68,7 +69,13 @@ const BaseLayout = ({ children }) => {
               <HiX style={{ fontSize: '18px' }} />
             )}
           </Button>
-          <img src={emoviewLogo} width="30" style={{ marginLeft: '16px' }} />
+          <img
+            src={emoviewLogo}
+            alt="Emoview"
+            width="30"
+            height="30"
+            style={{ marginLeft: '16px' }}
+          />
           <span className="font-bold text-xl ml-2">Emoview</span>
         </div>
         {user && (
@@ -87,8 +94,10 @@ const BaseLayout = ({ children }) => {
                 <div className="flex items-center space-x-2">
                   <img
                     src={user.picture}
+                    alt="Profile Picture"
                     style={{ borderRadius: '50%' }}
                     height="30"
+                    width="30"
                     referrerPolicy="no-referrer"
                   />
                   <span>{user.nickname}</span>
