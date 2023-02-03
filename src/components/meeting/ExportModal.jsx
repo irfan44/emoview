@@ -90,6 +90,7 @@ const ExportModal = ({ data }) => {
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Done"
+        cancelButtonProps={{ hidden: true }}
       >
         <p>
           Export your meeting's emotion recognition data to CSV or XLS file type
