@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
 import { createMeeting } from '../../api/meeting';
+import Subtitle from '../common/typography/Subtitle';
 
 const { TextArea } = Input;
 
@@ -103,7 +104,13 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
             display: tabValue === 'Description' ? 'block' : 'none',
           }}
         >
-          <Input placeholder="Example: https://meet.google.com/abc-defg-hij" />
+          <Input
+            className="mb-1"
+            placeholder="Example: https://meet.google.com/abc-defg-hij"
+          />
+          <p className="text-sm truncate text-black/[.60] m-0">
+            You can use 1 link for 1 meeting only
+          </p>
         </Form.Item>
         {/* <Form.Item
           label="Size"
