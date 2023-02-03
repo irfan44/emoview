@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
 import { GrEdit } from 'react-icons/gr';
 import { updateMeeting } from '../../api/meeting';
+import Subtitle from '../common/typography/Subtitle';
 
 const { TextArea } = Input;
 
@@ -91,27 +92,6 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
           }}
         >
           <TextArea rows={4} />
-        </Form.Item>
-        <Form.Item
-          label="Google Meet Link"
-          name="link"
-          rules={[
-            {
-              required: true,
-              message: 'Please insert google meet link!',
-            },
-            {
-              pattern: new RegExp(
-                /meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}/
-              ),
-              message: 'Please insert a valid google meet link',
-            },
-          ]}
-          style={{
-            display: tabValue === 'Description' ? 'block' : 'none',
-          }}
-        >
-          <Input />
         </Form.Item>
         {/* <Form.Item
           label="Size"

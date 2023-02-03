@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import menuItems from '../../data/menuItems';
 import emoviewLogo from '../../assets/icon.png';
 import Style from '../../styles/header.module.css';
+import GetExtension from '../extension/GetExtension';
 
 const { Content, Header, Sider } = Layout;
 
@@ -22,13 +23,17 @@ const BaseLayout = ({ children }) => {
   const items = [
     {
       key: '1',
+      label: <GetExtension />,
+    },
+    {
+      key: '2',
       label: (
         <a
           className="flex items-center space-x-2"
           onClick={() => window.electronAPI.logOut()}
         >
           <HiOutlineLogout />
-          <span>Logout</span>
+          <span className="text-red-700">Logout</span>
         </a>
       ),
     },
