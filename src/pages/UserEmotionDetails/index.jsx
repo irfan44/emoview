@@ -47,7 +47,6 @@ const UserEmotionDetails = () => {
   const fetchUserDetails = async () => {
     try {
       const data = await getUserByUserId(userId);
-      console.log(data[0]);
       setUserData(data[0]);
     } catch (error) {
       console.log(error);

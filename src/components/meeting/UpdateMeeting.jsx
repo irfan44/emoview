@@ -148,18 +148,14 @@ const UpdateMeetingModal = ({ fetchData, initialValues }) => {
   const handleSubmit = async (values) => {
     setOpen(false);
 
-    const { name, subject, description, link, size, emotionDisplay } = values;
+    const { name, subject, description, size, emotionDisplay } = values;
 
     try {
-      const getCode = link.match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/g);
-      const code = getCode[0];
       await updateMeeting(
         initialValues._id,
         name,
         subject,
         description,
-        link,
-        code,
         size,
         emotionDisplay
       );

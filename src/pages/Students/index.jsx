@@ -14,7 +14,6 @@ const Students = () => {
   const fetchStudents = async () => {
     setIsLoading(true);
     const data = await getUserStudent();
-    console.log(data);
     setStudents(data);
     setIsLoading(false);
   };

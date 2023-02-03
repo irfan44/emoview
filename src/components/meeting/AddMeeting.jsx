@@ -88,6 +88,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         <Form.Item
           label="Google Meet Link"
           name="link"
+          extra="Google Meet link can only be used once"
           rules={[
             {
               required: true,
@@ -108,9 +109,6 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
             className="mb-1"
             placeholder="Example: https://meet.google.com/abc-defg-hij"
           />
-          <p className="text-sm truncate text-black/[.60] m-0">
-            You can use 1 link for 1 meeting only
-          </p>
         </Form.Item>
         {/* <Form.Item
           label="Size"
