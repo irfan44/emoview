@@ -42,9 +42,14 @@ const GetExtension = () => {
         </p>
         <div className="flex flex-col mb-4">
           <span>Get extension **</span>
-          <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
-            <a>https://google.com</a>
-          </Text>
+          <a href="https://google.com" target="_blank">
+            <Text
+              className="text-[#0066ff] hover:text-[#69b1ff]"
+              copyable={{ icon: <FaRegCopy className="text-black" /> }}
+            >
+              https://google.com
+            </Text>
+          </a>
         </div>
         <p className="mb-2 text-black/[.60] text-xs">
           * Participant's emotion will not show up if they didn't install this
@@ -52,7 +57,13 @@ const GetExtension = () => {
         </p>
         <p className="text-black/[.60] text-xs">
           ** This extension is only for use in Google Chrome, Microsoft Edge, or
-          other Chromium based browser
+          other Chromium based browser.{' '}
+          <a
+            href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium"
+            target="_blank"
+          >
+            Learn more
+          </a>
         </p>
       </Modal>
     </>
