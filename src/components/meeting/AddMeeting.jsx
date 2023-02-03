@@ -88,6 +88,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         <Form.Item
           label="Google Meet Link"
           name="link"
+          extra="Google Meet link can only be used once"
           rules={[
             {
               required: true,
@@ -154,9 +155,6 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
           </Radio.Group>
         </Form.Item> */}
       </Form>
-      <p className="mb-2 text-black/[.60] text-xs">
-        * Google Meet link can only be used for one meeting
-      </p>
     </Modal>
   );
 };
