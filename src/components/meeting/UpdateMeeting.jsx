@@ -27,6 +27,7 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
       title="Edit Meeting"
       okText="Edit"
       onCancel={onCancel}
+      cancelButtonProps={{ type: 'text' }}
       onOk={() => {
         form
           .validateFields()
