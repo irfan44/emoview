@@ -18,6 +18,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
       okText="Add"
       onCancel={onCancel}
       confirmLoading={isLoading}
+      cancelButtonProps={{ type: 'text' }}
       onOk={() => {
         form
           .validateFields()
