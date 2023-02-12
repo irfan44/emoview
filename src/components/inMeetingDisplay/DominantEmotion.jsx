@@ -19,7 +19,7 @@ const DominantEmotion = ({ emotion }) => {
             <FaRegMeh size={28} style={{ marginTop: '8px' }} />
             <div>
               <CardTitle>Neutral</CardTitle>
-              <p className="m-0 text-sm text-black/[.60]">Emotion</p>
+              <p className="m-0 text-sm text-black/[.60]">Current</p>
             </div>
           </>
         );
