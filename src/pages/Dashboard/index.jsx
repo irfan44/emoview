@@ -29,7 +29,7 @@ const Dashboard = () => {
     try {
       setIsLoading(true);
       const data = await getMeeting();
-      const recentMeeting = data.slice(0, 6);
+      const recentMeeting = data ? data.slice(0, 6) : null;
       setMeetings(recentMeeting);
       setIsLoading(false);
     } catch (error) {
@@ -57,10 +57,18 @@ const Dashboard = () => {
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 gap-4 my-6">
         <div span={4}>
-          <Card loading={isLoading}>
-            <p className="mb-4 font-bold text-4xl">{count}</p>
-            <Subtitle>Total Meeting</Subtitle>
-          </Card>
+          {isLoading ? (
+            <Card />
+          ) : (
+            <Card>
+              {count ? (
+                <p className="mb-4 font-bold text-4xl">{count}</p>
+              ) : (
+                <p className="mb-4 font-bold text-4xl">0</p>
+              )}
+              <Subtitle>Total Meeting</Subtitle>
+            </Card>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-between mt-2 mb-6">
