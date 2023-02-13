@@ -121,6 +121,7 @@ const MeetingDetails = () => {
       okText: 'End',
       okType: 'danger',
       okButtonProps: { type: 'primary' },
+      cancelButtonProps: { type: 'text' },
       onOk: async () => {
         await setMeetingStatus(id, true, true);
         fetchMeetingById();
@@ -151,6 +152,7 @@ const MeetingDetails = () => {
       okText: 'Delete',
       okType: 'danger',
       okButtonProps: { type: 'primary' },
+      cancelButtonProps: { type: 'text' },
       onOk: async () => {
         await removeMeeting(id);
         navigate('/meetings');
