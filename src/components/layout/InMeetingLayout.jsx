@@ -1,11 +1,12 @@
 import { Button, theme } from 'antd';
+import { TbLayoutDashboard } from 'react-icons/tb';
 import { VscChromeClose } from 'react-icons/vsc';
 import Style from '../../styles/floatingWin.module.css';
 import CardTitle from '../common/typography/CardTitle';
 
 const { useToken } = theme;
 
-const InMeetingLayout = ({ children }) => {
+const InMeetingLayout = ({ children, changeLayout }) => {
   const { token } = useToken();
 
   return (
@@ -16,6 +17,11 @@ const InMeetingLayout = ({ children }) => {
       <div className="flex items-center justify-between pl-3 border-0 border-b-[0.5px] border-[#d9d9d9] border-solid">
         <CardTitle>In Meeting Display</CardTitle>
         <div className="flex items-center">
+          <div>
+            <Button type="text" onClick={changeLayout}>
+              <TbLayoutDashboard className="text-lg" />
+            </Button>
+          </div>
           <div id="titlebar-close">
             <Button
               type="text"

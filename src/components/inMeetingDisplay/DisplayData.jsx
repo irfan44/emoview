@@ -6,7 +6,7 @@ const DisplayData = ({ emotionDisplay, data, title }) => {
       <Progress
         type={emotionDisplay}
         percent={Math.floor(data * 100)}
-        width={56}
+        width={52}
       />
       <p className="mb-0 mt-2 text-sm">{title}</p>
     </div>
