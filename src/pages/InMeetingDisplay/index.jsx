@@ -1,25 +1,21 @@
-import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import {
-  FaRegArrowAltCircleLeft,
-  FaRegArrowAltCircleRight,
-} from 'react-icons/fa';
 import { useSearchParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById, getRecognition } from '../../api/floating';
 import { getMeetingParticipants } from '../../api/meeting';
-import CardTitle from '../../components/common/typography/CardTitle';
-import DisplayData from '../../components/inMeetingDisplay/DisplayData';
+import PositiveNegative from '../../components/floatingDisplay/PositiveNegative';
+import ShowAll from '../../components/floatingDisplay/ShowAll';
 import DominantEmotion from '../../components/inMeetingDisplay/DominantEmotion';
 import ParticipantCount from '../../components/inMeetingDisplay/ParticipantCount';
 import InMeetingLayout from '../../components/layout/InMeetingLayout';
 
 const InMeetingDisplay = () => {
   const [recognitionStream, setRecognitionStream] = useState({});
+  const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [meetingParticipants, setMeetingParticipants] = useState();
   const [maxRecognition, setMaxRecognition] = useState();
   const [countParticipants, setCountParticipants] = useState();
-  const [page, setPage] = useState(0);
+  const [layout, setLayout] = useState('positive/negative');
 
   const [searchParams, setSearchParams] = useSearchParams();
   const id = searchParams.get('id');
@@ -58,6 +54,7 @@ const InMeetingDisplay = () => {
       let max = Object.keys(arr).reduce((a, b) => (arr[a] > arr[b] ? a : b));
       setMaxRecognition(max);
       setRecognitionStream(data.recognitionStream[0]);
+      setRecognitionsSummary(data.recognitionsSummary);
     } catch (error) {
       console.log(error);
     }
@@ -66,13 +63,16 @@ const InMeetingDisplay = () => {
   const fetchMeetingParticipants = async (id) => {
     try {
       const data = await getMeetingParticipants(id);
-      console.log(data);
       setMeetingParticipants(data);
       let count = data.length;
       setCountParticipants(count);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const changeLayout = () => {
+    layout === 'all' ? setLayout('positive/negative') : setLayout('all');
   };
 
   useEffect(() => {
@@ -84,104 +84,20 @@ const InMeetingDisplay = () => {
   }, []);
 
   return (
-    <InMeetingLayout>
+    <InMeetingLayout changeLayout={changeLayout}>
       <div className="min-w-full space-y-4">
-        <div className="flex items-center justify-between">
-          {page !== 0 && (
-            <Button
-              type="text"
-              style={{ padding: 0 }}
-              onClick={() => setPage(page - 1)}
-            >
-              <FaRegArrowAltCircleLeft />
-            </Button>
-          )}
-          {page === 0 && (
-            <>
-              <DisplayData
-                emotionDisplay="dashboard"
-                data={recognitionStream.neutral}
-                title="Neutral"
-              />
-              <DisplayData
-                emotionDisplay="dashboard"
-                data={recognitionStream.happy}
-                title="Happy"
-              />
-              <DisplayData
-                emotionDisplay="dashboard"
-                data={recognitionStream.sad}
-                title="Sad"
-              />
-            </>
-          )}
-          {page === 1 && (
-            <>
-              <div className="flex space-x-2">
-                <DisplayData
-                  emotionDisplay="dashboard"
-                  data={recognitionStream.fearful}
-                  title="Fearful"
-                />
-                <DisplayData
-                  emotionDisplay="dashboard"
-                  data={recognitionStream.disgusted}
-                  title="Disgust"
-                />
-                <DisplayData
-                  emotionDisplay="dashboard"
-                  data={recognitionStream.surprised}
-                  title="Suprise"
-                />
-              </div>
-            </>
-          )}
-          {page === 2 && (
-            <>
-              <div className="flex justify-between">
-                <DisplayData
-                  emotionDisplay="dashboard"
-                  data={recognitionStream.angry}
-                  title="Angry"
-                />
-              </div>
-            </>
-          )}
-          {page === 2 && (
-            <>
-              <p style={{ color: '#f1f2f6' }}>End</p>
-            </>
-          )}
-          {page !== 2 && (
-            <Button
-              type="text"
-              style={{ padding: 0 }}
-              onClick={() => setPage(page + 1)}
-            >
-              <FaRegArrowAltCircleRight />
-            </Button>
-          )}
-        </div>
+        {layout === 'all' ? (
+          <ShowAll recognitionStream={recognitionStream} />
+        ) : (
+          <PositiveNegative
+            recognitionStream={recognitionStream}
+            recognitionsSummary={recognitionsSummary}
+          />
+        )}
         <div className="flex items-center justify-between">
           <DominantEmotion emotion={maxRecognition} />
           <ParticipantCount countParticipants={countParticipants} />
         </div>
-        {/* <div>
-          <CardTitle>Participants</CardTitle>
-          {meetingParticipants ? (
-            <div>
-              {meetingParticipants.map((data) => {
-                return (
-                  <div>
-                    <p className="m-0 text-sm">{data.fullname}</p>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <h1>Empty</h1>
-          )}
-        </div> */}
       </div>
     </InMeetingLayout>
   );
