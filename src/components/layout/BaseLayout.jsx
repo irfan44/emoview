@@ -6,6 +6,7 @@ import menuItems from '../../data/menuItems';
 import emoviewLogo from '../../assets/icon.png';
 import Style from '../../styles/header.module.css';
 import GetExtension from '../extension/GetExtension';
+import EmptyHolder from '../placeholders/EmptyHolder';
 
 const { Content, Header, Sider } = Layout;
 
@@ -13,6 +14,7 @@ const { useToken } = theme;
 
 const BaseLayout = ({ children }) => {
   const [user, setUser] = useState();
+  const [role, setRole] = useState();
   const [collapsed, setCollapsed] = useState(true);
 
   const router = useLocation();
@@ -40,7 +42,10 @@ const BaseLayout = ({ children }) => {
   ];
 
   const getProfile = async () => {
-    setUser(await window.electronAPI.getProfile());
+    const profile = await window.electronAPI.getProfile();
+    setUser(profile);
+    const { [`https://customclaim.com/role`]: role } = profile;
+    setRole(role[0]);
   };
 
   useEffect(() => {
@@ -139,7 +144,14 @@ const BaseLayout = ({ children }) => {
             }}
           />
         </Sider>
-        <Content>{children}</Content>
+        <Content>
+          {role === 'teacher' ? (
+            children
+          ) : (
+            <EmptyHolder title="Welcome! Please contact administrator to change your role to teacher" />
+          )}
+          {/* {children} */}
+        </Content>
       </Layout>
     </Layout>
   );
