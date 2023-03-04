@@ -21,7 +21,12 @@ const PositiveNegative = ({ recognitionStream, recognitionsSummary }) => {
               clicked === 'positive' ? setClicked('') : setClicked('positive')
             }
           >
-            <Progress type="dashboard" percent={summary.datas[0]} width={52} />
+            <Progress
+              type="dashboard"
+              percent={summary.datas[0]}
+              format={(percent) => `${percent}%`}
+              width={52}
+            />
             <p className="mb-0 mt-2 text-sm">Positive</p>
           </button>
         )}
@@ -39,7 +44,12 @@ const PositiveNegative = ({ recognitionStream, recognitionsSummary }) => {
               clicked === 'negative' ? setClicked('') : setClicked('negative')
             }
           >
-            <Progress type="dashboard" percent={summary.datas[1]} width={52} />
+            <Progress
+              type="dashboard"
+              percent={summary.datas[1]}
+              format={(percent) => `${percent}%`}
+              width={52}
+            />
             <p className="mb-0 mt-2 text-sm">Negative</p>
           </button>
         )}
