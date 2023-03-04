@@ -42,12 +42,12 @@ const GetExtension = () => {
         </p>
         <div className="flex flex-col mb-4">
           <span>Get extension **</span>
-          <a href="https://google.com" target="_blank">
+          <a href="https://bit.ly/EmoviewExtension" target="_blank">
             <Text
               className="text-[#0066ff] hover:text-[#69b1ff]"
               copyable={{ icon: <FaRegCopy className="text-black" /> }}
             >
-              https://google.com
+              https://bit.ly/EmoviewExtension
             </Text>
           </a>
         </div>

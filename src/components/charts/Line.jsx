@@ -188,7 +188,7 @@ const Linechart = ({ data, withImage }) => {
         <div className="flex items-center space-x-2">
           <ExportModal data={data} />
           <div className="flex items-center space-x-1">
-            <Subtitle>Simple</Subtitle>
+            <Subtitle>Last 15 data</Subtitle>
             <Tooltip title="Only show the last 15 data" placement="topRight">
               <Switch size="small" onChange={handleSimpleMode} />
             </Tooltip>
