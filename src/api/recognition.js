@@ -60,6 +60,23 @@ const getSummary = async () => {
   }
 };
 
+const getArchive = async (ids) => {
+  const body = {
+    ids: ids,
+  };
+
+  try {
+    const response = await axios.post(`${baseURL}/recognition/archive`, body, {
+      headers: {
+        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createRecognition = async () => {
   try {
     const response = await axios.post(`${baseURL}/recognition/`, {
@@ -91,6 +108,7 @@ export {
   getRecognitionById,
   getOverview,
   getSummary,
+  getArchive,
   createRecognition,
   removeRecognition,
 };
