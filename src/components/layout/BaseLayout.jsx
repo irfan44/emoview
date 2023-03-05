@@ -7,6 +7,7 @@ import emoviewLogo from '../../assets/icon.png';
 import Style from '../../styles/header.module.css';
 import GetExtension from '../extension/GetExtension';
 import EmptyHolder from '../placeholders/EmptyHolder';
+import ArchiveModal from '../meeting/ArchiveModal';
 
 const { Content, Header, Sider } = Layout;
 
@@ -25,10 +26,14 @@ const BaseLayout = ({ children }) => {
   const items = [
     {
       key: '1',
-      label: <GetExtension />,
+      label: <ArchiveModal />,
     },
     {
       key: '2',
+      label: <GetExtension />,
+    },
+    {
+      key: '3',
       label: (
         <a
           className="flex items-center space-x-2"
