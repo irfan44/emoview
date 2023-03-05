@@ -10,7 +10,7 @@ import { getArchive } from '../../api/recognition';
 const ArchiveModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataSource, setDataSource] = useState();
-  const [selectedCode, setSelectedCode] = useState();
+  const [selectedCode, setSelectedCode] = useState([]);
   const [format, setFormat] = useState();
 
   const columns = [
@@ -173,7 +173,7 @@ const ArchiveModal = () => {
               ]}
             />
             <Button
-              disabled={selectedCode && selectedCode.length === 0}
+              disabled={selectedCode === [] || selectedCode.length === 0}
               type="primary"
               onClick={handleExportData}
             >
