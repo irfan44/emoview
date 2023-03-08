@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaAngleLeft } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -90,17 +90,22 @@ const UserEmotionDetails = () => {
         </div>
       </div>
       {userData && (
-        <div className="flex items-center space-x-4">
-          <img
-            src={userData.picture}
-            alt={userData.userId}
-            style={{ borderRadius: '50%' }}
-            height="42"
-            referrerPolicy="no-referrer"
-          />
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-4">
+            <img
+              src={userData.picture}
+              alt={userData.userId}
+              style={{ borderRadius: '50%' }}
+              height="42"
+              referrerPolicy="no-referrer"
+            />
+            <div>
+              <Title>{userData.fullname}</Title>
+              <Subtitle>{userData.email}</Subtitle>
+            </div>
+          </div>
           <div>
-            <Title>{userData.fullname}</Title>
-            <Subtitle>{userData.email}</Subtitle>
+            <Button onClick={() => window.location.reload()}>Refresh</Button>
           </div>
         </div>
       )}
