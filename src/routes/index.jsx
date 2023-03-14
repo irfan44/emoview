@@ -7,6 +7,7 @@ import InMeetingDisplay from '../pages/InMeetingDisplay';
 import UserEmotionDetails from '../pages/UserEmotionDetails';
 import Students from '../pages/Students';
 import StudentDetails from '../pages/StudentDetails';
+import StudentList from '../pages/StudentList';
 
 const Routes = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ const Routes = createBrowserRouter([
     element: (
       <BaseLayout>
         <Students />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/student-list/:id',
+    element: (
+      <BaseLayout>
+        <StudentList />
       </BaseLayout>
     ),
   },

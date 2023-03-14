@@ -97,6 +97,22 @@ const getUserStudent = async () => {
   }
 };
 
+const getUserStudentAtMeeting = async (meetingCode) => {
+  try {
+    const response = await axios.get(
+      `${baseURL}/user?role=student&meetingId=${meetingCode}`,
+      {
+        headers: {
+          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   createUser,
   getUserById,
@@ -104,4 +120,5 @@ export {
   getUserOverview,
   getUserSummary,
   getUserStudent,
+  getUserStudentAtMeeting,
 };

@@ -30,13 +30,18 @@ const PositiveNegative = ({ recognitionStream, recognitionsSummary }) => {
             <p className="mb-0 mt-2 text-sm">Positive</p>
           </button>
         )}
-        <div className="p-2">
+        {/* <div className="p-2" onClick={() => setClicked('')}> */}
+        <button
+          className="flex flex-col text-center border-0 p-2 cursor-pointer"
+          onClick={() => setClicked('')}
+        >
           <DisplayData
             emotionDisplay="dashboard"
             data={recognitionStream.neutral}
             title="Neutral"
           />
-        </div>
+        </button>
+        {/* </div> */}
         {summary && (
           <button
             className="flex flex-col text-center border-0 p-2 cursor-pointer hover:bg-white/[.60] rounded"

@@ -32,18 +32,6 @@ const Header = ({
     {
       key: '1',
       label: (
-        <a
-          className="flex items-center space-x-2"
-          onClick={() => window.location.reload()}
-        >
-          <GrRefresh />
-          <span>Refresh</span>
-        </a>
-      ),
-    },
-    {
-      key: '2',
-      label: (
         <UpdateMeeting
           fetchData={fetchMeetingById}
           initialValues={meetingData}
@@ -51,7 +39,7 @@ const Header = ({
       ),
     },
     {
-      key: '3',
+      key: '2',
       label: (
         <a
           className="flex items-center space-x-2"
@@ -81,12 +69,15 @@ const Header = ({
         </div>
         <div>
           <div className="flex items-center space-x-2">
-            <RecognitionSwitch
-              isStart={isStart}
-              isEnded={isEnded}
-              recognitionStatus={recognitionStatus}
-              handleSwitch={handleSwitch}
-            />
+            <div>
+              <RecognitionSwitch
+                isStart={isStart}
+                isEnded={isEnded}
+                recognitionStatus={recognitionStatus}
+                handleSwitch={handleSwitch}
+              />
+            </div>
+            <Button onClick={() => window.location.reload()}>Refresh</Button>
             {!isEnded && isStart && (
               <Button type="primary" onClick={() => openInMeeting()}>
                 <div className="flex items-center space-x-1">
