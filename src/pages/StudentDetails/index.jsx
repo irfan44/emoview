@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { FaAngleLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getUserById, getUserOverview, getUserSummary } from '../../api/user';
@@ -13,6 +15,7 @@ const StudentDetails = () => {
   const [studentSummary, setStudentSummary] = useState();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetchStudentDetails = async () => {
     try {
@@ -54,19 +57,16 @@ const StudentDetails = () => {
     <>
       {studentData && (
         <PageLayout>
-          <div className="flex space-x-0.5 mb-2">
+          <div className="flex space-x-1 mb-2">
             <div>
               <Link
-                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-                to="/students"
+                className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
+                onClick={() => navigate(-1)}
+                style={{ display: 'flex', alignItems: 'center' }}
               >
-                Students
+                <FaAngleLeft /> Back to Previous
               </Link>
             </div>
-            <div>
-              <span className="text-black/[.60] ">/</span>
-            </div>
-            <div className="text-black/[.60] px-1">{studentData.fullname}</div>
           </div>
           <div className="flex items-center space-x-4">
             <img

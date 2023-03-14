@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import CardTitle from '../common/typography/CardTitle';
 import Subtitle from '../common/typography/Subtitle';
 
-const MeetingCard = ({ data }) => {
+const MeetingCard = ({ data, page }) => {
   return (
-    <Link to={`/meeting/${data._id}`}>
+    <Link to={`/${page}/${data._id}`}>
       <Card hoverable bodyStyle={{ padding: '16px 24px' }}>
         <div className="space-y-4">
           <div>

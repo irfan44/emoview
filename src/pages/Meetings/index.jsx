@@ -46,7 +46,13 @@ const Meetings = () => {
           </div>
         </div>
       </div>
-      {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}
+      {isLoading ? (
+        <LoadingMeetingList />
+      ) : (
+        <div className="mt-6">
+          <MeetingList meetings={meetings} page={'meeting'} />
+        </div>
+      )}
     </PageLayout>
   );
 };
