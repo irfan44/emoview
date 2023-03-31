@@ -1,7 +1,6 @@
-import { Button, Tabs } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import { FaAngleLeft } from 'react-icons/fa';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { getMeetingById } from '../../api/meeting';
 import { getRecognitionById } from '../../api/recognition';
@@ -18,8 +17,6 @@ const UserEmotionDetails = () => {
   const [userData, setUserData] = useState();
 
   const { meetingId, userId } = useParams();
-
-  const navigate = useNavigate();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
@@ -77,18 +74,7 @@ const UserEmotionDetails = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <div className="flex space-x-1 mb-2">
-        <div>
-          <Link
-            className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
-            onClick={() => navigate(-1)}
-            style={{ display: 'flex', alignItems: 'center' }}
-          >
-            <FaAngleLeft /> Back to Previous
-          </Link>
-        </div>
-      </div>
+    <PageLayout backToPrevious>
       {userData && (
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">

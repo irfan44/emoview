@@ -51,12 +51,11 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <p className="text-black/[.60] mb-2">Dashboard</p>
+    <PageLayout currentMenu="Dashboard">
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 gap-4 my-6">
-        <div span={4}>
+        <div>
           {isLoading ? (
             <Card />
           ) : (

@@ -1,6 +1,6 @@
 import { Modal, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import {
   getMeetingById,
@@ -212,21 +212,11 @@ const MeetingDetails = () => {
   return (
     <>
       {meetingData && (
-        <PageLayout>
-          <div className="flex space-x-0.5">
-            <div>
-              <Link
-                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-                to="/meetings"
-              >
-                Meetings
-              </Link>
-            </div>
-            <div>
-              <span className="text-black/[.60] ">/</span>
-            </div>
-            <div className="text-black/[.60] px-1">{meetingData.name}</div>
-          </div>
+        <PageLayout
+          backToMenu
+          prevMenu="Meetings"
+          currentMenu={meetingData.name}
+        >
           <Header
             name={meetingData.name}
             subject={meetingData.subject}
