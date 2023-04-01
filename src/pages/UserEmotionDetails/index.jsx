@@ -74,7 +74,7 @@ const UserEmotionDetails = () => {
   }, []);
 
   return (
-    <PageLayout backToPrevious>
+    <PageLayout backToPrevious prevLink={`/classes/${meetCode}/${emoviewCode}`}>
       {userData && (
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">

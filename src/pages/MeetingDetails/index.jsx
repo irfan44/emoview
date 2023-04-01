@@ -206,7 +206,7 @@ const MeetingDetails = () => {
   return (
     <>
       {meetingData && (
-        <PageLayout backToPrevious>
+        <PageLayout backToPrevious prevLink={`classes/${meetCode}`}>
           <Header
             name={meetingData.name}
             subject={meetingData.subject}

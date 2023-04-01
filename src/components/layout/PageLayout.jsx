@@ -7,6 +7,7 @@ const PageLayout = ({
   backToPrevious,
   backToMenu,
   prevMenu,
+  prevLink,
   currentMenu,
 }) => {
   return (
@@ -16,7 +17,7 @@ const PageLayout = ({
           <div>
             <Link
               className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
-              to={-1}
+              to={prevLink ? `/${prevLink}` : -1}
               style={{ display: 'flex', alignItems: 'center' }}
             >
               <FaAngleLeft /> Back to Previous
@@ -29,7 +30,7 @@ const PageLayout = ({
           <div>
             <Link
               className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-              to={-1}
+              to={prevLink ? `/${prevLink}` : -1}
             >
               {prevMenu}
             </Link>

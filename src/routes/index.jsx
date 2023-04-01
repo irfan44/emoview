@@ -97,6 +97,14 @@ const Routes = createBrowserRouter([
     path: '/in-meeting-display',
     element: <InMeetingDisplay />,
   },
+  {
+    path: '*',
+    element: (
+      <BaseLayout>
+        <p>Anda nyasar</p>
+      </BaseLayout>
+    ),
+  },
 ]);
 
 export default Routes;
