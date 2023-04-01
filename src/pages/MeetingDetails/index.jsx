@@ -16,6 +16,7 @@ import Header from '../../components/meetingDetails/Header.jsx';
 import ParticipantList from '../../components/meetingDetails/ParticipantList.jsx';
 import Recognition from '../../components/meetingDetails/Recognition.jsx';
 import EmptyHolder from '../../components/placeholders/EmptyHolder.jsx';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const { confirm } = Modal;
 
@@ -272,6 +273,7 @@ const MeetingDetails = () => {
           )}
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

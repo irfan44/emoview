@@ -6,13 +6,14 @@ import { getUserStudent } from '../../api/user';
 import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
-import LoadingMeetingList from '../../components/loading/MeetingList';
+import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList';
 import StudentsList from '../../components/students/StudentsList';
 import { getClassList } from '../../api/class.js';
 import ClassList from '../../components/class/ClassList.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/table.css';
+import ClassListLoading from '../../components/loading/ClassListLoading.jsx';
 
 const Students = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -69,47 +70,20 @@ const Students = () => {
       children: (
         <>
           {isLoading ? (
-            <LoadingMeetingList />
+            <ClassListLoading />
           ) : (
             <ClassList classList={classList} currentMenu={'students/class'} />
           )}
         </>
       ),
     },
-//    {
-//      key: '2',
-//      label: 'By Meetings',
-//      children: (
-//        <>
-//          {isLoading ? (
-//            <LoadingMeetingList />
-//          ) : (
-//            // <MeetingList meetings={meetings} page={'students/meeting'} />
-//            <Table
-//              onRow={(record, rowIndex) => {
-//                return {
-//                  onClick: (event) => {
-//                    navigate(
-//                      `/students/meeting/${record.meetCode}/${record.emoviewCode}`
-//                    );
-//                  },
-//                };
-//              }}
-//              pagination={{ hideOnSinglePage: true }}
-//              dataSource={meetings}
-//              columns={columns}
-//            />
-//          )}
-//        </>
-//      ),
-//    },
     {
       key: '2',
       label: `All Students`,
       children: (
         <>
           {isLoading ? (
-            <LoadingMeetingList />
+            <ClassListLoading />
           ) : (
             <StudentsList students={students} currentMenu={'students'} />
           )}

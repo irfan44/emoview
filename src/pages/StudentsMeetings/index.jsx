@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
-import LoadingMeetingList from '../../components/loading/MeetingList.jsx';
+import MeetingListLoading from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getClassDetailByMeetCode, removeClass } from '../../api/class.js';
 import { getClassMeetings } from '../../api/meeting.js';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentsMeetings = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ const StudentsMeetings = () => {
             </div>
           </div>
           {isLoading ? (
-            <LoadingMeetingList />
+            <MeetingListLoading />
           ) : (
             <div className="mt-6">
               <MeetingList meetings={meetings} page={`students/class`} />
@@ -67,6 +68,7 @@ const StudentsMeetings = () => {
           )}
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

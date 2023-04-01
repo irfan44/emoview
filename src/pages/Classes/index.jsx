@@ -2,11 +2,11 @@ import PageLayout from '../../components/layout/PageLayout.jsx';
 import ClassList from '../../components/class/ClassList.jsx';
 import { useEffect, useState } from 'react';
 import { getClassList } from '../../api/class.js';
-import LoadingMeetingList from '../../components/loading/MeetingList.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import { Button } from 'antd';
 import AddClass from '../../components/class/AddClass.jsx';
+import ClassListLoading from '../../components/loading/ClassListLoading.jsx';
 
 const Classes = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ const Classes = () => {
       </div>
       <div className="mt-6">
         {isLoading ? (
-          <LoadingMeetingList />
+          <ClassListLoading />
         ) : (
           <ClassList classList={classes} currentMenu={'classes'} />
         )}

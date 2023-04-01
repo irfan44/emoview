@@ -14,8 +14,10 @@ import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import Recognition from '../../components/studentDetails/Recognition.jsx';
 import { getRecognition } from '../../api/recognition.js';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentDetails = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [studentData, setStudentData] = useState();
   const [studentOverview, setStudentOverview] = useState();
   const [studentSummary, setStudentSummary] = useState();
@@ -25,8 +27,10 @@ const StudentDetails = () => {
 
   const fetchStudentDetails = async () => {
     try {
+      setIsLoading(true);
       const data = await getUserByUserId(userId);
       setStudentData(data[0]);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -34,8 +38,10 @@ const StudentDetails = () => {
 
   const fetchStudentOverview = async () => {
     try {
+      setIsLoading(true);
       const data = await getUserOverview(userId);
       setStudentOverview(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -43,8 +49,10 @@ const StudentDetails = () => {
 
   const fetchStudentSummary = async () => {
     try {
+      setIsLoading(true);
       const data = await getUserSummary(userId);
       setStudentSummary(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,9 +60,11 @@ const StudentDetails = () => {
 
   const fetchRecognitionOverview = async (emoviewCode, limit) => {
     try {
+      setIsLoading(true);
       const data = await getRecognition(emoviewCode, limit);
       setStudentOverview(data.recognitionsOverview);
       setStudentSummary(data.recognitionsSummary);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +112,7 @@ const StudentDetails = () => {
           </div>
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

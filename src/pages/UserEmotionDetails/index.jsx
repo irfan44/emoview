@@ -9,8 +9,10 @@ import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import Recognition from '../../components/meetingDetails/Recognition.jsx';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const UserEmotionDetails = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
@@ -23,8 +25,10 @@ const UserEmotionDetails = () => {
 
   const fetchRecognitionById = async () => {
     try {
+      setIsLoading(true);
       const data = await getMeetingByEmoviewCode({ emoviewCode });
       fetchRecognitionOverview(emoviewCode, userId, ' ');
+      setIsLoading(false);
 
       socket.on('connect', () => {
         socket.emit('join', `${emoviewCode}-${userId}`);
@@ -43,8 +47,10 @@ const UserEmotionDetails = () => {
 
   const fetchUserDetails = async () => {
     try {
+      setIsLoading(true);
       const data = await getUserByUserId(userId);
       setUserData(data[0]);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,10 +58,12 @@ const UserEmotionDetails = () => {
 
   const fetchRecognitionOverview = async (emoviewCode, userId, limit) => {
     try {
+      setIsLoading(true);
       const data = await getRecognitionById(emoviewCode, userId, limit);
       setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -74,37 +82,42 @@ const UserEmotionDetails = () => {
   }, []);
 
   return (
-    <PageLayout backToPrevious prevLink={`/classes/${meetCode}/${emoviewCode}`}>
+    <>
       {userData && (
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img
-              src={userData.picture}
-              alt={userData.userId}
-              style={{ borderRadius: '50%' }}
-              height="42"
-              referrerPolicy="no-referrer"
-            />
+        <PageLayout
+          backToPrevious
+          prevLink={`classes/${meetCode}/${emoviewCode}`}
+        >
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <img
+                src={userData.picture}
+                alt={userData.userId}
+                style={{ borderRadius: '50%' }}
+                height="42"
+                referrerPolicy="no-referrer"
+              />
+              <div>
+                <Title>{userData.fullname}</Title>
+                <Subtitle>{userData.email}</Subtitle>
+              </div>
+            </div>
             <div>
-              <Title>{userData.fullname}</Title>
-              <Subtitle>{userData.email}</Subtitle>
+              <Button onClick={() => window.location.reload()}>Refresh</Button>
             </div>
           </div>
-          <div>
-            <Button onClick={() => window.location.reload()}>Refresh</Button>
+          <div className="mt-4">
+            <Recognition
+              recogDetail={recognitionsDetail}
+              recogOverview={recognitionsOverview}
+              recogSummary={recognitionsSummary}
+              withImage={true}
+            />
           </div>
-        </div>
+        </PageLayout>
       )}
-
-      <div className="mt-4">
-        <Recognition
-          recogDetail={recognitionsDetail}
-          recogOverview={recognitionsOverview}
-          recogSummary={recognitionsSummary}
-          withImage={true}
-        />
-      </div>
-    </PageLayout>
+      {isLoading && <PageLoading />}
+    </>
   );
 };
 

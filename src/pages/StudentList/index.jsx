@@ -9,17 +9,21 @@ import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import { getClassDetailByMeetCode } from '../../api/class.js';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentList = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [meetingData, setMeetingData] = useState();
   const [studentAtMeeting, setStudentAtMeeting] = useState();
   const { emoviewCode } = useParams();
 
   const fetchMeetingById = async () => {
     try {
+      setIsLoading(true);
       const data = await getMeetingByEmoviewCode({ emoviewCode });
       setMeetingData(data[0]);
       studentsAtMeeting(emoviewCode);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -27,8 +31,10 @@ const StudentList = () => {
 
   const studentsAtMeeting = async (emoviewCode) => {
     try {
+      setIsLoading(true);
       const data = await getUserSameMeeting({ emoviewCode });
       setStudentAtMeeting(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +87,7 @@ const StudentList = () => {
           />
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

@@ -1,10 +1,10 @@
-import { Button, Dropdown, Modal, Typography } from 'antd';
+import { Button, Dropdown, Modal, Spin, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { getClassMeetings } from '../../api/meeting.js';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
-import LoadingMeetingList from '../../components/loading/MeetingList.jsx';
+import MeetingListLoading from '../../components/loading/MeetingListLoading.jsx';
 import AddMeeting from '../../components/meeting/AddMeeting.jsx';
 import MeetingList from '../../components/meeting/MeetingList.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { GrTextAlignFull, GrTrash } from 'react-icons/gr';
 import MeetIcon from '../../components/icons/Meet.jsx';
 import { FaEllipsisV, FaRegCopy } from 'react-icons/fa';
 import UpdateClass from '../../components/class/UpdateClass.jsx';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const { confirm } = Modal;
 const { Text } = Typography;
@@ -151,7 +152,7 @@ const ClassMeetings = () => {
             </div>
           </div>
           {isLoading ? (
-            <LoadingMeetingList />
+            <MeetingListLoading />
           ) : (
             <div className="mt-6">
               <MeetingList meetings={meetings} page={`classes`} />
@@ -159,6 +160,7 @@ const ClassMeetings = () => {
           )}
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };
