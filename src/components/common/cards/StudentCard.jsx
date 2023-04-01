@@ -1,11 +1,20 @@
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
-import CardTitle from '../common/typography/CardTitle';
-import Subtitle from '../common/typography/Subtitle';
+import CardTitle from '../typography/CardTitle.jsx';
+import Subtitle from '../typography/Subtitle.jsx';
 
-const StudentCard = ({ data }) => {
+const StudentCard = ({ data, currentMenu, pageId, studentId }) => {
+  const targetLink = () => {
+    if (pageId) {
+      return `/${currentMenu}/${pageId}/${studentId}`;
+    }
+    return `/${currentMenu}/${studentId}`;
+  };
+
+  console.log(targetLink());
+
   return (
-    <Link to={`/students/${data._id}`}>
+    <Link to={targetLink()}>
       <Card hoverable bodyStyle={{ padding: '16px 24px' }}>
         <div className="space-y-2">
           <img

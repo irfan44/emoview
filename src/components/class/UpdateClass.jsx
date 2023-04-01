@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
 import { GrEdit } from 'react-icons/gr';
 import { updateMeeting } from '../../api/meeting';
+import Subtitle from '../common/typography/Subtitle';
+import { updateClass } from '../../api/class.js';
 
 const { TextArea } = Input;
 
-const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
+const UpdateClassForm = ({ open, onSubmit, onCancel, initialValues }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [form] = Form.useForm();
   const beforeUpdate = {
     ...initialValues,
@@ -19,16 +23,19 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
     <Modal
       forceRender
       open={open}
-      title="Edit Meeting"
+      title="Edit Class"
       okText="Edit"
       onCancel={onCancel}
       cancelButtonProps={{ type: 'text' }}
+      confirmLoading={isLoading}
       onOk={() => {
         form
           .validateFields()
           .then((values) => {
+            setIsLoading(true);
             onSubmit(values);
             form.resetFields();
+            setIsLoading(false);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
@@ -36,18 +43,6 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
       }}
     >
       <Form form={form} layout="vertical" initialValues={initialValues}>
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: 'Please insert meeting name!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
         <Form.Item
           label="Description"
           name="description"
@@ -65,7 +60,7 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
   );
 };
 
-const UpdateMeetingModal = ({ fetchData, initialValues }) => {
+const UpdateClassModal = ({ fetchData, initialValues }) => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (values) => {
@@ -74,8 +69,8 @@ const UpdateMeetingModal = ({ fetchData, initialValues }) => {
     const { name, description } = values;
 
     try {
-      await updateMeeting({
-        emoviewCode: initialValues.emoviewCode,
+      await updateClass({
+        meetCode: initialValues.meetCode,
         name,
         description,
       });
@@ -89,9 +84,9 @@ const UpdateMeetingModal = ({ fetchData, initialValues }) => {
     <>
       <a className="flex items-center space-x-2" onClick={() => setOpen(true)}>
         <GrEdit />
-        <span>Edit Meeting</span>
+        <span>Edit Class</span>
       </a>
-      <UpdateMeetingForm
+      <UpdateClassForm
         open={open}
         onCancel={() => {
           setOpen(false);
@@ -103,4 +98,4 @@ const UpdateMeetingModal = ({ fetchData, initialValues }) => {
   );
 };
 
-export default UpdateMeetingModal;
+export default UpdateClassModal;

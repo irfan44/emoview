@@ -1,7 +1,7 @@
 import EmptyHolder from '../placeholders/EmptyHolder';
-import StudentCard from './StudentCard';
+import StudentCard from '../common/cards/StudentCard.jsx';
 
-const StudentsList = ({ students }) => {
+const StudentsList = ({ students, currentMenu }) => {
   return (
     <>
       {students ? (
@@ -9,7 +9,11 @@ const StudentsList = ({ students }) => {
           {students.map((data) => {
             return (
               <div key={data.userId}>
-                <StudentCard data={data} />
+                <StudentCard
+                  data={data}
+                  currentMenu={currentMenu}
+                  studentId={data.userId}
+                />
               </div>
             );
           })}

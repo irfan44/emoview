@@ -88,7 +88,11 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}
+      {isLoading ? (
+        <LoadingMeetingList />
+      ) : (
+        <MeetingList meetings={meetings} page={'classes'} />
+      )}
     </PageLayout>
   );
 };

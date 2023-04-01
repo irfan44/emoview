@@ -1,7 +1,7 @@
 import EmptyHolder from '../placeholders/EmptyHolder';
-import ParticipantCard from './ParticipantCard';
+import StudentCard from '../common/cards/StudentCard.jsx';
 
-const ParticipantList = ({ id, meetingParticipants }) => {
+const ParticipantList = ({ meetingParticipants, currentMenu, pageId }) => {
   return (
     <>
       {meetingParticipants ? (
@@ -9,7 +9,12 @@ const ParticipantList = ({ id, meetingParticipants }) => {
           {meetingParticipants.map((data) => {
             return (
               <div key={data.userId}>
-                <ParticipantCard id={id} data={data} />
+                <StudentCard
+                  data={data}
+                  currentMenu={currentMenu}
+                  pageId={pageId}
+                  studentId={data.userId}
+                />
               </div>
             );
           })}

@@ -7,6 +7,7 @@ import UpdateMeeting from '../meeting/UpdateMeeting';
 import RecognitionSwitch from './RecognitionSwitch';
 import FloatingDisplayIcon from '../icons/FloatingDisplay';
 import MeetIcon from '../icons/Meet';
+import { MdFiberPin } from 'react-icons/all.js';
 
 const { Text } = Typography;
 
@@ -14,6 +15,7 @@ const Header = ({
   name,
   subject,
   description,
+  emoviewCode,
   link,
   isStart,
   isEnded,
@@ -77,7 +79,9 @@ const Header = ({
                 handleSwitch={handleSwitch}
               />
             </div>
-            <Button onClick={() => window.location.reload()}>Refresh</Button>
+            {isStart && (
+              <Button onClick={() => window.location.reload()}>Refresh</Button>
+            )}
             {!isEnded && isStart && (
               <Button type="primary" onClick={() => openInMeeting()}>
                 <div className="flex items-center space-x-1">
@@ -134,6 +138,12 @@ const Header = ({
             </Text>
           </a>
           {isEnded && <span> Ended</span>}
+        </div>
+        <div className="flex items-center space-x-2">
+          <MdFiberPin className="h-4 w-5" />
+          <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
+            {emoviewCode}
+          </Text>
         </div>
       </div>
     </>

@@ -3,24 +3,30 @@ import { FaAngleLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getUserById, getUserOverview, getUserSummary } from '../../api/user';
-import Subtitle from '../../components/common/typography/Subtitle';
-import Title from '../../components/common/typography/Title';
-import PageLayout from '../../components/layout/PageLayout';
-import Recognition from '../../components/studentDetails/Recognition';
+import {
+  getUserById,
+  getUserByUserId,
+  getUserOverview,
+  getUserSummary,
+} from '../../api/user.js';
+import Subtitle from '../../components/common/typography/Subtitle.jsx';
+import Title from '../../components/common/typography/Title.jsx';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import Recognition from '../../components/studentDetails/Recognition.jsx';
+import { getRecognition } from '../../api/recognition.js';
 
 const StudentDetails = () => {
   const [studentData, setStudentData] = useState();
   const [studentOverview, setStudentOverview] = useState();
   const [studentSummary, setStudentSummary] = useState();
 
-  const { id } = useParams();
+  const { userId, emoviewCode } = useParams();
   const navigate = useNavigate();
 
   const fetchStudentDetails = async () => {
     try {
-      const data = await getUserById(id);
-      setStudentData(data);
+      const data = await getUserByUserId(userId);
+      setStudentData(data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +34,7 @@ const StudentDetails = () => {
 
   const fetchStudentOverview = async () => {
     try {
-      const data = await getUserOverview(studentData.userId);
+      const data = await getUserOverview(userId);
       setStudentOverview(data);
     } catch (error) {
       console.log(error);
@@ -37,10 +43,29 @@ const StudentDetails = () => {
 
   const fetchStudentSummary = async () => {
     try {
-      const data = await getUserSummary(studentData.userId);
+      const data = await getUserSummary(userId);
       setStudentSummary(data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const fetchRecognitionOverview = async (emoviewCode, limit) => {
+    try {
+      const data = await getRecognition(emoviewCode, limit);
+      setStudentOverview(data.recognitionsOverview);
+      setStudentSummary(data.recognitionsSummary);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const checkEmoviewCode = () => {
+    if (emoviewCode) {
+      fetchRecognitionOverview(emoviewCode, ' ');
+    } else {
+      fetchStudentOverview();
+      fetchStudentSummary();
     }
   };
 
@@ -49,25 +74,13 @@ const StudentDetails = () => {
   }, []);
 
   useEffect(() => {
-    fetchStudentOverview();
-    fetchStudentSummary();
+    checkEmoviewCode();
   }, [studentData]);
 
   return (
     <>
       {studentData && (
-        <PageLayout>
-          <div className="flex space-x-1 mb-2">
-            <div>
-              <Link
-                className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
-                onClick={() => navigate(-1)}
-                style={{ display: 'flex', alignItems: 'center' }}
-              >
-                <FaAngleLeft /> Back to Previous
-              </Link>
-            </div>
-          </div>
+        <PageLayout backToPrevious>
           <div className="flex items-center space-x-4">
             <img
               src={studentData.picture}

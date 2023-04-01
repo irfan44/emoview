@@ -2,13 +2,13 @@ import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { getMeetingById } from '../../api/meeting';
-import { getRecognitionById } from '../../api/recognition';
-import { getUserByUserId } from '../../api/user';
-import Subtitle from '../../components/common/typography/Subtitle';
-import Title from '../../components/common/typography/Title';
-import PageLayout from '../../components/layout/PageLayout';
-import Recognition from '../../components/meetingDetails/Recognition';
+import { getMeetingByEmoviewCode, getMeetingById } from '../../api/meeting.js';
+import { getRecognitionById } from '../../api/recognition.js';
+import { getUserByUserId } from '../../api/user.js';
+import Subtitle from '../../components/common/typography/Subtitle.jsx';
+import Title from '../../components/common/typography/Title.jsx';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import Recognition from '../../components/meetingDetails/Recognition.jsx';
 
 const UserEmotionDetails = () => {
   const [recognitionsDetail, setRecognitionsDetail] = useState();
@@ -16,23 +16,23 @@ const UserEmotionDetails = () => {
   const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [userData, setUserData] = useState();
 
-  const { meetingId, userId } = useParams();
+  const { meetCode, emoviewCode, userId } = useParams();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const fetchRecognitionById = async () => {
     try {
-      const data = await getMeetingById(meetingId);
-      fetchRecognitionOverview(data.code, userId, ' ');
+      const data = await getMeetingByEmoviewCode({ emoviewCode });
+      fetchRecognitionOverview(emoviewCode, userId, ' ');
 
       socket.on('connect', () => {
-        socket.emit('join', `${data.code}-${userId}`);
+        socket.emit('join', `${emoviewCode}-${userId}`);
       });
 
       if (data.isStart) {
         socket.on('RECOGNITION_DATA_ADDED', () => {
-          fetchRecognitionOverview(data.code, userId, ' ');
+          fetchRecognitionOverview(emoviewCode, userId, ' ');
           console.log('FER:: Recognition Running');
         });
       }
@@ -50,9 +50,9 @@ const UserEmotionDetails = () => {
     }
   };
 
-  const fetchRecognitionOverview = async (id, userId, limit) => {
+  const fetchRecognitionOverview = async (emoviewCode, userId, limit) => {
     try {
-      const data = await getRecognitionById(id, userId, limit);
+      const data = await getRecognitionById(emoviewCode, userId, limit);
       setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
