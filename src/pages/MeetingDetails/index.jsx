@@ -17,6 +17,10 @@ import ParticipantList from '../../components/meetingDetails/ParticipantList.jsx
 import Recognition from '../../components/meetingDetails/Recognition.jsx';
 import EmptyHolder from '../../components/placeholders/EmptyHolder.jsx';
 import PageLoading from '../../components/loading/PageLoading.jsx';
+import {
+  getClassDetailByMeetCode,
+  updateMeetingCount,
+} from '../../api/class.js';
 
 const { confirm } = Modal;
 
@@ -145,6 +149,12 @@ const MeetingDetails = () => {
       cancelButtonProps: { type: 'text' },
       onOk: async () => {
         await removeMeeting({ emoviewCode });
+        const data = await getClassDetailByMeetCode({ meetCode });
+        const countOfMeetings = data[0].countOfMeetings;
+        await updateMeetingCount({
+          meetCode,
+          initialCountOfMeetings: countOfMeetings,
+        });
         navigate(`/classes/${meetCode}`);
       },
     });

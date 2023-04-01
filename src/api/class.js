@@ -66,6 +66,23 @@ const updateClass = async ({ meetCode, name, description }) => {
   }
 };
 
+const updateMeetingCount = async ({ meetCode, initialCountOfMeetings }) => {
+  const body = {
+    countOfMeetings: initialCountOfMeetings - 1,
+  };
+
+  try {
+    const response = await axios.patch(`${baseURL}/class/${meetCode}`, body, {
+      headers: {
+        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const removeClass = async (id) => {
   try {
     await axios.delete(`${baseURL}/class/${id}`, {
@@ -83,5 +100,6 @@ export {
   getClassDetailByMeetCode,
   createClass,
   updateClass,
+  updateMeetingCount,
   removeClass,
 };
