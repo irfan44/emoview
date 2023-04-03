@@ -23,8 +23,12 @@ const ArchiveModal = () => {
       dataIndex: 'subject',
     },
     {
+      title: 'Class Code',
+      dataIndex: 'meetCode',
+    },
+    {
       title: 'Meeting Code',
-      dataIndex: 'code',
+      dataIndex: 'emoviewCode',
     },
   ];
 
@@ -60,7 +64,7 @@ const ArchiveModal = () => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       let selected = [];
-      selectedRows.map((data) => selected.push(data.code));
+      selectedRows.map((data) => selected.push(data.emoviewCode));
       setSelectedCode(selected);
     },
     getCheckboxProps: (record) => ({
@@ -75,10 +79,11 @@ const ArchiveModal = () => {
       const data = await getArchive(selectedCode);
       console.log(data);
 
-      const { ...rest } = data;
+      const { ...rest } = data.recognitionsDetail;
       const labels = [
         'Timestamp',
-        'Code',
+        'Class Code',
+        'Meeting Code',
         'User',
         'Neutral',
         'Happy',
