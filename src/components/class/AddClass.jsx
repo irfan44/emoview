@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import { createMeeting } from '../../api/meeting';
+import { createClass } from '../../api/class.js';
 
 const { TextArea } = Input;
 
-const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
+const AddClassForm = ({ open, onSubmit, onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [form] = Form.useForm();
@@ -12,7 +12,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
   return (
     <Modal
       open={open}
-      title="Add New Meeting"
+      title="Add New Class"
       okText="Add"
       onCancel={onCancel}
       confirmLoading={isLoading}
@@ -24,7 +24,6 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
             setIsLoading(true);
             onSubmit(values);
             form.resetFields();
-            setIsLoading(false);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
@@ -34,7 +33,7 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
       <Form form={form} layout="vertical" style={{ marginTop: '16px' }}>
         <Form.Item
           label="Name"
-          name="meetingName"
+          name="name"
           rules={[
             {
               required: true,
@@ -56,41 +55,45 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
         >
           <TextArea rows={4} placeholder="Insert meeting description here" />
         </Form.Item>
+        <Form.Item
+          label="Google Meet Link"
+          name="link"
+          extra="Google Meet link can only be used once"
+          rules={[
+            {
+              required: true,
+              message: 'Please insert google meet link!',
+            },
+            {
+              pattern: new RegExp(
+                /meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}/
+              ),
+              message: 'Please insert a valid google meet link',
+            },
+          ]}
+        >
+          <Input
+            className="mb-1"
+            placeholder="Example: https://meet.google.com/abc-defg-hij"
+          />
+        </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-const AddMeetingModal = ({ fetchData, updateDetails, classDetails }) => {
+const AddClassModal = ({ fetchData }) => {
   const [open, setOpen] = useState(false);
-  let initialName;
-  let initialLink;
-  let initialMeetCode;
-  let initialCountOfMeetings;
-
-  if (classDetails) {
-    const { name, link, meetCode, countOfMeetings } = classDetails[0];
-    initialName = name;
-    initialLink = link;
-    initialMeetCode = meetCode;
-    initialCountOfMeetings = countOfMeetings;
-  }
 
   const handleSubmit = async (values) => {
-    const { meetingName, description } = values;
+    const { name, description, link } = values;
 
     try {
-      await createMeeting({
-        name: meetingName,
-        subject: initialName,
-        description: description,
-        link: initialLink,
-        meetCode: initialMeetCode,
-        countOfMeetings: initialCountOfMeetings,
-      });
+      const getCode = link.match(/[a-z]{3}-[a-z]{4}-[a-z]{3}/g);
+      const meetCode = getCode[0];
+      await createClass({ meetCode, name, description, link });
       setOpen(false);
       fetchData();
-      updateDetails();
     } catch (error) {
       console.log(error);
     }
@@ -99,9 +102,9 @@ const AddMeetingModal = ({ fetchData, updateDetails, classDetails }) => {
   return (
     <>
       <Button type="primary" onClick={() => setOpen(true)}>
-        Add Meeting
+        Add Class
       </Button>
-      <AddMeetingForm
+      <AddClassForm
         open={open}
         onCancel={() => {
           setOpen(false);
@@ -112,4 +115,4 @@ const AddMeetingModal = ({ fetchData, updateDetails, classDetails }) => {
   );
 };
 
-export default AddMeetingModal;
+export default AddClassModal;

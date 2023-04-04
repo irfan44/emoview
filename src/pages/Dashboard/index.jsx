@@ -7,7 +7,7 @@ import SectionTitle from '../../components/common/typography/SectionTitle';
 import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
-import LoadingMeetingList from '../../components/loading/MeetingList';
+import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList';
 
 const Dashboard = () => {
@@ -51,14 +51,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <p className="text-black/[.60] mb-2">Dashboard</p>
+    <PageLayout currentMenu="Dashboard">
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 gap-4 my-6">
-        <div span={4}>
+        <div>
           {isLoading ? (
-            <Card />
+            <Card loading>
+              <p className="mb-4 font-bold text-4xl">0</p>
+              <Subtitle>Total Meeting</Subtitle>
+            </Card>
           ) : (
             <Card>
               {count ? (
@@ -89,7 +91,11 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}
+      {isLoading ? (
+        <LoadingMeetingList />
+      ) : (
+        <MeetingList meetings={meetings} page={'classes'} />
+      )}
     </PageLayout>
   );
 };

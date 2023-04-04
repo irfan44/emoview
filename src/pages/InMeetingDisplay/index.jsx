@@ -26,12 +26,12 @@ const InMeetingDisplay = () => {
 
   const fetchRecognition = async () => {
     try {
-      const data = await getMeetingById(id, accessToken);
-      fetchRecognitionOverview(data.code, 1);
+      // const data = await getMeetingById(id, accessToken);
+      fetchRecognitionOverview(id, 1);
       fetchMeetingParticipants(id);
 
       socket.on('connect', () => {
-        socket.emit('join', data.code);
+        socket.emit('join', id);
       });
 
       socket.on('USER_JOINED', () => {
@@ -39,7 +39,7 @@ const InMeetingDisplay = () => {
       });
 
       socket.on('RECOGNITION_DATA_ADDED', () => {
-        fetchRecognitionOverview(data.code, 1);
+        fetchRecognitionOverview(id, 1);
         console.log('FER:: Recognition Running');
       });
     } catch (error) {
@@ -62,9 +62,10 @@ const InMeetingDisplay = () => {
 
   const fetchMeetingParticipants = async (id) => {
     try {
-      const data = await getMeetingParticipants(id);
+      const data = await getMeetingParticipants({ emoviewCode: id });
       setMeetingParticipants(data);
       let count = data.length;
+      console.log(count);
       setCountParticipants(count);
     } catch (error) {
       console.log(error);

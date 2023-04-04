@@ -1,46 +1,32 @@
 import { Modal, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import {
-  getMeetingById,
+  getMeetingByEmoviewCode,
   getMeetingParticipants,
   removeMeeting,
   setMeetingStatus,
   startRecognition,
   stopRecognition,
-} from '../../api/meeting';
-import { getRecognition } from '../../api/recognition';
-import PageLayout from '../../components/layout/PageLayout';
-import Header from '../../components/meetingDetails/Header';
-import ParticipantList from '../../components/meetingDetails/ParticipantList';
-import Recognition from '../../components/meetingDetails/Recognition';
-import EmptyHolder from '../../components/placeholders/EmptyHolder';
+} from '../../api/meeting.js';
+import { getRecognition } from '../../api/recognition.js';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import Header from '../../components/meetingDetails/Header.jsx';
+import ParticipantList from '../../components/meetingDetails/ParticipantList.jsx';
+import Recognition from '../../components/meetingDetails/Recognition.jsx';
+import EmptyHolder from '../../components/placeholders/EmptyHolder.jsx';
+import PageLoading from '../../components/loading/PageLoading.jsx';
+import {
+  getClassDetailByMeetCode,
+  updateMeetingCount,
+} from '../../api/class.js';
 
 const { confirm } = Modal;
 
 const MeetingDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [meetingData, setMeetingData] = useState({
-    _id: '',
-    name: '',
-    subject: '',
-    description: '',
-    link: '',
-    code: '',
-    createdBy: '',
-    isStart: false,
-    startedAt: '',
-    isEnded: false,
-    endedAt: null,
-    configuration: {
-      notification: '',
-      sound: '',
-      remindBelow: '',
-      size: '',
-      emotionDisplay: '',
-    },
-  });
+  const [meetingData, setMeetingData] = useState();
   const [recognitionStatus, setRecognitionStatus] = useState();
   const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
@@ -52,7 +38,7 @@ const MeetingDetails = () => {
 
   const [accessToken, setAccessToken] = useState();
 
-  const { id } = useParams();
+  const { meetCode, emoviewCode } = useParams();
   const navigate = useNavigate();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
@@ -61,22 +47,22 @@ const MeetingDetails = () => {
   const handleOnMount = async () => {
     try {
       setIsLoading(true);
-      const data = await getMeetingById(id);
-      setMeetingData(data);
-      fetchRecognitionOverview(data.code, ' ');
-      fetchMeetingParticipants(id);
+      const data = await getMeetingByEmoviewCode({ emoviewCode });
+      setMeetingData(data[0]);
+      fetchRecognitionOverview(emoviewCode, ' ');
+      fetchMeetingParticipants(emoviewCode);
       setIsLoading(false);
 
       socket.on('connect', () => {
-        socket.emit('join', data.code);
+        socket.emit('join', emoviewCode);
       });
 
       socket.on('USER_JOINED', () => {
-        fetchMeetingParticipants(id);
+        fetchMeetingParticipants(emoviewCode);
       });
 
       socket.on('RECOGNITION_DATA_ADDED', () => {
-        fetchRecognitionOverview(data.code, ' ');
+        fetchRecognitionOverview(emoviewCode, ' ');
         console.log('FER:: Recognition Running');
       });
     } catch (error) {
@@ -86,10 +72,10 @@ const MeetingDetails = () => {
 
   const fetchMeetingById = async () => {
     try {
-      const data = await getMeetingById(id);
-      setMeetingData(data);
-      fetchRecognitionOverview(data.code, ' ');
-      fetchMeetingParticipants(id);
+      const data = await getMeetingByEmoviewCode({ emoviewCode });
+      setMeetingData(data[0]);
+      await fetchRecognitionOverview(emoviewCode, ' ');
+      await fetchMeetingParticipants(emoviewCode);
     } catch (error) {
       console.log(error);
     }
@@ -101,13 +87,17 @@ const MeetingDetails = () => {
   };
 
   const openInMeeting = async () => {
-    await window.electronAPI.openFloating(id, accessToken);
+    await window.electronAPI.openFloating(emoviewCode, accessToken);
   };
 
   const handleStartMeeting = async () => {
     setIsLoadingStart(true);
-    await setMeetingStatus(id, true, false);
-    fetchMeetingById();
+    await setMeetingStatus({
+      emoviewCode,
+      statusStart: true,
+      statusEnd: false,
+    });
+    await fetchMeetingById();
   };
 
   const handleStopMeeting = async () => {
@@ -123,7 +113,11 @@ const MeetingDetails = () => {
       okButtonProps: { type: 'primary' },
       cancelButtonProps: { type: 'text' },
       onOk: async () => {
-        await setMeetingStatus(id, true, true);
+        await setMeetingStatus({
+          emoviewCode,
+          statusStart: true,
+          statusEnd: true,
+        });
         fetchMeetingById();
       },
     });
@@ -132,12 +126,12 @@ const MeetingDetails = () => {
   };
 
   const handleStartRecognition = async () => {
-    await startRecognition(meetingData.code);
+    await startRecognition(emoviewCode);
     handleOnMount();
   };
 
   const handleStopRecognition = async () => {
-    await stopRecognition(meetingData.code);
+    await stopRecognition(emoviewCode);
     fetchMeetingById();
   };
 
@@ -154,8 +148,14 @@ const MeetingDetails = () => {
       okButtonProps: { type: 'primary' },
       cancelButtonProps: { type: 'text' },
       onOk: async () => {
-        await removeMeeting(id);
-        navigate('/meetings');
+        await removeMeeting({ emoviewCode });
+        const data = await getClassDetailByMeetCode({ meetCode });
+        const countOfMeetings = data[0].countOfMeetings;
+        await updateMeetingCount({
+          meetCode,
+          initialCountOfMeetings: countOfMeetings,
+        });
+        navigate(`/classes/${meetCode}`);
       },
     });
   };
@@ -163,15 +163,20 @@ const MeetingDetails = () => {
   const handleSwitch = (checked) => {
     if (checked) {
       handleStartRecognition();
-      localStorage.setItem(`meeting/${id}/started`, checked);
+      localStorage.setItem(
+        `classes/${meetCode}/${emoviewCode}/started`,
+        checked
+      );
     } else {
       handleStopRecognition();
-      localStorage.removeItem(`meeting/${id}/started`);
+      localStorage.removeItem(`classes/${meetCode}/${emoviewCode}/started`);
     }
   };
 
   const getSwitchStatus = () => {
-    const status = localStorage.getItem(`meeting/${id}/started`);
+    const status = localStorage.getItem(
+      `classes/${meetCode}/${emoviewCode}/started`
+    );
     if (status === null) {
       setRecognitionStatus(false);
     } else {
@@ -179,9 +184,9 @@ const MeetingDetails = () => {
     }
   };
 
-  const fetchRecognitionOverview = async (id, limit) => {
+  const fetchRecognitionOverview = async (emoviewCode, limit) => {
     try {
-      const data = await getRecognition(id, limit);
+      const data = await getRecognition(emoviewCode, limit);
       setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
@@ -190,9 +195,9 @@ const MeetingDetails = () => {
     }
   };
 
-  const fetchMeetingParticipants = async (id) => {
+  const fetchMeetingParticipants = async (emoviewCode) => {
     try {
-      const data = await getMeetingParticipants(id);
+      const data = await getMeetingParticipants({ emoviewCode });
       setMeetingParticipants(data);
     } catch (error) {
       console.log(error);
@@ -212,26 +217,13 @@ const MeetingDetails = () => {
   return (
     <>
       {meetingData && (
-        <PageLayout>
-          <div className="flex space-x-0.5">
-            <div>
-              <Link
-                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-                to="/meetings"
-              >
-                Meetings
-              </Link>
-            </div>
-            <div>
-              <span className="text-black/[.60] ">/</span>
-            </div>
-            <div className="text-black/[.60] px-1">{meetingData.name}</div>
-          </div>
+        <PageLayout backToPrevious prevLink={`classes/${meetCode}`}>
           <Header
             name={meetingData.name}
             subject={meetingData.subject}
             description={meetingData.description}
             link={meetingData.link}
+            emoviewCode={meetingData.emoviewCode}
             isStart={meetingData.isStart}
             isEnded={meetingData.isEnded}
             recognitionStatus={recognitionStatus}
@@ -268,7 +260,8 @@ const MeetingDetails = () => {
                   key: 'participants',
                   children: (
                     <ParticipantList
-                      id={id}
+                      currentMenu={`classes/${meetCode}`}
+                      pageId={emoviewCode}
                       meetingParticipants={meetingParticipants}
                     />
                   ),
@@ -290,6 +283,7 @@ const MeetingDetails = () => {
           )}
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

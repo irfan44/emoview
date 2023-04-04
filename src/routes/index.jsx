@@ -8,6 +8,9 @@ import UserEmotionDetails from '../pages/UserEmotionDetails';
 import Students from '../pages/Students';
 import StudentDetails from '../pages/StudentDetails';
 import StudentList from '../pages/StudentList';
+import Classes from '../pages/Classes/index.jsx';
+import ClassMeetings from '../pages/Meetings/index.jsx';
+import StudentsMeetings from '../pages/StudentsMeetings/index.jsx';
 
 const Routes = createBrowserRouter([
   {
@@ -19,15 +22,23 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/meetings',
+    path: '/classes',
     element: (
       <BaseLayout>
-        <Meetings />
+        <Classes />
       </BaseLayout>
     ),
   },
   {
-    path: '/meeting/:id',
+    path: '/classes/:meetCode',
+    element: (
+      <BaseLayout>
+        <ClassMeetings />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/classes/:meetCode/:emoviewCode',
     element: (
       <BaseLayout>
         <MeetingDetails />
@@ -35,7 +46,7 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/meeting/:meetingId/:userId',
+    path: '/classes/:meetCode/:emoviewCode/:userId',
     element: (
       <BaseLayout>
         <UserEmotionDetails />
@@ -51,7 +62,15 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/student-list/:id',
+    path: '/students/class/:meetCode',
+    element: (
+      <BaseLayout>
+        <StudentsMeetings />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/students/class/:meetCode/:emoviewCode',
     element: (
       <BaseLayout>
         <StudentList />
@@ -59,7 +78,15 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/students/:id',
+    path: '/students/:userId',
+    element: (
+      <BaseLayout>
+        <StudentDetails />
+      </BaseLayout>
+    ),
+  },
+  {
+    path: '/students/:userId/:emoviewCode',
     element: (
       <BaseLayout>
         <StudentDetails />
@@ -69,6 +96,14 @@ const Routes = createBrowserRouter([
   {
     path: '/in-meeting-display',
     element: <InMeetingDisplay />,
+  },
+  {
+    path: '*',
+    element: (
+      <BaseLayout>
+        <p>Anda nyasar</p>
+      </BaseLayout>
+    ),
   },
 ]);
 

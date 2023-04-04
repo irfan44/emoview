@@ -97,6 +97,19 @@ const getUserStudent = async () => {
   }
 };
 
+const getUserSameMeeting = async ({emoviewCode}) => {
+  try {
+    const response = await axios.get(`${baseURL}/user/same-meeting/${emoviewCode}`, {
+      headers: {
+        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUserStudentAtMeeting = async (meetingCode) => {
   try {
     const response = await axios.get(
@@ -120,5 +133,6 @@ export {
   getUserOverview,
   getUserSummary,
   getUserStudent,
+  getUserSameMeeting,
   getUserStudentAtMeeting,
 };

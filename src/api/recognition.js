@@ -18,10 +18,10 @@ const getRecognition = async (id, limit) => {
   }
 };
 
-const getRecognitionById = async (id, userId, limit) => {
+const getRecognitionById = async (emoviewCode, userId, limit) => {
   try {
     const response = await axios.get(
-      `${baseURL}/recognition/${id}/${userId}?limit=${limit}`,
+      `${baseURL}/recognition/${emoviewCode}/${userId}?limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,

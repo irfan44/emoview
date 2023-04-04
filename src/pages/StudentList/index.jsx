@@ -3,31 +3,38 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getMeetingById } from '../../api/meeting';
-import { getUserStudentAtMeeting } from '../../api/user';
-import Subtitle from '../../components/common/typography/Subtitle';
-import Title from '../../components/common/typography/Title';
-import PageLayout from '../../components/layout/PageLayout';
+import { getMeetingByEmoviewCode, getMeetingById } from '../../api/meeting.js';
+import { getUserSameMeeting, getUserStudentAtMeeting } from '../../api/user.js';
+import Subtitle from '../../components/common/typography/Subtitle.jsx';
+import Title from '../../components/common/typography/Title.jsx';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import { getClassDetailByMeetCode } from '../../api/class.js';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentList = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [meetingData, setMeetingData] = useState();
   const [studentAtMeeting, setStudentAtMeeting] = useState();
-  const { id } = useParams();
+  const { emoviewCode } = useParams();
 
   const fetchMeetingById = async () => {
     try {
-      const data = await getMeetingById(id);
-      setMeetingData(data);
-      studentsAtMeeting(data.code);
+      setIsLoading(true);
+      const data = await getMeetingByEmoviewCode({ emoviewCode });
+      setMeetingData(data[0]);
+      studentsAtMeeting(emoviewCode);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const studentsAtMeeting = async (meetingCode) => {
+  const studentsAtMeeting = async (emoviewCode) => {
     try {
-      const data = await getUserStudentAtMeeting(meetingCode);
+      setIsLoading(true);
+      const data = await getUserSameMeeting({ emoviewCode });
       setStudentAtMeeting(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -50,15 +57,12 @@ const StudentList = () => {
       key: '_id',
       render: (_, tags) => (
         <>
-          <Link to={`/students/${tags._id}`}>View Emotion {'>'}</Link>
+          <Link to={`/students/${tags._id}/${emoviewCode}`}>
+            View Emotion {'>'}
+          </Link>
         </>
       ),
     },
-    // {
-    //   title: 'Address',
-    //   dataIndex: 'address',
-    //   key: 'address',
-    // },
   ];
 
   useEffect(() => {
@@ -68,30 +72,22 @@ const StudentList = () => {
   return (
     <>
       {meetingData && (
-        <PageLayout>
-          <div className="flex space-x-0.5 mb-2">
-            <div>
-              <Link
-                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-                to="/students"
-              >
-                Students
-              </Link>
-            </div>
-            <div>
-              <span className="text-black/[.60] ">/</span>
-            </div>
-            <div className="text-black/[.60] px-1">{meetingData.name}</div>
-          </div>
+        <PageLayout backToPrevious>
           <div className="mb-6">
             <div>
               <Title>{meetingData.name}</Title>
               <Subtitle>{meetingData.subject}</Subtitle>
             </div>
           </div>
-          <Table dataSource={studentAtMeeting} columns={columns} />
+          <Table
+            rowKey="_id"
+            dataSource={studentAtMeeting}
+            columns={columns}
+            pagination={{ hideOnSinglePage: true }}
+          />
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };
