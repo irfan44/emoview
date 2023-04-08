@@ -9,6 +9,7 @@ import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList';
+import DashboardTour from '../../components/tour/DashboardTour/index.jsx';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -96,6 +97,7 @@ const Dashboard = () => {
       ) : (
         <MeetingList meetings={meetings} page={'classes'} />
       )}
+      <DashboardTour />
     </PageLayout>
   );
 };

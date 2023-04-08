@@ -61,7 +61,12 @@ const AddMeetingForm = ({ open, onSubmit, onCancel }) => {
   );
 };
 
-const AddMeetingModal = ({ fetchData, updateDetails, classDetails }) => {
+const AddMeetingModal = ({
+  fetchData,
+  updateDetails,
+  classDetails,
+  addMeetingRef,
+}) => {
   const [open, setOpen] = useState(false);
   let initialName;
   let initialLink;
@@ -98,7 +103,7 @@ const AddMeetingModal = ({ fetchData, updateDetails, classDetails }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
+      <Button ref={addMeetingRef} type="primary" onClick={() => setOpen(true)}>
         Add Meeting
       </Button>
       <AddMeetingForm

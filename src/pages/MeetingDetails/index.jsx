@@ -1,5 +1,5 @@
 import { Modal, Spin, Tabs } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import {
@@ -21,6 +21,8 @@ import {
   getClassDetailByMeetCode,
   updateMeetingCount,
 } from '../../api/class.js';
+import MeetingDetailsTour from '../../components/tour/MeetingDetailsTour/index.jsx';
+import PreStartMeetingTour from '../../components/tour/PreStartMeetingTour/index.jsx';
 
 const { confirm } = Modal;
 
@@ -37,6 +39,14 @@ const MeetingDetails = () => {
   const [isLoadingEnd, setIsLoadingEnd] = useState(false);
 
   const [accessToken, setAccessToken] = useState();
+
+  const startMeetingRef = useRef(null);
+  const meetingCodeRef = useRef(null);
+  const recognitionSwitchRef = useRef(null);
+  const refreshRef = useRef(null);
+  const floatingDisplayRef = useRef(null);
+  const endRecognitionRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const { meetCode, emoviewCode } = useParams();
   const navigate = useNavigate();
@@ -236,6 +246,13 @@ const MeetingDetails = () => {
             meetingData={meetingData}
             isLoadingStart={isLoadingStart}
             isLoadingEnd={isLoadingEnd}
+            startMeetingRef={startMeetingRef}
+            meetingCodeRef={meetingCodeRef}
+            recognitionSwitchRef={recognitionSwitchRef}
+            refreshRef={refreshRef}
+            floatingDisplayRef={floatingDisplayRef}
+            endRecognitionRef={endRecognitionRef}
+            dropdownRef={dropdownRef}
           />
           {meetingData.isStart ? (
             <Tabs
@@ -280,6 +297,23 @@ const MeetingDetails = () => {
             </div>
           ) : (
             <EmptyHolder title="Start meeting & recognition to see emotion data!" />
+          )}
+          {meetingData.isStart && (
+            <MeetingDetailsTour
+              meetingCodeRef={meetingCodeRef}
+              recognitionSwitchRef={recognitionSwitchRef}
+              refreshRef={refreshRef}
+              floatingDisplayRef={floatingDisplayRef}
+              endRecognitionRef={endRecognitionRef}
+              dropdownRef={dropdownRef}
+            />
+          )}
+          {!meetingData.isStart && (
+            <PreStartMeetingTour
+              startMeetingRef={startMeetingRef}
+              dropdownRef={dropdownRef}
+              name={meetingData.name}
+            />
           )}
         </PageLayout>
       )}
