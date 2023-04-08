@@ -82,7 +82,7 @@ const AddClassForm = ({ open, onSubmit, onCancel }) => {
   );
 };
 
-const AddClassModal = ({ fetchData }) => {
+const AddClassModal = ({ fetchData, addClassRef }) => {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (values) => {
@@ -101,7 +101,7 @@ const AddClassModal = ({ fetchData }) => {
 
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
+      <Button type="primary" onClick={() => setOpen(true)} ref={addClassRef}>
         Add Class
       </Button>
       <AddClassForm

@@ -1,16 +1,20 @@
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import ClassList from '../../components/class/ClassList.jsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getClassList } from '../../api/class.js';
 import Title from '../../components/common/typography/Title.jsx';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import { Button } from 'antd';
 import AddClass from '../../components/class/AddClass.jsx';
 import ClassListLoading from '../../components/loading/ClassListLoading.jsx';
+import ClassesTour from '../../components/tour/ClassesTour/index.jsx';
 
 const Classes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [classes, setClasses] = useState();
+
+  const addClassRef = useRef(null);
+  const refreshRef = useRef(null);
 
   const fetchClasses = async () => {
     try {
@@ -45,8 +49,10 @@ const Classes = () => {
         <div>
           <div className="flex items-center space-x-2">
             {/*<AddMeeting fetchData={fetchMeetings} />*/}
-            <AddClass fetchData={fetchClasses} />
-            <Button onClick={() => fetchClasses()}>Refresh</Button>
+            <AddClass addClassRef={addClassRef} fetchData={fetchClasses} />
+            <Button ref={refreshRef} onClick={() => fetchClasses()}>
+              Refresh
+            </Button>
           </div>
         </div>
       </div>
@@ -57,6 +63,7 @@ const Classes = () => {
           <ClassList classList={classes} currentMenu={'classes'} />
         )}
       </div>
+      <ClassesTour addClassRef={addClassRef} refreshRef={refreshRef} />
     </PageLayout>
   );
 };

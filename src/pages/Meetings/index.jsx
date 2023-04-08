@@ -1,5 +1,5 @@
-import { Button, Dropdown, Modal, Spin, Typography } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Dropdown, Modal, Typography } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import { getClassMeetings } from '../../api/meeting.js';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
@@ -14,6 +14,7 @@ import MeetIcon from '../../components/icons/Meet.jsx';
 import { FaEllipsisV, FaRegCopy } from 'react-icons/fa';
 import UpdateClass from '../../components/class/UpdateClass.jsx';
 import PageLoading from '../../components/loading/PageLoading.jsx';
+import MeetingsTour from '../../components/tour/MeetingsTour/index.jsx';
 
 const { confirm } = Modal;
 const { Text } = Typography;
@@ -22,6 +23,11 @@ const ClassMeetings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [classDetails, setClassDetails] = useState();
   const [meetings, setMeetings] = useState([]);
+
+  const classDescriptionRef = useRef(null);
+  const addMeetingRef = useRef(null);
+  const refreshRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const { meetCode } = useParams();
   const navigate = useNavigate();
@@ -116,11 +122,14 @@ const ClassMeetings = () => {
             <div>
               <div className="flex items-center space-x-2">
                 <AddMeeting
+                  addMeetingRef={addMeetingRef}
                   fetchData={fetchMeetings}
                   updateDetails={fetchClassDetails}
                   classDetails={classDetails}
                 />
-                <Button onClick={() => fetchMeetings()}>Refresh</Button>
+                <Button ref={refreshRef} onClick={() => fetchMeetings()}>
+                  Refresh
+                </Button>
                 <Dropdown
                   menu={{
                     items,
@@ -128,7 +137,7 @@ const ClassMeetings = () => {
                   placement="bottomRight"
                   arrow
                 >
-                  <Button type="text">
+                  <Button ref={dropdownRef} type="text">
                     <Subtitle>
                       <FaEllipsisV />
                     </Subtitle>
@@ -138,17 +147,21 @@ const ClassMeetings = () => {
             </div>
           </div>
           <div className="space-y-2 mb-2">
-            <div className="flex items-center space-x-2">
-              <GrTextAlignFull className="h-4 w-5" />
-              <span>{classDetails[0].description}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <MeetIcon />
-              <a href={classDetails[0].link} target="_blank">
-                <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
-                  {classDetails[0].link}
-                </Text>
-              </a>
+            <div className="w-fit" ref={classDescriptionRef}>
+              <div className="flex items-center space-x-2">
+                <GrTextAlignFull className="h-4 w-5" />
+                <span>{classDetails[0].description}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MeetIcon />
+                <a href={classDetails[0].link} target="_blank">
+                  <Text
+                    copyable={{ icon: <FaRegCopy className="text-black" /> }}
+                  >
+                    {classDetails[0].link}
+                  </Text>
+                </a>
+              </div>
             </div>
           </div>
           {isLoading ? (
@@ -158,6 +171,13 @@ const ClassMeetings = () => {
               <MeetingList meetings={meetings} page={`classes`} />
             </div>
           )}
+          <MeetingsTour
+            classDescriptionRef={classDescriptionRef}
+            addMeetingRef={addMeetingRef}
+            refreshRef={refreshRef}
+            dropdownRef={dropdownRef}
+            name={classDetails[0].name}
+          />
         </PageLayout>
       )}
       {isLoading && <PageLoading />}
