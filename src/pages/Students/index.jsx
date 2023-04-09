@@ -99,7 +99,7 @@ const Students = () => {
   }, []);
 
   return (
-    <PageLayout currentMenu={'Students'}>
+    <PageLayout currentMenu={'Student Reports'}>
       <div
         style={{
           display: 'flex',
@@ -110,8 +110,8 @@ const Students = () => {
         }}
       >
         <div>
-          <Title>Students</Title>
-          <Subtitle>List of all your students</Subtitle>
+          <Title>Student Reports</Title>
+          <Subtitle>List of all your student's reports</Subtitle>
         </div>
         <div>
           <div className="flex items-center space-x-2">
