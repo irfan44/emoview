@@ -128,6 +128,8 @@ const MeetingDetails = () => {
           statusStart: true,
           statusEnd: true,
         });
+        handleStopMeeting();
+        localStorage.removeItem(`classes/${meetCode}/${emoviewCode}/started`);
         fetchMeetingById();
       },
     });

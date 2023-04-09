@@ -1,4 +1,4 @@
-import { Table, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { getMeeting } from '../../api/meeting';
@@ -6,22 +6,16 @@ import { getUserStudent } from '../../api/user';
 import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
-import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
-import MeetingList from '../../components/meeting/MeetingList';
 import StudentsList from '../../components/students/StudentsList';
 import { getClassList } from '../../api/class.js';
 import ClassList from '../../components/class/ClassList.jsx';
-import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/table.css';
 import ClassListLoading from '../../components/loading/ClassListLoading.jsx';
 
 const Students = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [students, setStudents] = useState([]);
-  const [meetings, setMeetings] = useState([]);
   const [classList, setClassList] = useState([]);
-
-  const navigate = useNavigate();
 
   const fetchStudents = async () => {
     setIsLoading(true);
@@ -43,25 +37,6 @@ const Students = () => {
     setClassList(data);
     setIsLoading(false);
   };
-
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Class',
-      dataIndex: 'subject',
-      key: 'subject',
-    },
-    {
-      title: 'Started At',
-      dataIndex: 'startedAt',
-      key: 'startedAt',
-      render: (data) => <span>{new Date(data).toLocaleString()}</span>,
-    },
-  ];
 
   const items = [
     {
@@ -99,7 +74,7 @@ const Students = () => {
   }, []);
 
   return (
-    <PageLayout currentMenu={'Students'}>
+    <PageLayout currentMenu={'Student Reports'}>
       <div
         style={{
           display: 'flex',
@@ -110,8 +85,8 @@ const Students = () => {
         }}
       >
         <div>
-          <Title>Students</Title>
-          <Subtitle>List of all your students</Subtitle>
+          <Title>Student Reports</Title>
+          <Subtitle>List of all your student's reports</Subtitle>
         </div>
         <div>
           <div className="flex items-center space-x-2">
