@@ -9,7 +9,7 @@ const menuItems = [
     '/classes',
     <FaChalkboardTeacher />
   ),
-  getItem(<Link to="/students">Students</Link>, '/students', <FaUser />),
+  getItem(<Link to="/students">Student Reports</Link>, '/students', <FaUser />),
 ];
 
 export default menuItems;
