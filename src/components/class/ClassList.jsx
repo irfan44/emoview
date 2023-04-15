@@ -5,7 +5,7 @@ const ClassList = ({ classList, currentMenu }) => {
   return (
     <>
       {classList ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 xl:grid-cols-5 gap-4">
           {classList.map((data) => {
             return (
               <div key={data._id}>

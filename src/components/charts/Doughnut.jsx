@@ -46,6 +46,7 @@ const DoughnutChart = ({ data }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       datalabels: {
         display: true,
@@ -72,7 +73,14 @@ const DoughnutChart = ({ data }) => {
         <Subtitle>{DOUGHNUT_CHART_SUBTITLE}</Subtitle>
       </div>
       <div style={{ width: '100%', textAlign: 'center' }}>
-        <Doughnut data={chartData} options={options} height="300" width="300" />
+        <div className="my-4">
+          <Doughnut
+            data={chartData}
+            options={options}
+            height="400"
+            width="400"
+          />
+        </div>
         <div
           style={{
             fontSize: '5rem',

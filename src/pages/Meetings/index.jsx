@@ -146,8 +146,8 @@ const ClassMeetings = () => {
               </div>
             </div>
           </div>
-          <div className="space-y-2 mb-2">
-            <div className="w-fit" ref={classDescriptionRef}>
+          <div className="mb-2">
+            <div className="w-fit space-y-2" ref={classDescriptionRef}>
               <div className="flex items-center space-x-2">
                 <GrTextAlignFull className="h-4 w-5" />
                 <span>{classDetails[0].description}</span>
