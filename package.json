@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.1",
     "antd": "^5.1.5",
     "axios": "^1.2.3",
     "chart.js": "^4.2.0",

@@ -10,10 +10,11 @@ import PageLayout from '../../components/layout/PageLayout';
 import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList';
 import DashboardTour from '../../components/tour/DashboardTour/index.jsx';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Dashboard = () => {
+  const { user } = useAuth0();
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState();
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
 
@@ -38,14 +39,6 @@ const Dashboard = () => {
     }
   };
 
-  const getProfile = async () => {
-    setUser(await window.electronAPI.getProfile());
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
   useEffect(() => {
     fetchCountMeeting();
     fetchMeetings();
@@ -55,7 +48,7 @@ const Dashboard = () => {
     <PageLayout currentMenu="Dashboard">
       <Title>Dashboard</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
-      <div className="grid grid-cols-6 gap-4 my-6">
+      <div className="grid grid-cols-6 xl:grid-cols-7 gap-4 my-6">
         <div>
           {isLoading ? (
             <Card loading>
@@ -82,9 +75,9 @@ const Dashboard = () => {
           <Subtitle>List of your latest meetings</Subtitle>
         </div>
         <div>
-          <Link to={'/meetings'}>
+          <Link to={'/classes'}>
             <div className="flex items-center space-x-2 text-black/[.60] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
-              <span className="text-sm">View All</span>
+              <span className="text-sm">View From Class</span>
               <span>
                 <FaChevronRight className="mt-1" />
               </span>

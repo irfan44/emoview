@@ -6,7 +6,7 @@ const getMeeting = async () => {
   try {
     const response = await axios.get(`${baseURL}/meeting`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -19,7 +19,7 @@ const getClassMeetings = async ({ meetCode }) => {
   try {
     const response = await axios.get(`${baseURL}/meeting/class/${meetCode}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -32,7 +32,7 @@ const getMeetingById = async (id) => {
   try {
     const response = await axios.get(`${baseURL}/meeting/${id}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -47,7 +47,7 @@ const getMeetingByEmoviewCode = async ({ emoviewCode }) => {
       `${baseURL}/meeting/class/meeting/${emoviewCode}`,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -63,7 +63,7 @@ const getMeetingParticipants = async ({ emoviewCode }) => {
       `${baseURL}/meeting/class/meeting/${emoviewCode}`,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -77,7 +77,7 @@ const countMeeting = async () => {
   try {
     const response = await axios(`${baseURL}/meeting/count`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -105,7 +105,7 @@ const createMeeting = async ({
   try {
     const response = await axios.post(`${baseURL}/meeting`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data;
@@ -126,7 +126,7 @@ const updateMeeting = async ({ emoviewCode, name, description }) => {
       body,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -149,7 +149,7 @@ const setMeetingStatus = async ({ emoviewCode, statusStart, statusEnd }) => {
       body,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -166,7 +166,7 @@ const startRecognition = async (emoviewCode) => {
       { status: 'started' },
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -183,7 +183,7 @@ const stopRecognition = async (code) => {
       { status: 'stopped' },
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -197,7 +197,7 @@ const removeMeeting = async ({ emoviewCode }) => {
   try {
     await axios.delete(`${baseURL}/meeting/class/meeting/${emoviewCode}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
   } catch (error) {
