@@ -5,13 +5,13 @@ const AntdConfig = ({ children }) => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#0066ff',
+          colorPrimary: '#0066da',
           colorBgLayout: '#f1f2f6',
           fontFamily: 'Public Sans',
         },
         components: {
           Menu: {
-            colorItemBgSelected: '#0066ff',
+            colorItemBgSelected: '#0066da',
             colorItemTextSelected: '#ffffff',
             borderRadius: '8px',
           },

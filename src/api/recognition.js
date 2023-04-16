@@ -8,7 +8,7 @@ const getRecognition = async (id, limit) => {
       `${baseURL}/recognition/${id}?limit=${limit}`,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -24,7 +24,7 @@ const getRecognitionById = async (emoviewCode, userId, limit) => {
       `${baseURL}/recognition/${emoviewCode}/${userId}?limit=${limit}`,
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }
     );
@@ -38,7 +38,7 @@ const getOverview = async () => {
   try {
     const response = await axios.get(`${baseURL}/recognition/overview`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -51,7 +51,7 @@ const getSummary = async () => {
   try {
     const response = await axios.get(`${baseURL}/recognition/summary`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -68,7 +68,7 @@ const getArchive = async (ids) => {
   try {
     const response = await axios.post(`${baseURL}/recognition/archive`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -81,7 +81,7 @@ const createRecognition = async () => {
   try {
     const response = await axios.post(`${baseURL}/recognition/`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -94,7 +94,7 @@ const removeRecognition = async (id) => {
   try {
     const response = await axios.delete(`${baseURL}/recognition/${id}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;

@@ -5,7 +5,7 @@ const ParticipantList = ({ meetingParticipants, currentMenu, pageId }) => {
   return (
     <>
       {meetingParticipants ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 xl:grid-cols-5 gap-4">
           {meetingParticipants.map((data) => {
             return (
               <div key={data.userId}>

@@ -15,7 +15,7 @@ const MeetingList = ({ meetings, page }) => {
   return (
     <>
       {checkMeetings() ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 xl:grid-cols-4 gap-4">
           {meetings.map((data) => {
             return (
               <div key={data._id}>

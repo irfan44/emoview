@@ -6,7 +6,7 @@ const getClassList = async () => {
   try {
     const response = await axios.get(`${baseURL}/class`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -19,7 +19,7 @@ const getClassDetailByMeetCode = async ({ meetCode }) => {
   try {
     const response = await axios.get(`${baseURL}/class/${meetCode}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -39,7 +39,7 @@ const createClass = async ({ meetCode, name, description, link }) => {
   try {
     const response = await axios.post(`${baseURL}/class`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data;
@@ -57,7 +57,7 @@ const updateClass = async ({ meetCode, name, description }) => {
   try {
     const response = await axios.patch(`${baseURL}/class/${meetCode}`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -74,7 +74,7 @@ const updateMeetingCount = async ({ meetCode, initialCountOfMeetings }) => {
   try {
     const response = await axios.patch(`${baseURL}/class/${meetCode}`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
     return response.data.data;
@@ -87,7 +87,7 @@ const removeClass = async (id) => {
   try {
     await axios.delete(`${baseURL}/class/${id}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
   } catch (error) {

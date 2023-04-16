@@ -91,13 +91,24 @@ const MeetingDetails = () => {
     }
   };
 
-  const getAccessToken = async () => {
-    const accessToken = await window.electronAPI.getAccessToken();
+  const getAccessToken = () => {
+    const accessToken = localStorage.getItem('accessToken');
     setAccessToken(accessToken);
   };
 
   const openInMeeting = async () => {
-    await window.electronAPI.openFloating(emoviewCode, accessToken);
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.indexOf('electron/') > -1) {
+      await window.electronAPI.openFloating(emoviewCode, accessToken);
+    } else {
+      window.open(
+        `${
+          import.meta.env.VITE_APP_ROOT_URL
+        }/in-meeting-display?id=${emoviewCode}&accessToken=${accessToken}`,
+        '_blank',
+        'location=yes,height=292,width=260,scrollbars=yes,status=yes'
+      );
+    }
   };
 
   const handleStartMeeting = async () => {

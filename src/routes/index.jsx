@@ -11,6 +11,7 @@ import StudentList from '../pages/StudentList';
 import Classes from '../pages/Classes/index.jsx';
 import ClassMeetings from '../pages/Meetings/index.jsx';
 import StudentsMeetings from '../pages/StudentsMeetings/index.jsx';
+import Callback from '../pages/Callback/index.jsx';
 
 const Routes = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const Routes = createBrowserRouter([
         <Dashboard />
       </BaseLayout>
     ),
+  },
+  {
+    path: '/callback',
+    element: <Callback />,
   },
   {
     path: '/classes',

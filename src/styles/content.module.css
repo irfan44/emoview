@@ -1,15 +1,34 @@
 .content {
-  height: calc(100vh - 46px);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  padding-top: 16px;
-  padding-bottom: 32px;
-  padding-left: 24px;
-  padding-right: 24px;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  height: calc(100vh - 63px);
+  overflow-y: auto;
+  padding: 16px 6px 16px 24px;
+  scrollbar-gutter: stable;
 }
 
 .content::-webkit-scrollbar {
+  width: 18px;
+  height: 0;
+}
+
+.content::-webkit-scrollbar-thumb {
+  height: 1em;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-border-radius: 8px;
+  background-color: #0066da;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 102, 218, 0.8);
+}
+
+.content::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
   display: none;
+}
+
+.content::-webkit-scrollbar-corner {
+  background-color: transparent;
 }

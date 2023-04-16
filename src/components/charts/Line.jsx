@@ -97,6 +97,7 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const options = {
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -195,9 +196,11 @@ const Linechart = ({ data, withImage }) => {
           </div>
         </div>
       </div>
-      <div className="text-center mb-2">
+      <div className="text-center my-4">
         {withImage && <img className="mb-4 w-36" src={currentImage()} />}
-        <Line data={chartData} options={options} />
+        <div>
+          <Line data={chartData} options={options} height={400} />
+        </div>
       </div>
       <div>
         <span className="text-black/[.60] text-xs">

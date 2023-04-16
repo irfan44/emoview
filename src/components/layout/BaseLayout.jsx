@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Dropdown, Layout, Menu, theme } from 'antd';
+import { Button, Dropdown, Layout, Menu, Spin, theme } from 'antd';
 import { HiChevronDown, HiMenu, HiOutlineLogout, HiX } from 'react-icons/hi';
 import { useLocation } from 'react-router-dom';
 import menuItems from '../../data/menuItems';
@@ -8,15 +8,19 @@ import Style from '../../styles/header.module.css';
 import GetExtension from '../extension/GetExtension';
 import EmptyHolder from '../placeholders/EmptyHolder';
 import ArchiveModal from '../meeting/ArchiveModal';
+import LoginButton from '../auth/LoginButton.jsx';
+import { useAuth0 } from '@auth0/auth0-react';
+import ProfileDropdown from '../auth/ProfileDropdown.jsx';
+import PageLoading from '../loading/PageLoading.jsx';
 
 const { Content, Header, Sider } = Layout;
 
 const { useToken } = theme;
 
 const BaseLayout = ({ children }) => {
-  const [user, setUser] = useState();
-  const [role, setRole] = useState();
+  const { isAuthenticated, isLoading, logout, user } = useAuth0();
   const [collapsed, setCollapsed] = useState(true);
+  const [role, setRole] = useState();
 
   const router = useLocation();
   const selectedLocation = router.pathname;
@@ -37,7 +41,7 @@ const BaseLayout = ({ children }) => {
       label: (
         <a
           className="flex items-center space-x-2"
-          onClick={() => window.electronAPI.logOut()}
+          onClick={() => handleLogout()}
         >
           <HiOutlineLogout />
           <span className="text-red-700">Logout</span>
@@ -46,16 +50,26 @@ const BaseLayout = ({ children }) => {
     },
   ];
 
+  const handleLogout = () => {
+    logout({
+      logoutParams: {
+        returnTo: import.meta.env.VITE_APP_ROOT_URL,
+      },
+    });
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+  };
+
   const getProfile = async () => {
-    const profile = await window.electronAPI.getProfile();
-    setUser(profile);
-    const { [`https://customclaim.com/role`]: role } = profile;
-    setRole(role[0]);
+    if (isAuthenticated) {
+      const { [`https://customclaim.com/role`]: role } = user;
+      setRole(role[0]);
+    }
   };
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -93,37 +107,13 @@ const BaseLayout = ({ children }) => {
           />
           <span className="font-bold text-xl ml-2">Emoview</span>
         </div>
-        {user && (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginRight: '132px',
-            }}
-          >
-            <Dropdown menu={{ items }}>
-              <a
-                className="text-black/[.60] hover:text-black"
-                onClick={(e) => e.preventDefault()}
-              >
-                <div className="flex items-center space-x-2">
-                  <img
-                    src={user.picture}
-                    alt="Profile Picture"
-                    style={{ borderRadius: '50%' }}
-                    height="30"
-                    width="30"
-                    referrerPolicy="no-referrer"
-                  />
-                  <span>{user.nickname}</span>
-                  <span>
-                    <HiChevronDown style={{ paddingTop: '4px' }} />
-                  </span>
-                </div>
-              </a>
-            </Dropdown>
-          </div>
-        )}
+        <div className="flex items-center mr-36">
+          {user && !isLoading ? (
+            <ProfileDropdown user={user} items={items} />
+          ) : (
+            <LoginButton isLoading={isLoading} />
+          )}
+        </div>
       </Header>
       <Layout>
         <Sider
@@ -150,12 +140,15 @@ const BaseLayout = ({ children }) => {
           />
         </Sider>
         <Content>
-          {role === 'teacher' ? (
+          {isLoading ? (
+            <PageLoading />
+          ) : role === 'teacher' ? (
             children
+          ) : !isAuthenticated ? (
+            <EmptyHolder title="Welcome! Please login first" />
           ) : (
             <EmptyHolder title="Welcome! Please contact administrator to change your role to teacher" />
           )}
-          {/* {children} */}
         </Content>
       </Layout>
     </Layout>

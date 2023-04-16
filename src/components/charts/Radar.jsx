@@ -44,6 +44,7 @@ const RadarChart = ({ data }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       r: {
         pointLabels: {
@@ -86,7 +87,14 @@ const RadarChart = ({ data }) => {
         <Empty />
       ) : (
         <div className="text-center">
-          <Radar data={chartData} options={options} />
+          <div className="my-4">
+            <Radar
+              data={chartData}
+              options={options}
+              height={400}
+              width={400}
+            />
+          </div>
         </div>
       )}
     </Card>
