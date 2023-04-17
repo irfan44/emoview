@@ -16,6 +16,7 @@ import Subtitle from '../common/typography/Subtitle';
 import { LINE_CHART_SUBTITLE, LINE_CHART_TITLE } from '../../data/constants';
 import ExportModal from '../meeting/ExportModal';
 import CustomLegend from './CustomLegend';
+import Style from '../../styles/lineChart.module.css';
 
 ChartJS.register(
   LinearScale,
@@ -238,7 +239,7 @@ const Linechart = ({ data, withImage }) => {
               );
             })}
         </div>
-        <div style={{ overflowX: 'auto' }}>
+        <div className={Style.lineChart} style={{ overflowX: 'auto' }}>
           <div
             ref={chartContainerRef}
             style={{
