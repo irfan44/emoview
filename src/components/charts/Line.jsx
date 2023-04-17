@@ -238,7 +238,7 @@ const Linechart = ({ data, withImage }) => {
               );
             })}
         </div>
-        <div style={{ overflowX: 'scroll' }}>
+        <div style={{ overflowX: 'auto' }}>
           <div
             ref={chartContainerRef}
             style={{
