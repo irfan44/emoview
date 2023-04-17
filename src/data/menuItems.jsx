@@ -4,11 +4,7 @@ import getItem from '../helpers/getItem';
 
 const menuItems = [
   getItem(<Link to="/">Dashboard</Link>, '/', <FaHome />),
-  getItem(
-    <Link to="/classes">Classes</Link>,
-    '/classes',
-    <FaChalkboardTeacher />
-  ),
+  getItem(<Link to="/class">Class</Link>, '/class', <FaChalkboardTeacher />),
   getItem(<Link to="/students">Student Reports</Link>, '/students', <FaUser />),
 ];
 

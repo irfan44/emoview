@@ -32,7 +32,7 @@ const Classes = () => {
   }, []);
 
   return (
-    <PageLayout currentMenu="Classes">
+    <PageLayout currentMenu="Class">
       <div
         style={{
           display: 'flex',
@@ -43,7 +43,7 @@ const Classes = () => {
         }}
       >
         <div>
-          <Title>Classes</Title>
+          <Title>Class</Title>
           <Subtitle>List of all your classes</Subtitle>
         </div>
         <div>
@@ -60,7 +60,7 @@ const Classes = () => {
         {isLoading ? (
           <ClassListLoading />
         ) : (
-          <ClassList classList={classes} currentMenu={'classes'} />
+          <ClassList classList={classes} currentMenu={'class'} />
         )}
       </div>
       <ClassesTour addClassRef={addClassRef} refreshRef={refreshRef} />

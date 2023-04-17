@@ -75,7 +75,7 @@ const Dashboard = () => {
           <Subtitle>List of your latest meetings</Subtitle>
         </div>
         <div>
-          <Link to={'/classes'}>
+          <Link to={'/class'}>
             <div className="flex items-center space-x-2 text-black/[.60] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
               <span className="text-sm">View From Class</span>
               <span>
@@ -88,7 +88,7 @@ const Dashboard = () => {
       {isLoading ? (
         <LoadingMeetingList />
       ) : (
-        <MeetingList meetings={meetings} page={'classes'} />
+        <MeetingList meetings={meetings} page={'class'} />
       )}
       <DashboardTour />
     </PageLayout>

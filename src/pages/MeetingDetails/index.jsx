@@ -140,7 +140,7 @@ const MeetingDetails = () => {
           statusEnd: true,
         });
         handleStopMeeting();
-        localStorage.removeItem(`classes/${meetCode}/${emoviewCode}/started`);
+        localStorage.removeItem(`class/${meetCode}/${emoviewCode}/started`);
         fetchMeetingById();
       },
     });
@@ -178,7 +178,7 @@ const MeetingDetails = () => {
           meetCode,
           initialCountOfMeetings: countOfMeetings,
         });
-        navigate(`/classes/${meetCode}`);
+        navigate(`/class/${meetCode}`);
       },
     });
   };
@@ -186,19 +186,16 @@ const MeetingDetails = () => {
   const handleSwitch = (checked) => {
     if (checked) {
       handleStartRecognition();
-      localStorage.setItem(
-        `classes/${meetCode}/${emoviewCode}/started`,
-        checked
-      );
+      localStorage.setItem(`class/${meetCode}/${emoviewCode}/started`, checked);
     } else {
       handleStopRecognition();
-      localStorage.removeItem(`classes/${meetCode}/${emoviewCode}/started`);
+      localStorage.removeItem(`class/${meetCode}/${emoviewCode}/started`);
     }
   };
 
   const getSwitchStatus = () => {
     const status = localStorage.getItem(
-      `classes/${meetCode}/${emoviewCode}/started`
+      `class/${meetCode}/${emoviewCode}/started`
     );
     if (status === null) {
       setRecognitionStatus(false);
@@ -240,7 +237,7 @@ const MeetingDetails = () => {
   return (
     <>
       {meetingData && (
-        <PageLayout backToPrevious prevLink={`classes/${meetCode}`}>
+        <PageLayout backToPrevious prevLink={`class/${meetCode}`}>
           <Header
             name={meetingData.name}
             subject={meetingData.subject}
@@ -290,7 +287,7 @@ const MeetingDetails = () => {
                   key: 'participants',
                   children: (
                     <ParticipantList
-                      currentMenu={`classes/${meetCode}`}
+                      currentMenu={`class/${meetCode}`}
                       pageId={emoviewCode}
                       meetingParticipants={meetingParticipants}
                     />

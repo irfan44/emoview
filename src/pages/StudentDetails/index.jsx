@@ -13,7 +13,7 @@ import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import Recognition from '../../components/studentDetails/Recognition.jsx';
-import { getRecognition } from '../../api/recognition.js';
+import { getRecognition, getRecognitionById } from '../../api/recognition.js';
 import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentDetails = () => {
@@ -61,7 +61,7 @@ const StudentDetails = () => {
   const fetchRecognitionOverview = async (emoviewCode, limit) => {
     try {
       setIsLoading(true);
-      const data = await getRecognition(emoviewCode, limit);
+      const data = await getRecognitionById(emoviewCode, userId, limit);
       setStudentOverview(data.recognitionsOverview);
       setStudentSummary(data.recognitionsSummary);
       setIsLoading(false);

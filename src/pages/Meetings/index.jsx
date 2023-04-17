@@ -63,7 +63,7 @@ const ClassMeetings = () => {
       cancelButtonProps: { type: 'text' },
       onOk: async () => {
         await removeClass(meetCode);
-        navigate('/classes');
+        navigate('/class');
       },
     });
   };
@@ -102,8 +102,8 @@ const ClassMeetings = () => {
       {classDetails && (
         <PageLayout
           backToMenu
-          prevMenu="Classes"
-          prevLink="classes"
+          prevMenu="Class"
+          prevLink="class"
           currentMenu={classDetails[0].name}
         >
           <div
@@ -168,7 +168,7 @@ const ClassMeetings = () => {
             <MeetingListLoading />
           ) : (
             <div className="mt-6">
-              <MeetingList meetings={meetings} page={`classes`} />
+              <MeetingList meetings={meetings} page={`class`} />
             </div>
           )}
           <MeetingsTour
