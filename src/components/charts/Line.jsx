@@ -1,5 +1,5 @@
 import { Card, Switch, Tooltip } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -15,6 +15,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import Subtitle from '../common/typography/Subtitle';
 import { LINE_CHART_SUBTITLE, LINE_CHART_TITLE } from '../../data/constants';
 import ExportModal from '../meeting/ExportModal';
+import CustomLegend from './CustomLegend';
 
 ChartJS.register(
   LinearScale,
@@ -29,6 +30,11 @@ ChartJS.register(
 const Linechart = ({ data, withImage }) => {
   const [currentIndex, setCurrentIndex] = useState();
   const [isSimple, setsSimple] = useState(false);
+  const [legendArray, setLegendArray] = useState();
+  const [chartElement, setChartElement] = useState();
+  const [hideDataSet, setHideDataSet] = useState(false);
+
+  const chartRef = useRef(null);
 
   const simpleData = (data) => {
     return data.slice(-15);
@@ -100,8 +106,7 @@ const Linechart = ({ data, withImage }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-        align: 'center',
+        display: false,
       },
       tooltip: {
         itemSort(a, b) {
@@ -179,6 +184,31 @@ const Linechart = ({ data, withImage }) => {
     setsSimple(checked);
   };
 
+  const handleOnClickLegend = (index) => {
+    setHideDataSet(!hideDataSet);
+    if (!hideDataSet) {
+      chartElement.setDatasetVisibility(index, false);
+    } else {
+      chartElement.setDatasetVisibility(index, true);
+    }
+    chartElement.update();
+  };
+
+  useEffect(() => {
+    const chart = ChartJS.getChart(chartRef.current);
+    setChartElement(chart);
+    const legend = chart.options.plugins.legend.labels.generateLabels(chart);
+    let legendArr = [];
+    legend.forEach((item) => {
+      const index = item.datasetIndex;
+      const isHidden = item.hidden;
+      const strokeStyle = item.strokeStyle;
+      const text = item.text;
+      legendArr.push({ index, isHidden, strokeStyle, text });
+    });
+    setLegendArray(legendArr);
+  }, []);
+
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
       <div className="flex justify-between mb-2">
@@ -198,8 +228,25 @@ const Linechart = ({ data, withImage }) => {
       </div>
       <div className="text-center my-4">
         {withImage && <img className="mb-4 w-36" src={currentImage()} />}
+        <div className="flex justify-center space-x-4 mb-4">
+          {legendArray &&
+            legendArray.map((item) => {
+              return (
+                <CustomLegend
+                  key={item.index}
+                  item={item}
+                  chartElement={chartElement}
+                />
+              );
+            })}
+        </div>
         <div>
-          <Line data={chartData} options={options} height={400} />
+          <Line
+            ref={chartRef}
+            data={chartData}
+            options={options}
+            height={400}
+          />
         </div>
       </div>
       <div>
