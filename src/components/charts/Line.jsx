@@ -66,7 +66,7 @@ const Linechart = ({ data, withImage }) => {
         label: 'Sad',
         data: !isSimple ? data.sad : simpleData(data.sad),
         backgroundColor: 'transparent',
-        borderColor: '#2962FF',
+        borderColor: '#001AFF',
         borderWidth: 1,
         tension: 0.3,
       },
