@@ -23,7 +23,6 @@ import {
 } from '../../api/class.js';
 import MeetingDetailsTour from '../../components/tour/MeetingDetailsTour/index.jsx';
 import PreStartMeetingTour from '../../components/tour/PreStartMeetingTour/index.jsx';
-import recognitionDetailsExample from '../../data/mock/recognitionsDetail-example.json';
 
 const { confirm } = Modal;
 
@@ -211,7 +210,7 @@ const MeetingDetails = () => {
   const fetchRecognitionOverview = async (emoviewCode, limit) => {
     try {
       const data = await getRecognition(emoviewCode, limit);
-      setRecognitionsDetail(recognitionDetailsExample);
+      setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
     } catch (error) {
