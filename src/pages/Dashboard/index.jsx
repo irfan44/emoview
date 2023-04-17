@@ -45,8 +45,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <PageLayout currentMenu="Dashboard">
-      <Title>Dashboard</Title>
+    <PageLayout currentMenu="Home">
+      <Title>Home</Title>
       {user && <Subtitle>Welcome, {user.name}</Subtitle>}
       <div className="grid grid-cols-6 xl:grid-cols-7 gap-4 my-6">
         <div>

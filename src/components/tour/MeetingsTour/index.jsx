@@ -29,7 +29,7 @@ const MeetingsTour = ({
       target: addMeetingRef.current,
     },
     {
-      title: 'Class not showing?',
+      title: 'Meetings not showing?',
       description: 'Click this button to refresh meetings data',
       target: refreshRef.current,
     },
