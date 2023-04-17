@@ -32,8 +32,10 @@ const Linechart = ({ data, withImage }) => {
   const [isSimple, setsSimple] = useState(false);
   const [legendArray, setLegendArray] = useState();
   const [chartElement, setChartElement] = useState();
-  const [hideDataSet, setHideDataSet] = useState(false);
+  const [isLong, setIsLong] = useState(false);
+  const [width, setWidth] = useState();
 
+  const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
 
   const simpleData = (data) => {
@@ -184,16 +186,6 @@ const Linechart = ({ data, withImage }) => {
     setsSimple(checked);
   };
 
-  const handleOnClickLegend = (index) => {
-    setHideDataSet(!hideDataSet);
-    if (!hideDataSet) {
-      chartElement.setDatasetVisibility(index, false);
-    } else {
-      chartElement.setDatasetVisibility(index, true);
-    }
-    chartElement.update();
-  };
-
   useEffect(() => {
     const chart = ChartJS.getChart(chartRef.current);
     setChartElement(chart);
@@ -208,6 +200,12 @@ const Linechart = ({ data, withImage }) => {
     });
     setLegendArray(legendArr);
   }, []);
+
+  useEffect(() => {
+    setIsLong(data.labels.length > 15);
+    // setIsLong(false);
+    setWidth(chartContainerRef.current.offsetWidth + data.labels.length * 10);
+  }, [data]);
 
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
@@ -240,13 +238,21 @@ const Linechart = ({ data, withImage }) => {
               );
             })}
         </div>
-        <div>
-          <Line
-            ref={chartRef}
-            data={chartData}
-            options={options}
-            height={400}
-          />
+        <div style={{ overflowX: 'scroll' }}>
+          <div
+            ref={chartContainerRef}
+            style={{
+              position: 'relative',
+              width: !isSimple && isLong ? `${width}px` : '100%',
+            }}
+          >
+            <Line
+              ref={chartRef}
+              data={chartData}
+              options={options}
+              height={400}
+            />
+          </div>
         </div>
       </div>
       <div>
