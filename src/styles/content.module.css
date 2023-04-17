@@ -15,12 +15,12 @@
   border: 4px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
   -webkit-border-radius: 8px;
-  background-color: #0066da;
+  background-color: rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
 }
 
 .content::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 102, 218, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .content::-webkit-scrollbar-button {
