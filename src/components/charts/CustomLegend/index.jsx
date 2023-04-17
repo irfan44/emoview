@@ -22,7 +22,7 @@ const CustomLegend = ({ item, chartElement }) => {
         style={{
           width: '32px',
           height: '12px',
-          border: `1px solid ${item.strokeStyle}`,
+          border: `1.5px solid ${item.strokeStyle}`,
         }}
       ></div>
       <span

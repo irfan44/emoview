@@ -27,7 +27,7 @@ const Routes = createBrowserRouter([
     element: <Callback />,
   },
   {
-    path: '/classes',
+    path: '/class',
     element: (
       <BaseLayout>
         <Classes />
@@ -35,7 +35,7 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/classes/:meetCode',
+    path: '/class/:meetCode',
     element: (
       <BaseLayout>
         <ClassMeetings />
@@ -43,7 +43,7 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/classes/:meetCode/:emoviewCode',
+    path: '/class/:meetCode/:emoviewCode',
     element: (
       <BaseLayout>
         <MeetingDetails />
@@ -51,7 +51,7 @@ const Routes = createBrowserRouter([
     ),
   },
   {
-    path: '/classes/:meetCode/:emoviewCode/:userId',
+    path: '/class/:meetCode/:emoviewCode/:userId',
     element: (
       <BaseLayout>
         <UserEmotionDetails />

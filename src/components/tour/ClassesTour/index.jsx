@@ -6,7 +6,7 @@ const ClassesTour = ({ addClassRef, refreshRef }) => {
 
   const steps = [
     {
-      title: 'Welcome to Classes page!',
+      title: 'Welcome to Class page!',
       description:
         'A class consist of one or more meetings which are recurring. A class is enables you to use one Google Meet link in multiple meetings.',
       target: null,
@@ -18,7 +18,7 @@ const ClassesTour = ({ addClassRef, refreshRef }) => {
     },
     {
       title: 'Class not showing?',
-      description: 'Click this button to refresh classes data',
+      description: 'Click this button to refresh class data',
       target: refreshRef.current,
     },
   ];
