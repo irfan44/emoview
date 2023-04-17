@@ -77,7 +77,7 @@ const Dashboard = () => {
         <div>
           <Link to={'/class'}>
             <div className="flex items-center space-x-2 text-black/[.60] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
-              <span className="text-sm">View From Class</span>
+              <span className="text-sm">View from Class</span>
               <span>
                 <FaChevronRight className="mt-1" />
               </span>
