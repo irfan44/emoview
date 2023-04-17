@@ -106,7 +106,7 @@ const MeetingDetails = () => {
           import.meta.env.VITE_APP_ROOT_URL
         }/in-meeting-display?id=${emoviewCode}&accessToken=${accessToken}`,
         '_blank',
-        'location=yes,height=292,width=260,scrollbars=yes,status=yes'
+        'location=yes,height=320,width=260,scrollbars=yes,status=yes'
       );
     }
   };
