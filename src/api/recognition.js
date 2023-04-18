@@ -34,6 +34,24 @@ const getRecognitionById = async (emoviewCode, userId, limit) => {
   }
 };
 
+const getRecognitionByIds = async (emoviewCode, userIds, limit) => {
+  try {
+    const body = { ids: userIds };
+    const response = await axios.post(
+      `${baseURL}/recognition/reports/${emoviewCode}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getOverview = async () => {
   try {
     const response = await axios.get(`${baseURL}/recognition/overview`, {
@@ -106,6 +124,7 @@ const removeRecognition = async (id) => {
 export {
   getRecognition,
   getRecognitionById,
+  getRecognitionByIds,
   getOverview,
   getSummary,
   getArchive,
