@@ -12,6 +12,7 @@ import PageLayout from '../../components/layout/PageLayout.jsx';
 import { getClassDetailByMeetCode } from '../../api/class.js';
 import PageLoading from '../../components/loading/PageLoading.jsx';
 import exportFromJSON from 'export-from-json';
+import ExportMeetingReport from '../../components/students/ExportMeetingReport.jsx';
 
 const StudentList = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,66 +68,66 @@ const StudentList = () => {
     },
   ];
 
-  const handleFetchMeetingReport = async () => {
-    try {
-      let ids = [];
-      meetingData.participants.map((value) => {
-        ids.push(value.userId);
-      });
-      const data = await getRecognitionByIds(emoviewCode, ids, ' ');
-      let datas = [];
-      data.forEach((values) => {
-        const transpose = (array) =>
-          array[0].map((_, index) => array.map((row) => row[index]));
-        const recognitionsOverview = [
-          ...transpose(Object.values(values.recognitionsOverview)),
-        ];
-        const recognitionsSummary = [
-          ...transpose(Object.values(values.recognitionsSummary)),
-        ];
-        let array = [];
-        array.push(['User Id', values.userId]);
-        recognitionsOverview.forEach((data) => {
-          array.push(data);
-        });
-        recognitionsSummary.forEach((data) => {
-          array.push(data);
-        });
-        const collectedValue = [...transpose(Object.values(array))];
-        datas.push(collectedValue[1]);
-      });
-      function toObject(keys, values) {
-        const obj = keys.reduce((accumulator, key, index) => {
-          return { ...accumulator, [key]: values[index] };
-        }, {});
-
-        return obj;
-      }
-      let abc = [];
-      const labels = [
-        'User',
-        'Neutral',
-        'Happy',
-        'Sad',
-        'Angry',
-        'Fearful',
-        'Disgusted',
-        'Surprised',
-        'Positive',
-        'Negative',
-      ];
-      datas.forEach((value) => {
-        abc.push(toObject(labels, value));
-      });
-      exportFromJSON({
-        data: abc,
-        fileName: `Students-Report_${meetingData.name}-Meeting`,
-        exportType: exportFromJSON.types.xls,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleFetchMeetingReport = async () => {
+  //   try {
+  //     let ids = [];
+  //     meetingData.participants.map((value) => {
+  //       ids.push(value.userId);
+  //     });
+  //     const data = await getRecognitionByIds(emoviewCode, ids, ' ');
+  //     let datas = [];
+  //     data.forEach((values) => {
+  //       const transpose = (array) =>
+  //         array[0].map((_, index) => array.map((row) => row[index]));
+  //       const recognitionsOverview = [
+  //         ...transpose(Object.values(values.recognitionsOverview)),
+  //       ];
+  //       const recognitionsSummary = [
+  //         ...transpose(Object.values(values.recognitionsSummary)),
+  //       ];
+  //       let array = [];
+  //       array.push(['User Id', values.userId]);
+  //       recognitionsOverview.forEach((data) => {
+  //         array.push(data);
+  //       });
+  //       recognitionsSummary.forEach((data) => {
+  //         array.push(data);
+  //       });
+  //       const collectedValue = [...transpose(Object.values(array))];
+  //       datas.push(collectedValue[1]);
+  //     });
+  //     function toObject(keys, values) {
+  //       const obj = keys.reduce((accumulator, key, index) => {
+  //         return { ...accumulator, [key]: values[index] };
+  //       }, {});
+  //
+  //       return obj;
+  //     }
+  //     let abc = [];
+  //     const labels = [
+  //       'User',
+  //       'Neutral',
+  //       'Happy',
+  //       'Sad',
+  //       'Angry',
+  //       'Fearful',
+  //       'Disgusted',
+  //       'Surprised',
+  //       'Positive',
+  //       'Negative',
+  //     ];
+  //     datas.forEach((value) => {
+  //       abc.push(toObject(labels, value));
+  //     });
+  //     exportFromJSON({
+  //       data: abc,
+  //       fileName: `Students-Report_${meetingData.name}-Meeting`,
+  //       exportType: exportFromJSON.types.xls,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchMeetingById();
@@ -141,9 +142,11 @@ const StudentList = () => {
               <Title>{meetingData.name}</Title>
               <Subtitle>{meetingData.subject}</Subtitle>
             </div>
-            <Button type="primary" onClick={() => handleFetchMeetingReport()}>
-              Export
-            </Button>
+            <ExportMeetingReport
+              emoviewCode={emoviewCode}
+              participants={meetingData.participants}
+              meetingName={meetingData.name}
+            />
           </div>
           <Table
             rowKey="_id"
