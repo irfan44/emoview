@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isElectron from '../utils/isElectron.js';
 
 const baseURL = import.meta.env.VITE_BE_ENDPOINT;
 
@@ -8,7 +9,11 @@ const getRecognition = async (id, limit) => {
       `${baseURL}/recognition/${id}?limit=${limit}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -24,7 +29,33 @@ const getRecognitionById = async (emoviewCode, userId, limit) => {
       `${baseURL}/recognition/${emoviewCode}/${userId}?limit=${limit}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getRecognitionByIds = async (emoviewCode, userIds, limit) => {
+  try {
+    const body = { ids: userIds };
+    const response = await axios.post(
+      `${baseURL}/recognition/reports/${emoviewCode}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -38,7 +69,11 @@ const getOverview = async () => {
   try {
     const response = await axios.get(`${baseURL}/recognition/overview`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -51,7 +86,11 @@ const getSummary = async () => {
   try {
     const response = await axios.get(`${baseURL}/recognition/summary`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -68,7 +107,11 @@ const getArchive = async (ids) => {
   try {
     const response = await axios.post(`${baseURL}/recognition/archive`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -81,7 +124,11 @@ const createRecognition = async () => {
   try {
     const response = await axios.post(`${baseURL}/recognition/`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -94,7 +141,11 @@ const removeRecognition = async (id) => {
   try {
     const response = await axios.delete(`${baseURL}/recognition/${id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -106,6 +157,7 @@ const removeRecognition = async (id) => {
 export {
   getRecognition,
   getRecognitionById,
+  getRecognitionByIds,
   getOverview,
   getSummary,
   getArchive,

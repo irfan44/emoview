@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isElectron from '../utils/isElectron.js';
 
 const baseURL = import.meta.env.VITE_BE_ENDPOINT;
 
@@ -6,7 +7,11 @@ const getClassList = async () => {
   try {
     const response = await axios.get(`${baseURL}/class`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -19,7 +24,11 @@ const getClassDetailByMeetCode = async ({ meetCode }) => {
   try {
     const response = await axios.get(`${baseURL}/class/${meetCode}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -39,7 +48,11 @@ const createClass = async ({ meetCode, name, description, link }) => {
   try {
     const response = await axios.post(`${baseURL}/class`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data;
@@ -57,7 +70,11 @@ const updateClass = async ({ meetCode, name, description }) => {
   try {
     const response = await axios.patch(`${baseURL}/class/${meetCode}`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -74,7 +91,11 @@ const updateMeetingCount = async ({ meetCode, initialCountOfMeetings }) => {
   try {
     const response = await axios.patch(`${baseURL}/class/${meetCode}`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -87,7 +108,11 @@ const removeClass = async (id) => {
   try {
     await axios.delete(`${baseURL}/class/${id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
   } catch (error) {

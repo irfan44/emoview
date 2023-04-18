@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isElectron from '../utils/isElectron.js';
 
 const baseURL = import.meta.env.VITE_BE_ENDPOINT;
 
@@ -6,7 +7,11 @@ const getMeeting = async () => {
   try {
     const response = await axios.get(`${baseURL}/meeting`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -19,7 +24,11 @@ const getClassMeetings = async ({ meetCode }) => {
   try {
     const response = await axios.get(`${baseURL}/meeting/class/${meetCode}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -32,7 +41,11 @@ const getMeetingById = async (id) => {
   try {
     const response = await axios.get(`${baseURL}/meeting/${id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -47,7 +60,11 @@ const getMeetingByEmoviewCode = async ({ emoviewCode }) => {
       `${baseURL}/meeting/class/meeting/${emoviewCode}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -63,7 +80,11 @@ const getMeetingParticipants = async ({ emoviewCode }) => {
       `${baseURL}/meeting/class/meeting/${emoviewCode}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -77,7 +98,11 @@ const countMeeting = async () => {
   try {
     const response = await axios(`${baseURL}/meeting/count`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -105,7 +130,11 @@ const createMeeting = async ({
   try {
     const response = await axios.post(`${baseURL}/meeting`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data;
@@ -126,7 +155,11 @@ const updateMeeting = async ({ emoviewCode, name, description }) => {
       body,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -149,7 +182,11 @@ const setMeetingStatus = async ({ emoviewCode, statusStart, statusEnd }) => {
       body,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -166,7 +203,11 @@ const startRecognition = async (emoviewCode) => {
       { status: 'started' },
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -183,7 +224,11 @@ const stopRecognition = async (code) => {
       { status: 'stopped' },
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -197,7 +242,11 @@ const removeMeeting = async ({ emoviewCode }) => {
   try {
     await axios.delete(`${baseURL}/meeting/class/meeting/${emoviewCode}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
   } catch (error) {

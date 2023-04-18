@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isElectron from '../utils/isElectron.js';
 
 const baseURL = import.meta.env.VITE_BE_ENDPOINT;
 
@@ -23,7 +24,11 @@ const createUser = async (
     };
     const response = await axios.post(`${baseURL}/user`, body, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data.data;
@@ -36,7 +41,11 @@ const getUserById = async (id) => {
   try {
     const response = await axios.get(`${baseURL}/user/${id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -49,7 +58,11 @@ const getUserByUserId = async (userId) => {
   try {
     const response = await axios.get(`${baseURL}/user/userId/${userId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -62,7 +75,11 @@ const getUserOverview = async (userId) => {
   try {
     const response = await axios.get(`${baseURL}/user/${userId}/overview`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -75,7 +92,11 @@ const getUserSummary = async (userId) => {
   try {
     const response = await axios.get(`${baseURL}/user/${userId}/summary`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -88,7 +109,11 @@ const getUserStudent = async () => {
   try {
     const response = await axios.get(`${baseURL}/user?role=student`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -103,7 +128,11 @@ const getUserSameMeeting = async ({ emoviewCode }) => {
       `${baseURL}/user/same-meeting/${emoviewCode}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -119,7 +148,11 @@ const getUserStudentAtMeeting = async (meetingCode) => {
       `${baseURL}/user?role=student&meetingId=${meetingCode}`,
       {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );

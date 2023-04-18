@@ -12,6 +12,7 @@ import LoginButton from '../auth/LoginButton.jsx';
 import { useAuth0 } from '@auth0/auth0-react';
 import ProfileDropdown from '../auth/ProfileDropdown.jsx';
 import PageLoading from '../loading/PageLoading.jsx';
+import isElectron from '../../utils/isElectron.js';
 
 const { Content, Header, Sider } = Layout;
 
@@ -20,7 +21,10 @@ const { useToken } = theme;
 const BaseLayout = ({ children }) => {
   const { isAuthenticated, isLoading, logout, user } = useAuth0();
   const [collapsed, setCollapsed] = useState(true);
+  const [userProfile, setUserProfile] = useState();
   const [role, setRole] = useState();
+  const [loading, setLoading] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const router = useLocation();
   const selectedLocation = router.pathname;
@@ -51,19 +55,51 @@ const BaseLayout = ({ children }) => {
   ];
 
   const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: import.meta.env.VITE_APP_ROOT_URL,
-      },
-    });
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
+    if (!isElectron()) {
+      logout({
+        logoutParams: {
+          returnTo: import.meta.env.VITE_APP_ROOT_URL,
+        },
+      });
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+    } else {
+      window.electronAPI.logOut();
+    }
   };
 
   const getProfile = async () => {
-    if (isAuthenticated) {
-      const { [`https://customclaim.com/role`]: role } = user;
+    if (!isElectron()) {
+      if (isAuthenticated) {
+        setUserProfile(user);
+        const { [`https://customclaim.com/role`]: role } = user;
+        setRole(role[0]);
+      }
+    } else {
+      const profile = await window.electronAPI.getProfile();
+      setUserProfile(profile);
+      const { [`https://customclaim.com/role`]: role } = profile;
       setRole(role[0]);
+    }
+  };
+
+  const setContent = (children) => {
+    if (!isElectron()) {
+      return isLoading ? (
+        <PageLoading />
+      ) : role === 'teacher' ? (
+        children
+      ) : !isAuthenticated ? (
+        <EmptyHolder title="Welcome! Please login first" />
+      ) : (
+        <EmptyHolder title="Welcome! Please contact administrator to change your role to teacher" />
+      );
+    } else {
+      return role === 'teacher' ? (
+        children
+      ) : (
+        <EmptyHolder title="Welcome! Please contact administrator to change your role to teacher" />
+      );
     }
   };
 
@@ -108,10 +144,12 @@ const BaseLayout = ({ children }) => {
           <span className="font-bold text-xl ml-2">Emoview</span>
         </div>
         <div className="flex items-center mr-36">
-          {user && !isLoading ? (
-            <ProfileDropdown user={user} items={items} />
-          ) : (
+          {userProfile && !isLoading ? (
+            <ProfileDropdown user={userProfile} items={items} />
+          ) : !isElectron() ? (
             <LoginButton isLoading={isLoading} />
+          ) : (
+            <></>
           )}
         </div>
       </Header>
@@ -139,17 +177,7 @@ const BaseLayout = ({ children }) => {
             }}
           />
         </Sider>
-        <Content>
-          {isLoading ? (
-            <PageLoading />
-          ) : role === 'teacher' ? (
-            children
-          ) : !isAuthenticated ? (
-            <EmptyHolder title="Welcome! Please login first" />
-          ) : (
-            <EmptyHolder title="Welcome! Please contact administrator to change your role to teacher" />
-          )}
-        </Content>
+        <Content>{setContent(children)}</Content>
       </Layout>
     </Layout>
   );
