@@ -23,6 +23,7 @@ import {
 } from '../../api/class.js';
 import MeetingDetailsTour from '../../components/tour/MeetingDetailsTour/index.jsx';
 import PreStartMeetingTour from '../../components/tour/PreStartMeetingTour/index.jsx';
+import isElectron from '../../utils/isElectron.js';
 
 const { confirm } = Modal;
 
@@ -97,8 +98,7 @@ const MeetingDetails = () => {
   };
 
   const openInMeeting = async () => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    if (userAgent.indexOf('electron/') > -1) {
+    if (isElectron()) {
       await window.electronAPI.openFloating(emoviewCode, accessToken);
     } else {
       window.open(
