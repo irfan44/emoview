@@ -62,7 +62,6 @@ const InMeetingDisplay = () => {
     try {
       const data = await getMeetingParticipants({ emoviewCode: id });
       let count = data.length;
-      console.log(count);
       setCountParticipants(count);
     } catch (error) {
       console.log(error);
