@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, Dropdown, Layout, Menu, Spin, theme } from 'antd';
-import { HiChevronDown, HiMenu, HiOutlineLogout, HiX } from 'react-icons/hi';
+import { Button, Layout, Menu, theme } from 'antd';
+import { HiMenu, HiOutlineLogout, HiX } from 'react-icons/hi';
 import { useLocation } from 'react-router-dom';
 import menuItems from '../../data/menuItems';
 import emoviewLogo from '../../assets/icon.png';
@@ -23,8 +23,6 @@ const BaseLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [userProfile, setUserProfile] = useState();
   const [role, setRole] = useState();
-  const [loading, setLoading] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
 
   const router = useLocation();
   const selectedLocation = router.pathname;

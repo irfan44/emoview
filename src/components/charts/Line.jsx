@@ -1,15 +1,14 @@
 import { Card, Switch, Tooltip } from 'antd';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip as ChartTooltip,
-  Legend,
 } from 'chart.js';
-import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import Subtitle from '../common/typography/Subtitle';

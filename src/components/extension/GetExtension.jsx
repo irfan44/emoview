@@ -1,5 +1,4 @@
-import { Typography } from 'antd';
-import { Modal } from 'antd';
+import { Modal, Typography } from 'antd';
 import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
 import { IoExtensionPuzzle } from 'react-icons/io5';

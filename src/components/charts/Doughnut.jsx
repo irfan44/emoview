@@ -1,14 +1,14 @@
 import { Card } from 'antd';
 import {
-  Chart as ChartJS,
+  ArcElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
 } from 'chart.js';
 import datalabels from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';

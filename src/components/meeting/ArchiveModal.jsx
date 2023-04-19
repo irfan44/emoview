@@ -1,8 +1,6 @@
-import { Button, Select } from 'antd';
-import { Modal, Table } from 'antd';
+import { Button, Modal, Select, Table } from 'antd';
 import exportFromJSON from 'export-from-json';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoArchiveOutline } from 'react-icons/io5';
 import { getMeeting } from '../../api/meeting';
 import { getArchive } from '../../api/recognition';
@@ -100,11 +98,9 @@ const ArchiveModal = () => {
       const fileName = `Meeting - ${new Date().toLocaleString()}`;
 
       function toObject(keys, values) {
-        const obj = keys.reduce((accumulator, key, index) => {
+        return keys.reduce((accumulator, key, index) => {
           return { ...accumulator, [key]: values[index] };
         }, {});
-
-        return obj;
       }
 
       let array = [];
