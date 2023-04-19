@@ -1,5 +1,4 @@
-import { Tabs } from 'antd';
-import { Button } from 'antd';
+import { Button, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { getMeeting } from '../../api/meeting';
 import { getUserStudent } from '../../api/user';

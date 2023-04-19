@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { getMeetingById, getRecognition } from '../../api/floating';
+import { getRecognition } from '../../api/floating';
 import { getMeetingParticipants } from '../../api/meeting';
 import PositiveNegative from '../../components/floatingDisplay/PositiveNegative';
 import ShowAll from '../../components/floatingDisplay/ShowAll';
@@ -12,7 +12,6 @@ import InMeetingLayout from '../../components/layout/InMeetingLayout';
 const InMeetingDisplay = () => {
   const [recognitionStream, setRecognitionStream] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
-  const [meetingParticipants, setMeetingParticipants] = useState();
   const [maxRecognition, setMaxRecognition] = useState();
   const [countParticipants, setCountParticipants] = useState();
   const [layout, setLayout] = useState('positive/negative');
@@ -26,7 +25,6 @@ const InMeetingDisplay = () => {
 
   const fetchRecognition = async () => {
     try {
-      // const data = await getMeetingById(id, accessToken);
       fetchRecognitionOverview(id, 1);
       fetchMeetingParticipants(id);
 
@@ -63,9 +61,7 @@ const InMeetingDisplay = () => {
   const fetchMeetingParticipants = async (id) => {
     try {
       const data = await getMeetingParticipants({ emoviewCode: id });
-      setMeetingParticipants(data);
       let count = data.length;
-      console.log(count);
       setCountParticipants(count);
     } catch (error) {
       console.log(error);

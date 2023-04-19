@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
-import { FaAngleLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import {
-  getUserById,
   getUserByUserId,
   getUserOverview,
   getUserSummary,
@@ -13,7 +9,7 @@ import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import Recognition from '../../components/studentDetails/Recognition.jsx';
-import { getRecognition, getRecognitionById } from '../../api/recognition.js';
+import { getRecognitionById } from '../../api/recognition.js';
 import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentDetails = () => {
@@ -23,7 +19,6 @@ const StudentDetails = () => {
   const [studentSummary, setStudentSummary] = useState();
 
   const { userId, emoviewCode } = useParams();
-  const navigate = useNavigate();
 
   const fetchStudentDetails = async () => {
     try {

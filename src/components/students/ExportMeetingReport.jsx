@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Button, Modal, Select } from 'antd';
 import exportFromJSON from 'export-from-json';
-import { BiExport } from 'react-icons/bi';
-import { Tooltip } from 'antd';
 import { getRecognitionByIds } from '../../api/recognition.js';
 
 const ExportMeetingReport = ({ emoviewCode, participants, meetingName }) => {
@@ -46,10 +44,9 @@ const ExportMeetingReport = ({ emoviewCode, participants, meetingName }) => {
         datas.push(collectedValue[1]);
       });
       function toObject(keys, values) {
-        const obj = keys.reduce((accumulator, key, index) => {
+        return keys.reduce((accumulator, key, index) => {
           return { ...accumulator, [key]: values[index] };
         }, {});
-        return obj;
       }
       let finalArray = [];
       const labels = [

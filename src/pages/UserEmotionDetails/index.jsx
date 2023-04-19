@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { getMeetingByEmoviewCode, getMeetingById } from '../../api/meeting.js';
+import { getMeetingByEmoviewCode } from '../../api/meeting.js';
 import { getRecognitionById } from '../../api/recognition.js';
 import { getUserByUserId } from '../../api/user.js';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';

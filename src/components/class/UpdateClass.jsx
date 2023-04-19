@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { GrEdit } from 'react-icons/gr';
-import { updateMeeting } from '../../api/meeting';
-import Subtitle from '../common/typography/Subtitle';
 import { updateClass } from '../../api/class.js';
 
 const { TextArea } = Input;

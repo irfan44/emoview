@@ -1,5 +1,4 @@
-import { Tooltip } from 'antd';
-import { Switch } from 'antd';
+import { Switch, Tooltip } from 'antd';
 
 const RecognitionSwitch = ({
   recognitionSwitchRef,

@@ -11,12 +11,14 @@ import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx'
 import MeetingList from '../../components/meeting/MeetingList';
 import DashboardTour from '../../components/tour/DashboardTour/index.jsx';
 import { useAuth0 } from '@auth0/auth0-react';
+import isElectron from '../../utils/isElectron.js';
 
 const Dashboard = () => {
-  const { user } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const [isLoading, setIsLoading] = useState(false);
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
+  const [userProfile, setUserProfile] = useState();
 
   const fetchCountMeeting = async () => {
     try {
@@ -39,6 +41,21 @@ const Dashboard = () => {
     }
   };
 
+  const getProfile = async () => {
+    if (!isElectron()) {
+      if (isAuthenticated) {
+        setUserProfile(user);
+      }
+    } else {
+      const profile = await window.electronAPI.getProfile();
+      setUserProfile(profile);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, [isAuthenticated]);
+
   useEffect(() => {
     fetchCountMeeting();
     fetchMeetings();
@@ -47,7 +64,7 @@ const Dashboard = () => {
   return (
     <PageLayout currentMenu="Home">
       <Title>Home</Title>
-      {user && <Subtitle>Welcome, {user.name}</Subtitle>}
+      {userProfile && <Subtitle>Welcome, {userProfile.name}</Subtitle>}
       <div className="grid grid-cols-6 xl:grid-cols-7 gap-4 my-6">
         <div>
           {isLoading ? (

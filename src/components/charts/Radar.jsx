@@ -1,15 +1,15 @@
 import { Card, Empty } from 'antd';
 import {
-  Chart as ChartJS,
+  ArcElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
+  RadialLinearScale,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { RADAR_CHART_SUBTITLE, RADAR_CHART_TITLE } from '../../data/constants';

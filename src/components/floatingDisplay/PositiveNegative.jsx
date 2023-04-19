@@ -1,6 +1,5 @@
 import { Progress } from 'antd';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DisplayData from '../inMeetingDisplay/DisplayData';
 
 const PositiveNegative = ({ recognitionStream, recognitionsSummary }) => {

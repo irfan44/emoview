@@ -1,12 +1,11 @@
-import { Button, Dropdown, Modal, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import Subtitle from '../../components/common/typography/Subtitle.jsx';
 import Title from '../../components/common/typography/Title.jsx';
 import PageLayout from '../../components/layout/PageLayout.jsx';
 import MeetingListLoading from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList.jsx';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getClassDetailByMeetCode, removeClass } from '../../api/class.js';
+import { useParams } from 'react-router-dom';
+import { getClassDetailByMeetCode } from '../../api/class.js';
 import { getClassMeetings } from '../../api/meeting.js';
 import PageLoading from '../../components/loading/PageLoading.jsx';
 

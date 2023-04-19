@@ -92,9 +92,14 @@ const MeetingDetails = () => {
     }
   };
 
-  const getAccessToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-    setAccessToken(accessToken);
+  const getAccessToken = async () => {
+    if (!isElectron()) {
+      const accessToken = localStorage.getItem('accessToken');
+      setAccessToken(accessToken);
+    } else {
+      const accessToken = await window.electronAPI.getAccessToken();
+      setAccessToken(accessToken);
+    }
   };
 
   const openInMeeting = async () => {
