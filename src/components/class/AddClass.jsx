@@ -32,16 +32,16 @@ const AddClassForm = ({ open, onSubmit, onCancel }) => {
     >
       <Form form={form} layout="vertical" style={{ marginTop: '16px' }}>
         <Form.Item
-          label="Name"
+          label="Subject"
           name="name"
           rules={[
             {
               required: true,
-              message: 'Please insert meeting name!',
+              message: 'Please insert class subject!',
             },
           ]}
         >
-          <Input placeholder="Insert meeting name here" />
+          <Input placeholder="Insert class subject here" />
         </Form.Item>
         <Form.Item
           label="Description"
@@ -49,11 +49,11 @@ const AddClassForm = ({ open, onSubmit, onCancel }) => {
           rules={[
             {
               required: true,
-              message: 'Please insert meeting description!',
+              message: 'Please insert class description!',
             },
           ]}
         >
-          <TextArea rows={4} placeholder="Insert meeting description here" />
+          <TextArea rows={4} placeholder="Insert class description here" />
         </Form.Item>
         <Form.Item
           label="Google Meet Link"
