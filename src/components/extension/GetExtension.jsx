@@ -24,10 +24,10 @@ const GetExtension = () => {
     <>
       <a className="flex items-center space-x-2" onClick={showModal}>
         <IoExtensionPuzzle />
-        <span>Get Extension</span>
+        <span>Get Emoview for Students</span>
       </a>
       <Modal
-        title="Get Emoview Extension"
+        title="Get Emoview for Students"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -35,8 +35,8 @@ const GetExtension = () => {
         cancelButtonProps={{ hidden: true }}
       >
         <p className="mb-4">
-          Emoview Extension is used to capture emotion of the participants of
-          your meetings. Participant's emotion will show up in Emoview's chart
+          Emoview for Students is used to capture emotion of the student participants of
+          your meetings. Participant's emotion will show up in Emoview for Teachers's chart
           at Meeting Details page *
         </p>
         <div className="flex flex-col mb-4">
