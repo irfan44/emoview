@@ -7,14 +7,18 @@ import SectionTitle from '../../components/common/typography/SectionTitle';
 import Subtitle from '../../components/common/typography/Subtitle';
 import Title from '../../components/common/typography/Title';
 import PageLayout from '../../components/layout/PageLayout';
-import LoadingMeetingList from '../../components/loading/MeetingList';
+import LoadingMeetingList from '../../components/loading/MeetingListLoading.jsx';
 import MeetingList from '../../components/meeting/MeetingList';
+import DashboardTour from '../../components/tour/DashboardTour/index.jsx';
+import { useAuth0 } from '@auth0/auth0-react';
+import isElectron from '../../utils/isElectron.js';
 
 const Dashboard = () => {
+  const { isAuthenticated, user } = useAuth0();
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState();
   const [count, setCount] = useState();
   const [meetings, setMeetings] = useState([]);
+  const [userProfile, setUserProfile] = useState();
 
   const fetchCountMeeting = async () => {
     try {
@@ -38,12 +42,19 @@ const Dashboard = () => {
   };
 
   const getProfile = async () => {
-    setUser(await window.electronAPI.getProfile());
+    if (!isElectron()) {
+      if (isAuthenticated) {
+        setUserProfile(user);
+      }
+    } else {
+      const profile = await window.electronAPI.getProfile();
+      setUserProfile(profile);
+    }
   };
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     fetchCountMeeting();
@@ -51,14 +62,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <p className="text-black/[.60] mb-2">Dashboard</p>
-      <Title>Dashboard</Title>
-      {user && <Subtitle>Welcome, {user.name}</Subtitle>}
-      <div className="grid grid-cols-6 gap-4 my-6">
-        <div span={4}>
+    <PageLayout currentMenu="Home">
+      <Title>Home</Title>
+      {userProfile && <Subtitle>Welcome, {userProfile.name}</Subtitle>}
+      <div className="grid grid-cols-6 xl:grid-cols-7 gap-4 my-6">
+        <div>
           {isLoading ? (
-            <Card />
+            <Card loading>
+              <p className="mb-4 font-bold text-4xl">0</p>
+              <Subtitle>Total Meeting</Subtitle>
+            </Card>
           ) : (
             <Card>
               {count ? (
@@ -79,9 +92,9 @@ const Dashboard = () => {
           <Subtitle>List of your latest meetings</Subtitle>
         </div>
         <div>
-          <Link to={'/meetings'}>
+          <Link to={'/class'}>
             <div className="flex items-center space-x-2 text-black/[.60] px-[4px] rounded-md -ml-1 hover:text-black hover:bg-black/[.06]">
-              <span className="text-sm">View All</span>
+              <span className="text-sm">View from Class</span>
               <span>
                 <FaChevronRight className="mt-1" />
               </span>
@@ -89,7 +102,12 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      {isLoading ? <LoadingMeetingList /> : <MeetingList meetings={meetings} />}
+      {isLoading ? (
+        <LoadingMeetingList />
+      ) : (
+        <MeetingList meetings={meetings} page={'class'} />
+      )}
+      <DashboardTour />
     </PageLayout>
   );
 };

@@ -1,8 +1,8 @@
 import { Card } from 'antd';
 
-const LoadingMeetingList = () => {
+const MeetingListLoading = () => {
   return (
-    <div className="grid grid-cols-3 gap-4 mt-6">
+    <div className="grid grid-cols-3 xl:grid-cols-4 gap-4">
       <div>
         <Card loading />
       </div>
@@ -16,4 +16,4 @@ const LoadingMeetingList = () => {
   );
 };
 
-export default LoadingMeetingList;
+export default MeetingListLoading;

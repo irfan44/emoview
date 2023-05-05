@@ -1,12 +1,12 @@
 import { Card } from 'antd';
 import { FaRegCalendar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import CardTitle from '../common/typography/CardTitle';
-import Subtitle from '../common/typography/Subtitle';
+import CardTitle from '../typography/CardTitle.jsx';
+import Subtitle from '../typography/Subtitle.jsx';
 
-const MeetingCard = ({ data }) => {
+const MeetingCard = ({ data, page }) => {
   return (
-    <Link to={`/meeting/${data._id}`}>
+    <Link to={`/${page}/${data.meetCode}/${data.emoviewCode}`}>
       <Card hoverable bodyStyle={{ padding: '16px 24px' }}>
         <div className="space-y-4">
           <div>

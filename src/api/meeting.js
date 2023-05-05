@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isElectron from '../utils/isElectron.js';
 
 const baseURL = import.meta.env.VITE_BE_ENDPOINT;
 
@@ -6,7 +7,28 @@ const getMeeting = async () => {
   try {
     const response = await axios.get(`${baseURL}/meeting`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getClassMeetings = async ({ meetCode }) => {
+  try {
+    const response = await axios.get(`${baseURL}/meeting/class/${meetCode}`, {
+      headers: {
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -19,7 +41,11 @@ const getMeetingById = async (id) => {
   try {
     const response = await axios.get(`${baseURL}/meeting/${id}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -28,14 +54,41 @@ const getMeetingById = async (id) => {
   }
 };
 
-const getMeetingParticipants = async (id) => {
+const getMeetingByEmoviewCode = async ({ emoviewCode }) => {
   try {
-    const response = await axios.get(`${baseURL}/meeting/${id}`, {
-      headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
-      },
-    });
-    return response.data.data.participants;
+    const response = await axios.get(
+      `${baseURL}/meeting/class/meeting/${emoviewCode}`,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getMeetingParticipants = async ({ emoviewCode }) => {
+  try {
+    const response = await axios.get(
+      `${baseURL}/meeting/class/meeting/${emoviewCode}`,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
+        },
+      }
+    );
+    return response.data.data[0].participants;
   } catch (error) {
     console.log(error);
   }
@@ -45,7 +98,11 @@ const countMeeting = async () => {
   try {
     const response = await axios(`${baseURL}/meeting/count`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data.data;
@@ -54,31 +111,30 @@ const countMeeting = async () => {
   }
 };
 
-const createMeeting = async (
+const createMeeting = async ({
   name,
   subject,
   description,
   link,
-  code,
-  size,
-  emotionDisplay
-) => {
+  meetCode,
+  countOfMeetings,
+}) => {
   const body = {
     name: name,
     subject: subject,
     description: description,
     link: link,
-    code: code,
-    configuration: {
-      size: size,
-      emotionDisplay: emotionDisplay,
-    },
+    meetCode: meetCode,
+    countOfMeetings: countOfMeetings + 1,
   };
-
   try {
     const response = await axios.post(`${baseURL}/meeting`, body, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
     return response.data;
@@ -87,41 +143,33 @@ const createMeeting = async (
   }
 };
 
-const updateMeeting = async (
-  id,
-  name,
-  subject,
-  description,
-  link,
-  code,
-  size,
-  emotionDisplay
-) => {
+const updateMeeting = async ({ emoviewCode, name, description }) => {
   const body = {
     name: name,
-    subject: subject,
     description: description,
-    link: link,
-    code: code,
-    configuration: {
-      size: size,
-      emotionDisplay: emotionDisplay,
-    },
   };
 
   try {
-    const response = await axios.patch(`${baseURL}/meeting/${id}`, body, {
-      headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
-      },
-    });
+    const response = await axios.patch(
+      `${baseURL}/meeting/class/meeting/${emoviewCode}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
+        },
+      }
+    );
     return response.data.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-const setMeetingStatus = async (id, statusStart, statusEnd) => {
+const setMeetingStatus = async ({ emoviewCode, statusStart, statusEnd }) => {
   const body = {
     isStart: statusStart,
     isEnded: statusEnd,
@@ -129,25 +177,37 @@ const setMeetingStatus = async (id, statusStart, statusEnd) => {
   };
 
   try {
-    const response = await axios.patch(`${baseURL}/meeting/${id}`, body, {
-      headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
-      },
-    });
+    const response = await axios.patch(
+      `${baseURL}/meeting/class/meeting/${emoviewCode}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
+        },
+      }
+    );
     return response.data.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-const startRecognition = async (code) => {
+const startRecognition = async (emoviewCode) => {
   try {
     const response = await axios.patch(
-      `${baseURL}/meeting/start/${code}`,
+      `${baseURL}/meeting/start/${emoviewCode}`,
       { status: 'started' },
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -164,7 +224,11 @@ const stopRecognition = async (code) => {
       { status: 'stopped' },
       {
         headers: {
-          Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+          Authorization: `Bearer ${
+            !isElectron()
+              ? localStorage.getItem('accessToken')
+              : await window.electronAPI.getAccessToken()
+          }`,
         },
       }
     );
@@ -174,11 +238,15 @@ const stopRecognition = async (code) => {
   }
 };
 
-const removeMeeting = async (id) => {
+const removeMeeting = async ({ emoviewCode }) => {
   try {
-    await axios.delete(`${baseURL}/meeting/${id}`, {
+    await axios.delete(`${baseURL}/meeting/class/meeting/${emoviewCode}`, {
       headers: {
-        Authorization: `Bearer ${await window.electronAPI.getAccessToken()}`,
+        Authorization: `Bearer ${
+          !isElectron()
+            ? localStorage.getItem('accessToken')
+            : await window.electronAPI.getAccessToken()
+        }`,
       },
     });
   } catch (error) {
@@ -189,6 +257,8 @@ const removeMeeting = async (id) => {
 export {
   getMeeting,
   getMeetingById,
+  getClassMeetings,
+  getMeetingByEmoviewCode,
   getMeetingParticipants,
   countMeeting,
   createMeeting,

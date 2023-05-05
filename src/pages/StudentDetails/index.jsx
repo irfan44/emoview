@@ -1,23 +1,31 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getUserById, getUserOverview, getUserSummary } from '../../api/user';
-import Subtitle from '../../components/common/typography/Subtitle';
-import Title from '../../components/common/typography/Title';
-import PageLayout from '../../components/layout/PageLayout';
-import Recognition from '../../components/studentDetails/Recognition';
+import {
+  getUserByUserId,
+  getUserOverview,
+  getUserSummary,
+} from '../../api/user.js';
+import Subtitle from '../../components/common/typography/Subtitle.jsx';
+import Title from '../../components/common/typography/Title.jsx';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import Recognition from '../../components/studentDetails/Recognition.jsx';
+import { getRecognitionById } from '../../api/recognition.js';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const StudentDetails = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [studentData, setStudentData] = useState();
   const [studentOverview, setStudentOverview] = useState();
   const [studentSummary, setStudentSummary] = useState();
 
-  const { id } = useParams();
+  const { userId, emoviewCode } = useParams();
 
   const fetchStudentDetails = async () => {
     try {
-      const data = await getUserById(id);
-      setStudentData(data);
+      setIsLoading(true);
+      const data = await getUserByUserId(userId);
+      setStudentData(data[0]);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -25,8 +33,10 @@ const StudentDetails = () => {
 
   const fetchStudentOverview = async () => {
     try {
-      const data = await getUserOverview(studentData.userId);
+      setIsLoading(true);
+      const data = await getUserOverview(userId);
       setStudentOverview(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -34,10 +44,33 @@ const StudentDetails = () => {
 
   const fetchStudentSummary = async () => {
     try {
-      const data = await getUserSummary(studentData.userId);
+      setIsLoading(true);
+      const data = await getUserSummary(userId);
       setStudentSummary(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const fetchRecognitionOverview = async (emoviewCode, limit) => {
+    try {
+      setIsLoading(true);
+      const data = await getRecognitionById(emoviewCode, userId, limit);
+      setStudentOverview(data.recognitionsOverview);
+      setStudentSummary(data.recognitionsSummary);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const checkEmoviewCode = () => {
+    if (emoviewCode) {
+      fetchRecognitionOverview(emoviewCode, ' ');
+    } else {
+      fetchStudentOverview();
+      fetchStudentSummary();
     }
   };
 
@@ -46,28 +79,13 @@ const StudentDetails = () => {
   }, []);
 
   useEffect(() => {
-    fetchStudentOverview();
-    fetchStudentSummary();
+    checkEmoviewCode();
   }, [studentData]);
 
   return (
     <>
       {studentData && (
-        <PageLayout>
-          <div className="flex space-x-0.5 mb-2">
-            <div>
-              <Link
-                className="text-black/[.60] px-1 rounded-md h-[22px] -ml-1 hover:text-black hover:bg-black/[.06]"
-                to="/students"
-              >
-                Students
-              </Link>
-            </div>
-            <div>
-              <span className="text-black/[.60] ">/</span>
-            </div>
-            <div className="text-black/[.60] px-1">{studentData.fullname}</div>
-          </div>
+        <PageLayout backToPrevious>
           <div className="flex items-center space-x-4">
             <img
               src={studentData.picture}
@@ -89,6 +107,7 @@ const StudentDetails = () => {
           </div>
         </PageLayout>
       )}
+      {isLoading && <PageLoading />}
     </>
   );
 };

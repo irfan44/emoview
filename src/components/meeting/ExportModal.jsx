@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Button, Modal, Select } from 'antd';
+import { Button, Modal, Select, Tooltip } from 'antd';
 import exportFromJSON from 'export-from-json';
 import { BiExport } from 'react-icons/bi';
-import { Tooltip } from 'antd';
 
 const ExportModal = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,11 +34,9 @@ const ExportModal = ({ data }) => {
     const fileName = `Meeting - ${new Date().toLocaleString()}`;
 
     function toObject(keys, values) {
-      const obj = keys.reduce((accumulator, key, index) => {
+      return keys.reduce((accumulator, key, index) => {
         return { ...accumulator, [key]: values[index] };
       }, {});
-
-      return obj;
     }
 
     let array = [];

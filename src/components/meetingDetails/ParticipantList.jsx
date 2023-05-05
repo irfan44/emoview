@@ -1,15 +1,20 @@
 import EmptyHolder from '../placeholders/EmptyHolder';
-import ParticipantCard from './ParticipantCard';
+import StudentCard from '../common/cards/StudentCard.jsx';
 
-const ParticipantList = ({ id, meetingParticipants }) => {
+const ParticipantList = ({ meetingParticipants, currentMenu, pageId }) => {
   return (
     <>
       {meetingParticipants ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 xl:grid-cols-5 gap-4">
           {meetingParticipants.map((data) => {
             return (
               <div key={data.userId}>
-                <ParticipantCard id={id} data={data} />
+                <StudentCard
+                  data={data}
+                  currentMenu={currentMenu}
+                  pageId={pageId}
+                  studentId={data.userId}
+                />
               </div>
             );
           })}

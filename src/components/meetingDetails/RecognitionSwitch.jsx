@@ -1,8 +1,8 @@
-import { Tooltip } from 'antd';
-import { Switch } from 'antd';
-import Subtitle from '../common/typography/Subtitle';
+import { Switch, Tooltip } from 'antd';
 
 const RecognitionSwitch = ({
+  recognitionSwitchRef,
+
   isStart,
   isEnded,
   recognitionStatus,
@@ -15,12 +15,16 @@ const RecognitionSwitch = ({
           <span>Recognition</span>
           {recognitionStatus && (
             <Tooltip title="Enable/disable emotion recognition" placement="top">
-              <Switch defaultChecked onChange={handleSwitch} />
+              <Switch
+                ref={recognitionSwitchRef}
+                defaultChecked
+                onChange={handleSwitch}
+              />
             </Tooltip>
           )}
           {!recognitionStatus && (
             <Tooltip title="Enable/disable emotion recognition" placement="top">
-              <Switch onChange={handleSwitch} />
+              <Switch ref={recognitionSwitchRef} onChange={handleSwitch} />
             </Tooltip>
           )}
         </div>

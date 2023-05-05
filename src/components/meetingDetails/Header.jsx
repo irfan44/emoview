@@ -1,12 +1,13 @@
 import { Button, Dropdown, Typography } from 'antd';
 import { FaEllipsisV, FaRegCopy } from 'react-icons/fa';
-import { GrRefresh, GrTextAlignFull, GrTrash } from 'react-icons/gr';
+import { GrTextAlignFull, GrTrash } from 'react-icons/gr';
 import Subtitle from '../common/typography/Subtitle';
 import Title from '../common/typography/Title';
 import UpdateMeeting from '../meeting/UpdateMeeting';
 import RecognitionSwitch from './RecognitionSwitch';
 import FloatingDisplayIcon from '../icons/FloatingDisplay';
 import MeetIcon from '../icons/Meet';
+import { MdFiberPin } from 'react-icons/md';
 
 const { Text } = Typography;
 
@@ -14,6 +15,7 @@ const Header = ({
   name,
   subject,
   description,
+  emoviewCode,
   link,
   isStart,
   isEnded,
@@ -27,22 +29,17 @@ const Header = ({
   meetingData,
   isLoadingStart,
   isLoadingEnd,
+  startMeetingRef,
+  meetingCodeRef,
+  recognitionSwitchRef,
+  refreshRef,
+  floatingDisplayRef,
+  endRecognitionRef,
+  dropdownRef,
 }) => {
   const items = [
     {
       key: '1',
-      label: (
-        <a
-          className="flex items-center space-x-2"
-          onClick={() => window.location.reload()}
-        >
-          <GrRefresh />
-          <span>Refresh</span>
-        </a>
-      ),
-    },
-    {
-      key: '2',
       label: (
         <UpdateMeeting
           fetchData={fetchMeetingById}
@@ -51,7 +48,7 @@ const Header = ({
       ),
     },
     {
-      key: '3',
+      key: '2',
       label: (
         <a
           className="flex items-center space-x-2"
@@ -81,14 +78,26 @@ const Header = ({
         </div>
         <div>
           <div className="flex items-center space-x-2">
-            <RecognitionSwitch
-              isStart={isStart}
-              isEnded={isEnded}
-              recognitionStatus={recognitionStatus}
-              handleSwitch={handleSwitch}
-            />
+            <div>
+              <RecognitionSwitch
+                recognitionSwitchRef={recognitionSwitchRef}
+                isStart={isStart}
+                isEnded={isEnded}
+                recognitionStatus={recognitionStatus}
+                handleSwitch={handleSwitch}
+              />
+            </div>
+            {isStart && (
+              <Button ref={refreshRef} onClick={() => window.location.reload()}>
+                Refresh
+              </Button>
+            )}
             {!isEnded && isStart && (
-              <Button type="primary" onClick={() => openInMeeting()}>
+              <Button
+                ref={floatingDisplayRef}
+                type="primary"
+                onClick={() => openInMeeting()}
+              >
                 <div className="flex items-center space-x-1">
                   <FloatingDisplayIcon />
                   <span>Floating Display</span>
@@ -97,6 +106,7 @@ const Header = ({
             )}
             {!isEnded && !isStart && (
               <Button
+                ref={startMeetingRef}
                 loading={isLoadingStart}
                 type="primary"
                 onClick={() => handleStartMeeting()}
@@ -106,6 +116,7 @@ const Header = ({
             )}
             {!isEnded && isStart && (
               <Button
+                ref={endRecognitionRef}
                 danger
                 loading={isLoadingEnd}
                 type="primary"
@@ -121,7 +132,7 @@ const Header = ({
               placement="bottomRight"
               arrow
             >
-              <Button type="text">
+              <Button ref={dropdownRef} type="text">
                 <Subtitle>
                   <FaEllipsisV />
                 </Subtitle>
@@ -143,6 +154,17 @@ const Header = ({
             </Text>
           </a>
           {isEnded && <span> Ended</span>}
+        </div>
+        <div>
+          <div
+            className="flex items-center space-x-2 w-fit"
+            ref={meetingCodeRef}
+          >
+            <MdFiberPin className="h-4 w-5" />
+            <Text copyable={{ icon: <FaRegCopy className="text-black" /> }}>
+              {emoviewCode}
+            </Text>
+          </div>
         </div>
       </div>
     </>

@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Modal, Progress, Radio, Segmented } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { GrEdit } from 'react-icons/gr';
 import { updateMeeting } from '../../api/meeting';
-import Subtitle from '../common/typography/Subtitle';
 
 const { TextArea } = Input;
 
 const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
-  const [tabValue, setTabValue] = useState('Description');
-
   const [form] = Form.useForm();
   const beforeUpdate = {
     ...initialValues,
-    // size: initialValues.configuration.size,
-    // emotionDisplay: initialValues.configuration.emotionDisplay,
   };
 
   useEffect(() => {
@@ -40,14 +35,6 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
           });
       }}
     >
-      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Segmented
-          options={['Description', 'In Meeting View']}
-          value={tabValue}
-          onChange={setTabValue}
-          style={{ marginTop: '16px', marginBottom: '16px' }}
-        />
-      </div> */}
       <Form form={form} layout="vertical" initialValues={initialValues}>
         <Form.Item
           label="Name"
@@ -58,24 +45,6 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
               message: 'Please insert meeting name!',
             },
           ]}
-          style={{
-            display: tabValue === 'Description' ? 'block' : 'none',
-          }}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Subject"
-          name="subject"
-          rules={[
-            {
-              required: true,
-              message: 'Please insert meeting subject!',
-            },
-          ]}
-          style={{
-            display: tabValue === 'Description' ? 'block' : 'none',
-          }}
         >
           <Input />
         </Form.Item>
@@ -88,56 +57,9 @@ const UpdateMeetingForm = ({ open, onSubmit, onCancel, initialValues }) => {
               message: 'Please insert meeting description!',
             },
           ]}
-          style={{
-            display: tabValue === 'Description' ? 'block' : 'none',
-          }}
         >
           <TextArea rows={4} />
         </Form.Item>
-        {/* <Form.Item
-          label="Size"
-          name="size"
-          style={{
-            display: tabValue === 'In Meeting View' ? 'block' : 'none',
-          }}
-        >
-          <Radio.Group buttonStyle="solid">
-            <Radio value="large">Large</Radio>
-            <Radio value="medium">Medium</Radio>
-            <Radio value="small">Small</Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item
-          label="Emotion Display"
-          name="emotionDisplay"
-          style={{
-            display: tabValue === 'In Meeting View' ? 'block' : 'none',
-          }}
-        >
-          <Radio.Group>
-            <Radio value="circle">
-              <Progress
-                type="circle"
-                percent={50}
-                width={60}
-                format={() => 'Circle'}
-              />
-            </Radio>
-            <Radio value="dashboard">
-              <Progress
-                type="dashboard"
-                percent={50}
-                width={60}
-                format={() => 'Gauge'}
-              />
-            </Radio>
-            <Radio value="line">
-              <div style={{ width: '120px' }}>
-                <Progress type="line" percent={50} format={() => 'Bar'} />
-              </div>
-            </Radio>
-          </Radio.Group>
-        </Form.Item> */}
       </Form>
     </Modal>
   );
@@ -149,17 +71,14 @@ const UpdateMeetingModal = ({ fetchData, initialValues }) => {
   const handleSubmit = async (values) => {
     setOpen(false);
 
-    const { name, subject, description, size, emotionDisplay } = values;
+    const { name, description } = values;
 
     try {
-      await updateMeeting(
-        initialValues._id,
+      await updateMeeting({
+        emoviewCode: initialValues.emoviewCode,
         name,
-        subject,
         description,
-        size,
-        emotionDisplay
-      );
+      });
       fetchData();
     } catch (error) {
       console.log(error);

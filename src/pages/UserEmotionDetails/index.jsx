@@ -1,41 +1,42 @@
-import { Button, Tabs } from 'antd';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import { FaAngleLeft } from 'react-icons/fa';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { getMeetingById } from '../../api/meeting';
-import { getRecognitionById } from '../../api/recognition';
-import { getUserByUserId } from '../../api/user';
-import Subtitle from '../../components/common/typography/Subtitle';
-import Title from '../../components/common/typography/Title';
-import PageLayout from '../../components/layout/PageLayout';
-import Recognition from '../../components/meetingDetails/Recognition';
+import { getMeetingByEmoviewCode } from '../../api/meeting.js';
+import { getRecognitionById } from '../../api/recognition.js';
+import { getUserByUserId } from '../../api/user.js';
+import Subtitle from '../../components/common/typography/Subtitle.jsx';
+import Title from '../../components/common/typography/Title.jsx';
+import PageLayout from '../../components/layout/PageLayout.jsx';
+import Recognition from '../../components/meetingDetails/Recognition.jsx';
+import PageLoading from '../../components/loading/PageLoading.jsx';
 
 const UserEmotionDetails = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [recognitionsDetail, setRecognitionsDetail] = useState();
   const [recognitionsOverview, setRecognitionsOverview] = useState({});
   const [recognitionsSummary, setRecognitionsSummary] = useState();
   const [userData, setUserData] = useState();
 
-  const { meetingId, userId } = useParams();
-
-  const navigate = useNavigate();
+  const { meetCode, emoviewCode, userId } = useParams();
 
   const baseURL = import.meta.env.VITE_BE_ENDPOINT;
   const socket = io(baseURL, { transports: ['websocket'], upgrade: false });
 
   const fetchRecognitionById = async () => {
     try {
-      const data = await getMeetingById(meetingId);
-      fetchRecognitionOverview(data.code, userId, ' ');
+      setIsLoading(true);
+      const data = await getMeetingByEmoviewCode({ emoviewCode });
+      fetchRecognitionOverview(emoviewCode, userId, ' ');
+      setIsLoading(false);
 
       socket.on('connect', () => {
-        socket.emit('join', `${data.code}-${userId}`);
+        socket.emit('join', `${emoviewCode}-${userId}`);
       });
 
       if (data.isStart) {
         socket.on('RECOGNITION_DATA_ADDED', () => {
-          fetchRecognitionOverview(data.code, userId, ' ');
+          fetchRecognitionOverview(emoviewCode, userId, ' ');
           console.log('FER:: Recognition Running');
         });
       }
@@ -46,19 +47,23 @@ const UserEmotionDetails = () => {
 
   const fetchUserDetails = async () => {
     try {
+      setIsLoading(true);
       const data = await getUserByUserId(userId);
       setUserData(data[0]);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fetchRecognitionOverview = async (id, userId, limit) => {
+  const fetchRecognitionOverview = async (emoviewCode, userId, limit) => {
     try {
-      const data = await getRecognitionById(id, userId, limit);
+      setIsLoading(true);
+      const data = await getRecognitionById(emoviewCode, userId, limit);
       setRecognitionsDetail(data.recognitionsDetail);
       setRecognitionsOverview(data.recognitionsOverview);
       setRecognitionsSummary(data.recognitionsSummary);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -77,48 +82,42 @@ const UserEmotionDetails = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <div className="flex space-x-1 mb-2">
-        <div>
-          <Link
-            className="flex items-center text-black/[.60] px-1 rounded-md -ml-1 hover:text-black hover:bg-black/[.06]"
-            onClick={() => navigate(-1)}
-            style={{ display: 'flex', alignItems: 'center' }}
-          >
-            <FaAngleLeft /> Back to Previous
-          </Link>
-        </div>
-      </div>
+    <>
       {userData && (
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img
-              src={userData.picture}
-              alt={userData.userId}
-              style={{ borderRadius: '50%' }}
-              height="42"
-              referrerPolicy="no-referrer"
-            />
+        <PageLayout
+          backToPrevious
+          prevLink={`class/${meetCode}/${emoviewCode}`}
+        >
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <img
+                src={userData.picture}
+                alt={userData.userId}
+                style={{ borderRadius: '50%' }}
+                height="42"
+                referrerPolicy="no-referrer"
+              />
+              <div>
+                <Title>{userData.fullname}</Title>
+                <Subtitle>{userData.email}</Subtitle>
+              </div>
+            </div>
             <div>
-              <Title>{userData.fullname}</Title>
-              <Subtitle>{userData.email}</Subtitle>
+              <Button onClick={() => window.location.reload()}>Refresh</Button>
             </div>
           </div>
-          <div>
-            <Button onClick={() => window.location.reload()}>Refresh</Button>
+          <div className="mt-4">
+            <Recognition
+              recogDetail={recognitionsDetail}
+              recogOverview={recognitionsOverview}
+              recogSummary={recognitionsSummary}
+              withImage={true}
+            />
           </div>
-        </div>
+        </PageLayout>
       )}
-
-      <div className="mt-4">
-        <Recognition
-          recogDetail={recognitionsDetail}
-          recogOverview={recognitionsOverview}
-          recogSummary={recognitionsSummary}
-          withImage={true}
-        />
-      </div>
-    </PageLayout>
+      {isLoading && <PageLoading />}
+    </>
   );
 };
 

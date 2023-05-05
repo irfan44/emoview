@@ -1,15 +1,15 @@
 import { Card, Empty } from 'antd';
 import {
-  Chart as ChartJS,
+  ArcElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
+  RadialLinearScale,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { RADAR_CHART_SUBTITLE, RADAR_CHART_TITLE } from '../../data/constants';
@@ -44,6 +44,7 @@ const RadarChart = ({ data }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       r: {
         pointLabels: {
@@ -86,7 +87,14 @@ const RadarChart = ({ data }) => {
         <Empty />
       ) : (
         <div className="text-center">
-          <Radar data={chartData} options={options} />
+          <div className="my-4">
+            <Radar
+              data={chartData}
+              options={options}
+              height={400}
+              width={400}
+            />
+          </div>
         </div>
       )}
     </Card>

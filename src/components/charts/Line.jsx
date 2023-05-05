@@ -1,20 +1,21 @@
 import { Card, Switch, Tooltip } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip as ChartTooltip,
-  Legend,
 } from 'chart.js';
-import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import Subtitle from '../common/typography/Subtitle';
 import { LINE_CHART_SUBTITLE, LINE_CHART_TITLE } from '../../data/constants';
 import ExportModal from '../meeting/ExportModal';
+import CustomLegend from './CustomLegend';
+import Style from '../../styles/lineChart.module.css';
 
 ChartJS.register(
   LinearScale,
@@ -29,6 +30,13 @@ ChartJS.register(
 const Linechart = ({ data, withImage }) => {
   const [currentIndex, setCurrentIndex] = useState();
   const [isSimple, setsSimple] = useState(false);
+  const [legendArray, setLegendArray] = useState();
+  const [chartElement, setChartElement] = useState();
+  const [isLong, setIsLong] = useState(false);
+  const [width, setWidth] = useState();
+
+  const chartContainerRef = useRef(null);
+  const chartRef = useRef(null);
 
   const simpleData = (data) => {
     return data.slice(-15);
@@ -57,7 +65,7 @@ const Linechart = ({ data, withImage }) => {
         label: 'Sad',
         data: !isSimple ? data.sad : simpleData(data.sad),
         backgroundColor: 'transparent',
-        borderColor: '#2962FF',
+        borderColor: '#001AFF',
         borderWidth: 1,
         tension: 0.3,
       },
@@ -65,7 +73,7 @@ const Linechart = ({ data, withImage }) => {
         label: 'Angry',
         data: !isSimple ? data.angry : simpleData(data.angry),
         backgroundColor: 'transparent',
-        borderColor: '#D50000',
+        borderColor: '#FF0000',
         borderWidth: 1,
         tension: 0.3,
       },
@@ -73,7 +81,7 @@ const Linechart = ({ data, withImage }) => {
         label: 'Fearful',
         data: !isSimple ? data.fearful : simpleData(data.fearful),
         backgroundColor: 'transparent',
-        borderColor: '#AA00FF',
+        borderColor: '#bf00ff',
         borderWidth: 1,
         tension: 0.3,
       },
@@ -89,7 +97,7 @@ const Linechart = ({ data, withImage }) => {
         label: 'Surprised',
         data: !isSimple ? data.surprised : simpleData(data.surprised),
         backgroundColor: 'transparent',
-        borderColor: '#FF6D00',
+        borderColor: '#FFB700',
         borderWidth: 1,
         tension: 0.3,
       },
@@ -97,10 +105,10 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const options = {
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-        align: 'center',
+        display: false,
       },
       tooltip: {
         itemSort(a, b) {
@@ -178,6 +186,27 @@ const Linechart = ({ data, withImage }) => {
     setsSimple(checked);
   };
 
+  useEffect(() => {
+    const chart = ChartJS.getChart(chartRef.current);
+    setChartElement(chart);
+    const legend = chart.options.plugins.legend.labels.generateLabels(chart);
+    let legendArr = [];
+    legend.forEach((item) => {
+      const index = item.datasetIndex;
+      const isHidden = item.hidden;
+      const strokeStyle = item.strokeStyle;
+      const text = item.text;
+      legendArr.push({ index, isHidden, strokeStyle, text });
+    });
+    setLegendArray(legendArr);
+  }, []);
+
+  useEffect(() => {
+    setIsLong(data.labels.length > 15);
+    // setIsLong(false);
+    setWidth(chartContainerRef.current.offsetWidth + data.labels.length * 10);
+  }, [data]);
+
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
       <div className="flex justify-between mb-2">
@@ -195,9 +224,36 @@ const Linechart = ({ data, withImage }) => {
           </div>
         </div>
       </div>
-      <div className="text-center mb-2">
+      <div className="text-center my-4">
         {withImage && <img className="mb-4 w-36" src={currentImage()} />}
-        <Line data={chartData} options={options} />
+        <div className="flex justify-center space-x-4 mb-4">
+          {legendArray &&
+            legendArray.map((item) => {
+              return (
+                <CustomLegend
+                  key={item.index}
+                  item={item}
+                  chartElement={chartElement}
+                />
+              );
+            })}
+        </div>
+        <div className={Style.lineChart} style={{ overflowX: 'auto' }}>
+          <div
+            ref={chartContainerRef}
+            style={{
+              position: 'relative',
+              width: !isSimple && isLong ? `${width}px` : '100%',
+            }}
+          >
+            <Line
+              ref={chartRef}
+              data={chartData}
+              options={options}
+              height={400}
+            />
+          </div>
+        </div>
       </div>
       <div>
         <span className="text-black/[.60] text-xs">
