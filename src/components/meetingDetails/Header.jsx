@@ -122,7 +122,7 @@ const Header = ({
                 type="primary"
                 onClick={() => handleStopMeeting()}
               >
-                End Recognition
+                End Meeting
               </Button>
             )}
             <Dropdown
