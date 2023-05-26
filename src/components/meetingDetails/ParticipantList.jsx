@@ -4,7 +4,7 @@ import StudentCard from '../common/cards/StudentCard.jsx';
 const ParticipantList = ({ meetingParticipants, currentMenu, pageId }) => {
   return (
     <>
-      {meetingParticipants ? (
+      {meetingParticipants.length > 0 ? (
         <div className="grid grid-cols-4 xl:grid-cols-5 gap-4">
           {meetingParticipants.map((data) => {
             return (
