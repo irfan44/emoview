@@ -40,7 +40,7 @@ const StudentsMeetings = () => {
       {classDetails && (
         <PageLayout
           backToMenu
-          prevMenu="Students"
+          prevMenu="Student Reports"
           prevLink="students"
           currentMenu={classDetails[0].name}
         >

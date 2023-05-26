@@ -128,10 +128,11 @@ const MeetingDetails = () => {
 
   const handleStopMeeting = async () => {
     confirm({
-      title: 'Do you want to end this meeting?',
+      title: 'Do you want to end emotion recognition for this meeting?',
       content: (
         <span>
-          Warning : You <strong>cannot</strong> change this later!
+          Warning : You <strong>cannot</strong> re-enable emotion recognition
+          again!
         </span>
       ),
       okText: 'End',
@@ -144,7 +145,7 @@ const MeetingDetails = () => {
           statusStart: true,
           statusEnd: true,
         });
-        handleStopMeeting();
+        handleStopRecognition();
         localStorage.removeItem(`class/${meetCode}/${emoviewCode}/started`);
         fetchMeetingById();
       },
