@@ -85,8 +85,9 @@ const DoughnutChart = ({ data }) => {
           style={{
             fontSize: '5rem',
             position: 'absolute',
-            top: '48%',
-            left: '40%',
+            top: '45%',
+            left: '50%',
+            transform: 'translate(-50%)',
           }}
         >
           {emoji()}
