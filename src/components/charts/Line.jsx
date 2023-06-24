@@ -281,7 +281,9 @@ const Linechart = ({ data, withImage }) => {
         </div>
       </div>
       <div className="text-center my-4">
-        {withImage && <img alt="Emotion Image"} className="mb-4 w-36" src={currentImage()} />}
+        {withImage && (
+          <img alt="Emotion Image" className="mb-4 w-36" src={currentImage()} />
+        )}
         <div className="flex justify-center space-x-4 mb-4">
           {legendArray &&
             legendArray.map((item) => {
