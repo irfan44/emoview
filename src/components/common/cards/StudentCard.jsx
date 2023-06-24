@@ -11,8 +11,6 @@ const StudentCard = ({ data, currentMenu, pageId, studentId }) => {
     return `/${currentMenu}/${studentId}`;
   };
 
-  console.log(targetLink());
-
   return (
     <Link to={targetLink()}>
       <Card hoverable bodyStyle={{ padding: '16px 24px' }}>
