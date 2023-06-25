@@ -314,11 +314,19 @@ const Linechart = ({ data, withImage }) => {
         </div>
       </div>
       <div>
-        <span className="text-black/[.60] text-xs">
-          {!largeData && !mediumData
-            ? '* Emotion captured at 5 second interval'
-            : '* Incomplete emotion data is shown due to large amount, export recognition data to view the complete data'}
+        <span className="text-black/[.60] text-xs block">
+          {!isSimple
+            ? !largeData && !mediumData
+              ? '* Emotion captured at 5 second interval'
+              : '* Emotion data displayed may be incomplete due to its large size. Please export to view the complete emotion dataset'
+            : '* Only the last 15 emotion data is displayed'}
         </span>
+        {!isSimple && (largeData || mediumData) && (
+          <span className="text-black/[.60] text-xs block">
+            * Zooming feature has been disabled to maintain optimal performance.
+            We apologize for any inconvenience caused
+          </span>
+        )}
       </div>
     </Card>
   );
