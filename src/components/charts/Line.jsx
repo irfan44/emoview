@@ -32,22 +32,62 @@ const Linechart = ({ data, withImage }) => {
   const [isSimple, setsSimple] = useState(false);
   const [legendArray, setLegendArray] = useState();
   const [chartElement, setChartElement] = useState();
-  const [isLong, setIsLong] = useState(false);
-  const [width, setWidth] = useState();
 
   const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
+
+  const largeData = data.labels.length > 1000;
+  const mediumData = data.labels.length > 100 && data.labels.length < 1000;
 
   const simpleData = (data) => {
     return data.slice(-15);
   };
 
+  const minimizeLargeData = (data) => {
+    return data.filter((_, index, arr) => {
+      const isDivisibleByTen = index % 10 === 0;
+      const isFirstIndex = index === 0;
+      const isLastIndex = index === arr.length - 1;
+      return isDivisibleByTen && !isFirstIndex && !isLastIndex;
+    });
+  };
+
+  const minimizeMediumData = (data) => {
+    return data.filter((_, index, arr) => {
+      const isDivisibleByTen = index % 5 === 0;
+      const isFirstIndex = index === 0;
+      const isLastIndex = index === arr.length - 1;
+      return isDivisibleByTen && !isFirstIndex && !isLastIndex;
+    });
+  };
+
+  const createAxis = (labels, data) => {
+    if (largeData && !isSimple) {
+      const processedLabels = minimizeLargeData(labels);
+      const processedData = minimizeLargeData(data);
+      return processedLabels.map((value, index) => ({
+        x: value,
+        y: processedData[index],
+      }));
+    }
+    if (mediumData && !isSimple) {
+      const processedLabels = minimizeMediumData(labels);
+      const processedData = minimizeMediumData(data);
+      return processedLabels.map((value, index) => ({
+        x: value,
+        y: processedData[index],
+      }));
+    }
+    return labels.map((value, index) => ({ x: value, y: data[index] }));
+  };
+
   const chartData = {
-    labels: !isSimple ? data.labels : simpleData(data.labels),
     datasets: [
       {
         label: 'Neutral',
-        data: !isSimple ? data.neutral : simpleData(data.neutral),
+        data: !isSimple
+          ? createAxis(data.labels, data.neutral)
+          : createAxis(simpleData(data.labels), simpleData(data.neutral)),
         backgroundColor: 'transparent',
         borderColor: '#00B8D4',
         borderWidth: 1,
@@ -55,7 +95,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Happy',
-        data: !isSimple ? data.happy : simpleData(data.happy),
+        data: !isSimple
+          ? createAxis(data.labels, data.happy)
+          : createAxis(simpleData(data.labels), simpleData(data.happy)),
         backgroundColor: 'transparent',
         borderColor: '#64DD17',
         borderWidth: 1,
@@ -63,7 +105,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Sad',
-        data: !isSimple ? data.sad : simpleData(data.sad),
+        data: !isSimple
+          ? createAxis(data.labels, data.sad)
+          : createAxis(simpleData(data.labels), simpleData(data.sad)),
         backgroundColor: 'transparent',
         borderColor: '#001AFF',
         borderWidth: 1,
@@ -71,7 +115,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Angry',
-        data: !isSimple ? data.angry : simpleData(data.angry),
+        data: !isSimple
+          ? createAxis(data.labels, data.angry)
+          : createAxis(simpleData(data.labels), simpleData(data.angry)),
         backgroundColor: 'transparent',
         borderColor: '#FF0000',
         borderWidth: 1,
@@ -79,7 +125,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Fearful',
-        data: !isSimple ? data.fearful : simpleData(data.fearful),
+        data: !isSimple
+          ? createAxis(data.labels, data.fearful)
+          : createAxis(simpleData(data.labels), simpleData(data.fearful)),
         backgroundColor: 'transparent',
         borderColor: '#bf00ff',
         borderWidth: 1,
@@ -87,7 +135,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Disgusted',
-        data: !isSimple ? data.disgusted : simpleData(data.disgusted),
+        data: !isSimple
+          ? createAxis(data.labels, data.disgusted)
+          : createAxis(simpleData(data.labels), simpleData(data.disgusted)),
         backgroundColor: 'transparent',
         borderColor: '#212121',
         borderWidth: 1,
@@ -95,7 +145,9 @@ const Linechart = ({ data, withImage }) => {
       },
       {
         label: 'Surprised',
-        data: !isSimple ? data.surprised : simpleData(data.surprised),
+        data: !isSimple
+          ? createAxis(data.labels, data.surprised)
+          : createAxis(simpleData(data.labels), simpleData(data.surprised)),
         backgroundColor: 'transparent',
         borderColor: '#FFB700',
         borderWidth: 1,
@@ -105,6 +157,8 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const options = {
+    parsed: false,
+    animate: false,
     maintainAspectRatio: false,
     plugins: {
       legend: {
@@ -123,7 +177,6 @@ const Linechart = ({ data, withImage }) => {
       },
       zoom: {
         pan: {
-          enabled: true,
           mode: 'x',
           threshold: 5,
           rangeMax: {
@@ -132,10 +185,10 @@ const Linechart = ({ data, withImage }) => {
         },
         zoom: {
           wheel: {
-            enabled: !isSimple,
+            enabled: !isSimple && !largeData && !mediumData,
           },
           pinch: {
-            enabled: !isSimple,
+            enabled: !isSimple && !largeData && !mediumData,
           },
           mode: 'x',
         },
@@ -182,8 +235,17 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const handleSimpleMode = (checked) => {
-    setCurrentIndex();
     setsSimple(checked);
+  };
+
+  const setWidth = () => {
+    return isSimple
+      ? '100%'
+      : mediumData
+      ? '9999px'
+      : largeData
+      ? '30000px'
+      : '100%';
   };
 
   useEffect(() => {
@@ -200,12 +262,6 @@ const Linechart = ({ data, withImage }) => {
     });
     setLegendArray(legendArr);
   }, []);
-
-  useEffect(() => {
-    setIsLong(data.labels.length > 15);
-    // setIsLong(false);
-    setWidth(chartContainerRef.current.offsetWidth + data.labels.length * 10);
-  }, [data]);
 
   return (
     <Card bodyStyle={{ padding: '16px 24px' }}>
@@ -225,7 +281,9 @@ const Linechart = ({ data, withImage }) => {
         </div>
       </div>
       <div className="text-center my-4">
-        {withImage && <img className="mb-4 w-36" src={currentImage()} />}
+        {withImage && (
+          <img alt="Emotion Image" className="mb-4 w-36" src={currentImage()} />
+        )}
         <div className="flex justify-center space-x-4 mb-4">
           {legendArray &&
             legendArray.map((item) => {
@@ -243,7 +301,7 @@ const Linechart = ({ data, withImage }) => {
             ref={chartContainerRef}
             style={{
               position: 'relative',
-              width: !isSimple && isLong ? `${width}px` : '100%',
+              width: setWidth(),
             }}
           >
             <Line
@@ -257,7 +315,9 @@ const Linechart = ({ data, withImage }) => {
       </div>
       <div>
         <span className="text-black/[.60] text-xs">
-          * Emotion captured at 5 second interval
+          {!largeData && !mediumData
+            ? '* Emotion captured at 5 second interval'
+            : '* Incomplete emotion data is shown due to large amount, export recognition data to view the complete data'}
         </span>
       </div>
     </Card>
