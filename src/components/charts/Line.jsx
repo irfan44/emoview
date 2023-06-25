@@ -36,8 +36,8 @@ const Linechart = ({ data, withImage }) => {
   const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
 
-  const largeData = data.labels.length > 1000;
-  const mediumData = data.labels.length > 100 && data.labels.length < 1000;
+  const largeData = data.labels.length > 2000;
+  const mediumData = data.labels.length > 100 && data.labels.length < 2000;
 
   const simpleData = (data) => {
     return data.slice(-15);
@@ -281,9 +281,7 @@ const Linechart = ({ data, withImage }) => {
         </div>
       </div>
       <div className="text-center my-4">
-        {withImage && (
-          <img alt="Emotion Image" className="mb-4 w-36" src={currentImage()} />
-        )}
+        {withImage && <img className="mb-4 w-36" src={currentImage()} />}
         <div className="flex justify-center space-x-4 mb-4">
           {legendArray &&
             legendArray.map((item) => {
