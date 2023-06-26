@@ -41,6 +41,8 @@ const MeetingDetails = () => {
 
   const [accessToken, setAccessToken] = useState();
 
+  const [tabActive, setTabActive] = useState('recognition');
+
   const startMeetingRef = useRef(null);
   const meetingCodeRef = useRef(null);
   const recognitionSwitchRef = useRef(null);
@@ -231,6 +233,14 @@ const MeetingDetails = () => {
   };
 
   useEffect(() => {
+    const activeTab = sessionStorage.getItem('tabActive');
+    sessionStorage.removeItem('tabActive');
+    if (activeTab) {
+      setTabActive(activeTab);
+    }
+  }, [])
+
+  useEffect(() => {
     handleOnMount();
     getSwitchStatus();
     getAccessToken();
@@ -273,7 +283,7 @@ const MeetingDetails = () => {
           {meetingData.isStart ? (
             <Tabs
               className="mt-2"
-              defaultActiveKey="1"
+              defaultActiveKey={tabActive}
               tabBarStyle={{ borderBottom: '0px' }}
               items={[
                 {
