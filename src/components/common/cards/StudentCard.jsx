@@ -17,6 +17,8 @@ const StudentCard = ({ data, currentMenu, pageId, studentId }) => {
     navigate(targetLink());
     if (pageId) {
       sessionStorage.setItem('tabActive', 'participants')
+    } else {
+      sessionStorage.setItem('tabActive', 'allStudents')
     }
   }
 

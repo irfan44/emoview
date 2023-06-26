@@ -39,7 +39,7 @@ const Students = () => {
 
   const items = [
     {
-      key: '1',
+      key: 'byClass',
       label: `By Class`,
       children: (
         <>
@@ -52,7 +52,7 @@ const Students = () => {
       ),
     },
     {
-      key: '2',
+      key: 'allStudents',
       label: `All Students`,
       children: (
         <>
@@ -65,6 +65,12 @@ const Students = () => {
       ),
     },
   ];
+
+  const getTabActive = () => {
+    const activeTab = sessionStorage.getItem('tabActive');
+    sessionStorage.removeItem('tabActive');
+    return activeTab;
+  };
 
   useEffect(() => {
     fetchStudents();
@@ -93,7 +99,7 @@ const Students = () => {
           </div>
         </div>
       </div>
-      <Tabs defaultActiveKey="1" items={items} />
+      <Tabs defaultActiveKey={getTabActive() || 'byClass'} items={items} />
     </PageLayout>
   );
 };
