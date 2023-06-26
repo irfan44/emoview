@@ -234,10 +234,10 @@ const MeetingDetails = () => {
 
   useEffect(() => {
     const activeTab = sessionStorage.getItem('tabActive');
+    sessionStorage.removeItem('tabActive');
     if (activeTab) {
       setTabActive(activeTab);
     }
-    sessionStorage.removeItem('tabActive');
   }, [])
 
   useEffect(() => {
@@ -247,6 +247,7 @@ const MeetingDetails = () => {
 
     return function cleanup() {
       socket.disconnect();
+      sessionStorage.removeItem('tabActive');
     };
   }, []);
 
