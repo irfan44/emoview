@@ -247,7 +247,6 @@ const MeetingDetails = () => {
 
     return function cleanup() {
       socket.disconnect();
-      sessionStorage.removeItem('tabActive');
     };
   }, []);
 
