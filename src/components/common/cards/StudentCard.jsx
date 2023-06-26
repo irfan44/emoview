@@ -6,6 +6,7 @@ import Subtitle from '../typography/Subtitle.jsx';
 const StudentCard = ({ data, currentMenu, pageId, studentId }) => {
   const targetLink = () => {
     if (pageId) {
+      sessionStorage.setItem('tabActive', 'participants')
       return `/${currentMenu}/${pageId}/${studentId}`;
     }
     return `/${currentMenu}/${studentId}`;
