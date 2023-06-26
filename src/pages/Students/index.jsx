@@ -16,8 +16,6 @@ const Students = () => {
   const [students, setStudents] = useState([]);
   const [classList, setClassList] = useState([]);
 
-  const [tabActive, setTabActive] = useState('byClass');
-
   const fetchStudents = async () => {
     setIsLoading(true);
     const data = await getUserStudent();
@@ -68,13 +66,11 @@ const Students = () => {
     },
   ];
 
-  useEffect(() => {
+  const getTabActive = () => {
     const activeTab = sessionStorage.getItem('tabActive');
     sessionStorage.removeItem('tabActive');
-    if (activeTab) {
-      setTabActive(activeTab);
-    }
-  }, [])
+    return activeTab;
+  };
 
   useEffect(() => {
     fetchStudents();
@@ -103,7 +99,7 @@ const Students = () => {
           </div>
         </div>
       </div>
-      <Tabs defaultActiveKey={tabActive} items={items} />
+      <Tabs defaultActiveKey={getTabActive() || 'byClass'} items={items} />
     </PageLayout>
   );
 };
