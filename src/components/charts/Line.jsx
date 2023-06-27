@@ -36,54 +36,22 @@ const Linechart = ({ data, withImage }) => {
   const chartContainerRef = useRef(null);
   const chartRef = useRef(null);
 
-  const largeData = data.labels.length > 2000;
+  const veryLargeData = data.labels.length > 3000;
+  const largeData = data.labels.length > 2000 && data.labels.length < 3000;
   const mediumData = data.labels.length > 100 && data.labels.length < 2000;
 
   const simpleData = (data) => {
     return data.slice(-15);
   };
 
-  const minimizeLargeData = (data) => {
-    return data.filter((_, index, arr) => {
-      const isDivisibleByTen = index % 10 === 0;
-      const isFirstIndex = index === 0;
-      const isLastIndex = index === arr.length - 1;
-      return isDivisibleByTen && !isFirstIndex && !isLastIndex;
-    });
-  };
-
-  const minimizeMediumData = (data) => {
-    return data.filter((_, index, arr) => {
-      const isDivisibleByTen = index % 5 === 0;
-      const isFirstIndex = index === 0;
-      const isLastIndex = index === arr.length - 1;
-      return isDivisibleByTen && !isFirstIndex && !isLastIndex;
-    });
-  };
-
   const createAxis = (labels, data) => {
-    if (largeData && !isSimple) {
-      const processedLabels = minimizeLargeData(labels);
-      const processedData = minimizeLargeData(data);
-      return processedLabels.map((value, index) => ({
-        x: value,
-        y: processedData[index],
-      }));
-    }
-    if (mediumData && !isSimple) {
-      const processedLabels = minimizeMediumData(labels);
-      const processedData = minimizeMediumData(data);
-      return processedLabels.map((value, index) => ({
-        x: value,
-        y: processedData[index],
-      }));
-    }
     return labels.map((value, index) => ({ x: value, y: data[index] }));
   };
 
   const chartData = {
     datasets: [
       {
+        id: 1,
         label: 'Neutral',
         data: !isSimple
           ? createAxis(data.labels, data.neutral)
@@ -94,6 +62,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 2,
         label: 'Happy',
         data: !isSimple
           ? createAxis(data.labels, data.happy)
@@ -104,6 +73,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 3,
         label: 'Sad',
         data: !isSimple
           ? createAxis(data.labels, data.sad)
@@ -114,6 +84,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 4,
         label: 'Angry',
         data: !isSimple
           ? createAxis(data.labels, data.angry)
@@ -124,6 +95,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 5,
         label: 'Fearful',
         data: !isSimple
           ? createAxis(data.labels, data.fearful)
@@ -134,6 +106,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 6,
         label: 'Disgusted',
         data: !isSimple
           ? createAxis(data.labels, data.disgusted)
@@ -144,6 +117,7 @@ const Linechart = ({ data, withImage }) => {
         tension: 0.3,
       },
       {
+        id: 7,
         label: 'Surprised',
         data: !isSimple
           ? createAxis(data.labels, data.surprised)
@@ -157,8 +131,14 @@ const Linechart = ({ data, withImage }) => {
   };
 
   const options = {
-    parsed: false,
-    animate: false,
+    normalized: true,
+    animation: {
+      duration: 0,
+    },
+    hover: {
+      animationDuration: 0,
+    },
+    responsiveAnimationDuration: 0,
     maintainAspectRatio: false,
     plugins: {
       legend: {
@@ -241,9 +221,9 @@ const Linechart = ({ data, withImage }) => {
   const setWidth = () => {
     return isSimple
       ? '100%'
-      : mediumData
-      ? '9999px'
-      : largeData
+      : largeData || mediumData
+      ? `${data.labels.length * 20}px`
+      : veryLargeData
       ? '30000px'
       : '100%';
   };
