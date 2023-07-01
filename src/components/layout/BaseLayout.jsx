@@ -139,7 +139,7 @@ const BaseLayout = ({ children }) => {
             height="30"
             style={{ marginLeft: '16px' }}
           />
-          <span className="font-bold text-xl ml-2">Emoview for Teachers</span>
+          <span className="font-bold text-xl ml-2">EmoSync for Teachers</span>
         </div>
         <div className="flex items-center mr-36">
           {userProfile && !isLoading ? (
