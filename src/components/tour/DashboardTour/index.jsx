@@ -31,7 +31,7 @@ const SecondStep = () => {
       </div>
       <div className="space-y-2">
         <h3 className="font-bold text-xl m-0">
-          Get Emoview for Students for your students!
+          Get EmoSync for Students for your students!
         </h3>
         <p>
           Make sure your student have EmoSync for Students, a Chrome based
