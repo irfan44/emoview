@@ -14,7 +14,7 @@ const MeetingDetailsTour = ({
     {
       title: 'Share your meeting PIN!',
       description:
-        'Copy this code & share it to your student to fill in Emoview for Students so their emotion can be shown here',
+        'Copy this code & share it to your student to fill in EmoSync for Students so their emotion can be shown here',
       target: meetingCodeRef.current,
     },
     {

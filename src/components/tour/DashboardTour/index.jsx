@@ -11,10 +11,12 @@ const FirstStep = () => {
         <img alt="Teacher illustration" src={teacherImage} width={242} />
       </div>
       <div className="space-y-2">
-        <h3 className="font-bold text-xl m-0">Welcome to Emoview for Teachers!</h3>
+        <h3 className="font-bold text-xl m-0">
+          Welcome to EmoSync for Teachers!
+        </h3>
         <p>
-          Emoview for Teachers is a dashboard for teachers to see the emotions students feel
-          in real time while teaching
+          EmoSync for Teachers is a dashboard for teachers to see the emotions
+          students feel in real time while teaching
         </p>
       </div>
     </div>
@@ -29,15 +31,15 @@ const SecondStep = () => {
       </div>
       <div className="space-y-2">
         <h3 className="font-bold text-xl m-0">
-          Get Emoview for Students for your students!
+          Get EmoSync for Students for your students!
         </h3>
         <p>
-          Make sure your student have Emoview for Students, a Chrome based browser
-          extension, installed so their emotion data can be shown here
+          Make sure your student have EmoSync for Students, a Chrome based
+          browser extension, installed so their emotion data can be shown here
         </p>
         <p>
-          Get Emoview for Students from "Get Emoview for Students" menu by hovering your
-          profile name!
+          Get EmoSync for Students from "Get EmoSync for Students" menu by
+          hovering your profile name!
         </p>
       </div>
     </div>
